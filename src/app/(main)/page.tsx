@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getCachedCareers, getCachedCareerStats } from "@/lib/data";
 import Link from "next/link";
 import Image from "next/image";
 import { CareerExplorer } from "@/components/career-explorer";
@@ -47,29 +47,15 @@ const TESTIMONIALS = [
 // ============================================================
 // HOME PAGE - Server Component
 // ============================================================
-export const revalidate = 3600; // Cache at edge for 1 hour
+export const revalidate = 3600;
 
 export default async function HomePage() {
   const [careers, stats] = await Promise.all([
-    prisma.career.findMany({
-      include: {
-        paths: {
-          include: {
-            skills: { select: { id: true } },
-          },
-        },
-      },
-      orderBy: { createdAt: "asc" },
-    }),
-    Promise.all([
-      prisma.career.count(),
-      prisma.path.count(),
-      prisma.skill.count(),
-      prisma.certificate.count(),
-    ]),
+    getCachedCareers(),
+    getCachedCareerStats(),
   ]);
 
-  const [careerCount, pathCount, skillCount, certCount] = stats;
+  const { careerCount, pathCount, skillCount, certCount } = stats;
 
   // Prepare career data for client component
   const careerData = careers.map((career) => ({

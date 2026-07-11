@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { getCachedPathBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/app/auth/actions";
@@ -13,10 +14,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { pathSlug } = await params;
-  const path = await prisma.path.findUnique({
-    where: { slug: pathSlug },
-    select: { name: true, description: true },
-  });
+  const path = await getCachedPathBySlug(pathSlug);
   if (!path) return { title: "Path Not Found" };
   return {
     title: `${path.name} - SkillItLearn`,
@@ -27,26 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PathDetailPage({ params }: Props) {
   const { slug: careerSlug, pathSlug } = await params;
 
-  const path = await prisma.path.findUnique({
-    where: { slug: pathSlug },
-    include: {
-      career: { select: { name: true, slug: true } },
-      skills: {
-        orderBy: { orderIndex: "asc" },
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-          description: true,
-          estimatedHours: true,
-          orderIndex: true,
-          modules: {
-            select: { steps: { select: { id: true } } },
-          },
-        },
-      },
-    },
-  });
+  const path = await getCachedPathBySlug(pathSlug);
 
   if (!path) notFound();
 

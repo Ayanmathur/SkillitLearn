@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getCachedAboutStats } from "@/lib/data";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -7,13 +7,10 @@ export const metadata: Metadata = {
   description: "Learn how SkillItLearn organizes career development into structured paths with verifiable certificates.",
 };
 
+export const revalidate = 3600;
+
 export default async function AboutPage() {
-  const [careerCount, pathCount, skillCount, certCount] = await Promise.all([
-    prisma.career.count(),
-    prisma.path.count(),
-    prisma.skill.count(),
-    prisma.certificate.count(),
-  ]);
+  const { careerCount, pathCount, skillCount, certCount } = await getCachedAboutStats();
 
   return (
     <main className="min-h-screen bg-surface">

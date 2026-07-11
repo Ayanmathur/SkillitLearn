@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getCachedCareerBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -12,10 +12,7 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const career = await prisma.career.findUnique({
-    where: { slug },
-    select: { name: true, description: true },
-  });
+  const career = await getCachedCareerBySlug(slug);
 
   if (!career) return { title: "Career Not Found" };
 
@@ -27,18 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CareerDetailPage({ params }: Props) {
   const { slug } = await params;
-
-  const career = await prisma.career.findUnique({
-    where: { slug },
-    include: {
-      paths: {
-        orderBy: { orderIndex: "asc" },
-        include: {
-          skills: { select: { id: true, estimatedHours: true } },
-        },
-      },
-    },
-  });
+  const career = await getCachedCareerBySlug(slug);
 
   if (!career) notFound();
 
