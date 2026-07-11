@@ -69,7 +69,7 @@ export function TestimonialCarousel({ testimonials }: Props) {
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"></path>
               </svg>
               <p className="text-text-secondary text-sm leading-relaxed italic">
-                "{t.quote}"
+                &quot;{t.quote}&quot;
               </p>
             </div>
             <div className="flex items-center gap-3 mt-auto">
