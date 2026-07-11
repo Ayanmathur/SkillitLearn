@@ -54,7 +54,7 @@ export const getCachedCareerBySlug = unstable_cache(
         paths: {
           orderBy: { orderIndex: "asc" },
           include: {
-            skills: { select: { id: true, estimatedHours: true } },
+            skills: { select: { id: true, slug: true, estimatedHours: true } },
           },
         },
       },

@@ -4,16 +4,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 /**
- * Progressive Prefetcher — silently prefetches the next level of routes
- * in the background during browser idle time.
+ * Progressive Prefetcher — silently loads pages in the background.
  *
- * THROTTLED: Only prefetches up to `maxPrefetch` URLs (default 6),
- * staggered 500ms apart, during idle time. This prevents a thundering
- * herd of 50+ simultaneous server requests.
+ * When a career is chosen, this prefetches the ENTIRE tree
+ * (paths + skills + quizzes) so every click within that career
+ * is instant. Requests are staggered 200ms apart to avoid
+ * overwhelming the server.
  */
 export function Prefetcher({
   urls,
-  maxPrefetch = 6,
+  maxPrefetch = 30,
 }: {
   urls: string[];
   maxPrefetch?: number;
@@ -24,18 +24,17 @@ export function Prefetcher({
   useEffect(() => {
     if (!urls.length) return;
 
-    // Only prefetch the first N urls to avoid server overload
     const batch = urls.slice(0, maxPrefetch);
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     batch.forEach((url, index) => {
       if (prefetched.current.has(url)) return;
 
-      // Stagger prefetches 500ms apart, starting after 500ms
+      // Stagger prefetches 200ms apart, starting after 300ms idle
       const timer = setTimeout(() => {
         router.prefetch(url);
         prefetched.current.add(url);
-      }, 500 + index * 500);
+      }, 300 + index * 200);
 
       timers.push(timer);
     });

@@ -137,8 +137,17 @@ export default async function CareerDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Prefetch all path pages for this career */}
-      <Prefetcher urls={career.paths.map((p) => `/careers/${slug}/${p.slug}`)} />
+      {/* Prefetch ENTIRE career tree: paths + skills + quizzes */}
+      <Prefetcher
+        urls={career.paths.flatMap((p) => [
+          `/careers/${slug}/${p.slug}`,
+          ...p.skills.flatMap((s) => [
+            `/careers/${slug}/${p.slug}/${s.slug}`,
+            `/careers/${slug}/${p.slug}/${s.slug}/quiz`,
+          ]),
+        ])}
+        maxPrefetch={30}
+      />
     </main>
   );
 }
