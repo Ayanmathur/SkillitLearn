@@ -384,8 +384,15 @@ export default async function PathDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Prefetch all skill pages for this path */}
-      <Prefetcher urls={path.skills.map((s) => `/careers/${careerSlug}/${pathSlug}/${s.slug}`)} />
+      {/* 2 ahead, 2 back prefetch strategy */}
+      <Prefetcher 
+        urls={(() => {
+          const currentIndex = nextSkill ? path.skills.findIndex(s => s.id === nextSkill.id) : 0;
+          const start = Math.max(0, currentIndex - 2);
+          const end = Math.min(path.skills.length, currentIndex + 3); // current + 2 ahead
+          return path.skills.slice(start, end).map((s) => `/careers/${careerSlug}/${pathSlug}/${s.slug}`);
+        })()} 
+      />
     </main>
   );
 }

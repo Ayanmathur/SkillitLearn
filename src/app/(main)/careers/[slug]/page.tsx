@@ -137,16 +137,10 @@ export default async function CareerDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Prefetch ENTIRE career tree: paths + skills + quizzes */}
+      {/* Predict next click: Prefetch only the paths (avoid DDOSing serverless functions) */}
       <Prefetcher
-        urls={career.paths.flatMap((p) => [
-          `/careers/${slug}/${p.slug}`,
-          ...p.skills.flatMap((s) => [
-            `/careers/${slug}/${p.slug}/${s.slug}`,
-            `/careers/${slug}/${p.slug}/${s.slug}/quiz`,
-          ]),
-        ])}
-        maxPrefetch={30}
+        urls={career.paths.map((p) => `/careers/${slug}/${p.slug}`)}
+        maxPrefetch={5}
       />
     </main>
   );
