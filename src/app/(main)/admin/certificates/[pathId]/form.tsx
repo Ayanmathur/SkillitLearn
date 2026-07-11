@@ -115,15 +115,15 @@ export function CertTemplateForm({ pathId, pathName, existing }: Props) {
         </div>
       </div>
 
-      {/* Logo Upload */}
+      {/* Background Template Upload (Re-using logo field) */}
       <div>
         <label className="block text-sm font-semibold text-text-primary mb-2">
-          Company Logo
+          Certificate Background Template
         </label>
         <div className="flex items-start gap-4">
           {logoPreview && (
             <div className="w-20 h-20 rounded-xl border border-[var(--border-color)] overflow-hidden flex-shrink-0 bg-white">
-              <img src={logoPreview} alt="Logo preview" className="w-full h-full object-contain p-1" />
+              <img src={logoPreview} alt="Template preview" className="w-full h-full object-contain p-1" />
             </div>
           )}
           <div className="flex-1">
@@ -137,8 +137,8 @@ export function CertTemplateForm({ pathId, pathName, existing }: Props) {
                          file:bg-accent/10 file:text-accent hover:file:bg-accent/20"
             />
             <p className="text-xs text-text-muted mt-1">
-              PNG or SVG, max 5MB. Appears on the certificate.
-              {existing?.logoUrl && !logoPreview?.startsWith("blob:") && " Current logo is saved."}
+              Upload the blank Canva export here (PNG/JPG). It will fill the entire certificate background.
+              {existing?.logoUrl && !logoPreview?.startsWith("blob:") && " Current template is saved."}
             </p>
           </div>
         </div>

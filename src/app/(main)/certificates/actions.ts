@@ -7,8 +7,7 @@ import { verifyLimiter, certIssueLimiter } from "@/lib/rate-limit";
 import crypto from "crypto";
 import QRCode from "qrcode";
 import PDFDocument from "pdfkit";
-// @ts-ignore - svg-to-pdfkit does not have official types
-import SVGtoPDF from "svg-to-pdfkit";
+
 
 /**
  * CERTIFICATE_SECRET - HMAC signing secret for certificate verification.
@@ -80,7 +79,7 @@ async function generateCertificatePDF(data: {
     const doc = new PDFDocument({
       size: "A4",
       layout: "landscape",
-      margins: { top: 40, bottom: 40, left: 50, right: 50 },
+      margins: { top: 0, bottom: 0, left: 0, right: 0 },
     });
 
     const chunks: Buffer[] = [];
@@ -90,127 +89,54 @@ async function generateCertificatePDF(data: {
 
     const width = doc.page.width;
     const height = doc.page.height;
-    const centerX = width / 2;
 
-    // -- Background --
-    doc.rect(0, 0, width, height).fill("#ffffff");
-
-    let isSvgTemplate = false;
-    let yPos = 55;
-
+    // -- Background Template (The fully flattened Canva image) --
     if (data.logoBuffer) {
-      // Try to determine if it's an SVG
-      const logoStr = data.logoBuffer.toString('utf-8');
-      if (logoStr.includes('<svg') || logoStr.includes('<?xml')) {
-        isSvgTemplate = true;
-        // Render SVG as full-page background
-        SVGtoPDF(doc, logoStr, 0, 0, { width, height, preserveAspectRatio: "xMidYMid slice" });
-        yPos += 30; // Push text down a bit
-      }
-    }
-
-    if (!isSvgTemplate) {
-      // -- Border (double line) --
-      doc.rect(20, 20, width - 40, height - 40).lineWidth(2).stroke("#1a1a2e");
-      doc.rect(28, 28, width - 56, height - 56).lineWidth(0.5).stroke("#5bbd72");
-
-      // -- Decorative corner accents --
-      const cornerSize = 30;
-      const corners = [
-        [35, 35], [width - 35 - cornerSize, 35],
-        [35, height - 35 - cornerSize], [width - 35 - cornerSize, height - 35 - cornerSize]
-      ];
-      corners.forEach(([x, y]) => {
-        doc.rect(x, y, cornerSize, cornerSize).lineWidth(1).stroke("#5bbd72");
-      });
-
-      // -- Logo --
-      if (data.logoBuffer) {
-        try {
-          doc.image(data.logoBuffer, centerX - 40, yPos, { width: 80, height: 80, fit: [80, 80], align: "center" });
-        } catch {
-          // Skip if image fails
-        }
-        yPos += 90;
-      } else {
-        yPos += 10;
-      }
-    }
-
-    // -- Certificate Title --
-    doc.font("Helvetica-Bold").fontSize(28).fillColor("#1a1a2e");
-    doc.text(data.certificateTitle, 50, yPos, { align: "center", width: width - 100 });
-    yPos += 45;
-
-    // -- Divider line --
-    doc.moveTo(centerX - 120, yPos).lineTo(centerX + 120, yPos).lineWidth(1.5).stroke("#5bbd72");
-    yPos += 20;
-
-    // -- "This is to certify that" --
-    doc.font("Helvetica").fontSize(13).fillColor("#555555");
-    doc.text("This is to certify that", 50, yPos, { align: "center", width: width - 100 });
-    yPos += 25;
-
-    // -- Learner Name --
-    doc.font("Helvetica-Bold").fontSize(30).fillColor("#1a1a2e");
-    doc.text(data.learnerName, 50, yPos, { align: "center", width: width - 100 });
-    yPos += 45;
-
-    // -- Description --
-    doc.font("Helvetica").fontSize(12).fillColor("#555555");
-    doc.text(
-      `has successfully completed all skills and assessments in the`,
-      50, yPos, { align: "center", width: width - 100 }
-    );
-    yPos += 20;
-
-    // -- Path Name --
-    doc.font("Helvetica-Bold").fontSize(18).fillColor("#5bbd72");
-    doc.text(data.pathName, 50, yPos, { align: "center", width: width - 100 });
-    yPos += 25;
-
-    // -- Career --
-    doc.font("Helvetica").fontSize(11).fillColor("#888888");
-    doc.text(`under ${data.careerName}`, 50, yPos, { align: "center", width: width - 100 });
-    yPos += 35;
-
-    // -- Date --
-    const dateStr = data.issueDate.toLocaleDateString("en-US", {
-      year: "numeric", month: "long", day: "numeric",
-    });
-    doc.font("Helvetica").fontSize(11).fillColor("#555555");
-    doc.text(`Issued on ${dateStr}`, 50, yPos, { align: "center", width: width - 100 });
-    yPos += 30;
-
-    // -- Bottom section: Signature (left) and QR (right) --
-    const bottomY = height - 140;
-
-    // Signature section (left of center)
-    if (data.signatureBuffer) {
       try {
-        doc.image(data.signatureBuffer, centerX - 180, bottomY, { width: 120, height: 50, fit: [120, 50] });
-      } catch {
-        // Skip if image fails
+        doc.image(data.logoBuffer, 0, 0, { width, height });
+      } catch (err) {
+        console.error("Failed to render background image:", err);
       }
+    } else {
+      // Fallback white background if no template provided
+      doc.rect(0, 0, width, height).fill("#ffffff");
     }
-    doc.moveTo(centerX - 190, bottomY + 55).lineTo(centerX - 60, bottomY + 55).lineWidth(0.5).stroke("#aaaaaa");
-    doc.font("Helvetica-Bold").fontSize(11).fillColor("#1a1a2e");
-    doc.text(data.signatoryName, centerX - 200, bottomY + 60, { width: 150, align: "center" });
-    doc.font("Helvetica").fontSize(9).fillColor("#777777");
-    doc.text(data.signatoryTitle, centerX - 200, bottomY + 75, { width: 150, align: "center" });
 
-    // QR Code (right of center)
+    // -- Learner Name (Centered exactly over the main blank line) --
+    // Visually, the line is at ~53% down the page. We draw text slightly above it.
+    doc.font("Helvetica-Bold").fontSize(38).fillColor("#1a1a2e");
+    doc.text(data.learnerName, 0, height * 0.49, { align: "center", width });
+
+    // -- Course / Path Name --
+    // The user's template has a paragraph "In recognition of outstanding knowledge...".
+    // We will place the specific Course / Path name directly beneath that paragraph.
+    doc.font("Helvetica-Bold").fontSize(18).fillColor("#1a1a2e");
+    doc.text(`For successfully completing: ${data.pathName}`, 0, height * 0.68, { align: "center", width });
+    
+    // -- Career --
+    doc.font("Helvetica").fontSize(12).fillColor("#555555");
+    doc.text(`Career Track: ${data.careerName}`, 0, height * 0.72, { align: "center", width });
+
+    // -- Certificate ID --
+    // The template has a specific line in the bottom right corner above the text "Certificate ID".
+    // X is approx 65% across, Y is approx 80% down.
+    doc.font("Helvetica-Bold").fontSize(12).fillColor("#1a1a2e");
+    doc.text(data.certId, width * 0.645, height * 0.81, { align: "center", width: width * 0.28 });
+
+    // -- Date (Optional - place neatly under the ID or bottom center) --
+    const dateStr = data.issueDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    doc.font("Helvetica").fontSize(10).fillColor("#555555");
+    doc.text(`Issued: ${dateStr}`, width * 0.645, height * 0.88, { align: "center", width: width * 0.28 });
+
+    // -- QR Code --
+    // Place QR Code in bottom left or top right corner since bottom right is taken
     try {
-      doc.image(data.qrBuffer, centerX + 80, bottomY - 10, { width: 80, height: 80 });
-      doc.font("Helvetica").fontSize(7).fillColor("#999999");
-      doc.text("Scan to verify", centerX + 80, bottomY + 73, { width: 80, align: "center" });
+      doc.image(data.qrBuffer, 40, height - 120, { width: 80, height: 80 });
+      doc.font("Helvetica").fontSize(8).fillColor("#555555");
+      doc.text("Scan to verify", 40, height - 35, { width: 80, align: "center" });
     } catch {
       // Skip if QR fails
     }
-
-    // -- Certificate ID at bottom --
-    doc.font("Helvetica").fontSize(8).fillColor("#bbbbbb");
-    doc.text(`Certificate ID: ${data.certId}`, 50, height - 50, { align: "center", width: width - 100 });
 
     doc.end();
   });
