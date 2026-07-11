@@ -210,18 +210,15 @@ export async function getCurrentUser() {
   if (!user) return null;
 
   // Always fetch from DB - the single source of truth for role
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    select: {
-      id: true,
-      email: true,
-      fullName: true,
-      role: true,
-    },
-  });
+  // We use Supabase JS instead of Prisma here to prevent heavy cold starts on every page load
+  const { data: dbUser } = await supabase
+    .from("users")
+    .select("id, email, full_name, role")
+    .eq("id", user.id)
+    .single();
 
   if (!dbUser) {
-    // Auth user exists but no DB record - create one
+    // Auth user exists but no DB record - create one (fallback to prisma for writes)
     const newUser = await prisma.user.create({
       data: {
         id: user.id,
@@ -240,7 +237,12 @@ export async function getCurrentUser() {
     return newUser;
   }
 
-  return dbUser;
+  return {
+    id: dbUser.id,
+    email: dbUser.email,
+    fullName: dbUser.full_name,
+    role: dbUser.role,
+  };
 }
 
 // ── Require Auth (helper for server actions) ─────────────────
