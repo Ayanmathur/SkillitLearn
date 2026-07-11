@@ -47,6 +47,8 @@ const TESTIMONIALS = [
 // ============================================================
 // HOME PAGE - Server Component
 // ============================================================
+export const revalidate = 3600; // Cache at edge for 1 hour
+
 export default async function HomePage() {
   const [careers, stats] = await Promise.all([
     prisma.career.findMany({

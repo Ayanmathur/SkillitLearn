@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { getCurrentUser } from "@/app/auth/actions";
+import { ClientAuthWidget } from "./client-auth-widget";
 import { MobileNav } from "./mobile-nav";
-import { SignOutButton } from "./sign-out-button";
-import { ThemeToggle } from "../theme-toggle";
 
 const NAV_LINKS = [
   { href: "/#careers", label: "Careers" },
@@ -11,10 +9,14 @@ const NAV_LINKS = [
   { href: "/about", label: "About" },
 ];
 
-export async function Header() {
-  const user = await getCurrentUser();
-  const isLoggedIn = !!user;
-
+/**
+ * Site header — renders instantly with no server-side auth check.
+ *
+ * PERFORMANCE: Auth state is handled by <ClientAuthWidget /> on the client,
+ * so this component is a pure static render. This allows Vercel to cache
+ * every public page at the edge via ISR.
+ */
+export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#1a1a2e] shadow-lg">
       <div className="container-page flex items-center justify-between h-16">
@@ -37,39 +39,13 @@ export async function Header() {
           ))}
         </nav>
 
-        {/* Right side */}
+        {/* Right side — client-side auth (no server round-trip) */}
         <div className="hidden md:flex items-center gap-3">
-          {isLoggedIn ? (
-            <>
-              <span className="text-sm text-white/70">{user.fullName}</span>
-              {(user.role === "admin" || user.role === "super_admin") && (
-                <Link
-                  href="/admin"
-                  className="text-xs px-3 py-1.5 rounded-full bg-accent/20 text-accent font-semibold hover:bg-accent/30 transition-colors"
-                >
-                  Admin
-                </Link>
-              )}
-              <ThemeToggle />
-              <SignOutButton />
-            </>
-          ) : (
-            <>
-              <ThemeToggle />
-              <Link
-                href="/login"
-                className="bg-accent hover:bg-accent-hover text-white font-semibold
-                           rounded-full px-6 py-2 text-sm
-                           transition-all duration-200 hover:shadow-md hover:shadow-accent/20"
-              >
-                Log in
-              </Link>
-            </>
-          )}
+          <ClientAuthWidget />
         </div>
 
         {/* Mobile hamburger */}
-        <MobileNav isLoggedIn={isLoggedIn} userName={user?.fullName} />
+        <MobileNav />
       </div>
     </header>
   );

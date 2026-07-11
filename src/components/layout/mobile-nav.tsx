@@ -1,12 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-
-interface MobileNavProps {
-  isLoggedIn: boolean;
-  userName?: string;
-}
+import { createBrowserClient } from "@supabase/ssr";
+import { signOut } from "@/app/auth/actions";
 
 const NAV_LINKS = [
   { href: "/#careers", label: "Careers" },
@@ -15,8 +12,23 @@ const NAV_LINKS = [
   { href: "/about", label: "About" },
 ];
 
-export function MobileNav({ isLoggedIn, userName }: MobileNavProps) {
+export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<{ name: string } | null>(null);
+
+  useEffect(() => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    supabase.auth.getUser().then(({ data: { user: authUser } }) => {
+      if (authUser) {
+        setUser({
+          name: authUser.user_metadata?.full_name || authUser.email?.split("@")[0] || "User",
+        });
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -46,21 +58,21 @@ export function MobileNav({ isLoggedIn, userName }: MobileNavProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="px-4 py-3 rounded-xl text-gray-700 dark:text-white/80 hover:text-accent hover:bg-white/60 dark:bg-white/5 transition-colors font-medium text-sm"
+                className="px-4 py-3 rounded-xl text-gray-700 dark:text-white/80 hover:text-accent hover:bg-white/60 dark:hover:bg-white/5 transition-colors font-medium text-sm"
               >
                 {link.label}
               </Link>
             ))}
             <div className="border-t border-gray-200 dark:border-white/10 mt-2 pt-3">
-              {isLoggedIn ? (
+              {user ? (
                 <>
                   <span className="px-4 py-2 block text-gray-500 dark:text-white/60 text-sm">
-                    {userName}
+                    {user.name}
                   </span>
-                  <form action="/auth/signout" method="post">
+                  <form action={signOut}>
                     <button
                       type="submit"
-                      className="px-4 py-3 rounded-xl text-gray-700 dark:text-white/80 hover:text-accent hover:bg-white/60 dark:bg-white/5 transition-colors font-medium text-sm w-full text-left"
+                      className="px-4 py-3 rounded-xl text-gray-700 dark:text-white/80 hover:text-accent hover:bg-white/60 dark:hover:bg-white/5 transition-colors font-medium text-sm w-full text-left"
                     >
                       Sign out
                     </button>

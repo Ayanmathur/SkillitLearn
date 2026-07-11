@@ -2,16 +2,14 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * Next.js Middleware - runs on every request.
+ * Next.js Middleware - ONLY runs on protected routes.
  *
- * Responsibilities:
- * 1. Refresh Supabase Auth session (keeps cookies up to date)
- * 2. Protect /admin/* and /instructor/* routes (redirect unauthorized users)
+ * PERFORMANCE: This middleware is scoped to /admin/* and /instructor/* ONLY.
+ * Public pages (home, careers, paths, skills) bypass this entirely,
+ * avoiding the Supabase auth round-trip on every page load.
  *
- * Route protection checks the Supabase Auth session here, then the
- * actual role is re-verified from the database in the server action/route
- * handler itself. This middleware provides a first line of defense, not
- * the only one.
+ * The auth session refresh for logged-in users on public pages
+ * happens client-side via the Supabase browser client instead.
  */
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -41,27 +39,15 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // Refresh session - important for Server Components
+  // Refresh session & check auth
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
-
-  // ── Protected route guards ────────────────────────────────
-  // These redirect unauthenticated users. The actual role check
-  // (admin vs instructor vs learner) happens in the page/action
-  // itself via a DB lookup - never trust just the session here.
-
-  const protectedPrefixes = ["/admin", "/instructor"];
-  const isProtected = protectedPrefixes.some((prefix) =>
-    pathname.startsWith(prefix)
-  );
-
-  if (isProtected && !user) {
+  if (!user) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
-    loginUrl.searchParams.set("redirect", pathname);
+    loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -70,13 +56,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization)
-     * - favicon.ico (favicon)
-     * - Public assets
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // ONLY run middleware on protected routes — public pages skip entirely
+    "/admin/:path*",
+    "/instructor/:path*",
   ],
 };
