@@ -24,13 +24,13 @@ export default async function VerifyCertificatePage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Header band */}
-      <section className="bg-green-50 py-10 md:py-14">
+      <section className="bg-green-50 dark:bg-[#1a1a2e] py-10 md:py-14">
         <div className="container-page text-center">
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">
             Certificate Verification
           </h1>
-          <p className="text-gray-500 text-sm">
-            ID: <span className="font-mono text-gray-600">{certificate_id.toUpperCase()}</span>
+          <p className="text-gray-500 dark:text-white/60 text-sm">
+            ID: <span className="font-mono text-gray-600 dark:text-white/75">{certificate_id.toUpperCase()}</span>
           </p>
         </div>
       </section>
@@ -70,7 +70,7 @@ export default async function VerifyCertificatePage({ params }: Props) {
                   </svg>
                 </div>
                 <h2 className="text-xl font-bold text-white">Verified</h2>
-                <p className="text-gray-700 text-sm mt-0.5">This certificate is authentic and valid.</p>
+                <p className="text-gray-700 dark:text-white/80 text-sm mt-0.5">This certificate is authentic and valid.</p>
               </div>
 
               {/* Certificate details - ONLY name, path, date */}

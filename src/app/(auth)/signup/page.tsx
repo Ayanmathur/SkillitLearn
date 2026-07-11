@@ -93,7 +93,7 @@ export default function SignupPage() {
 
           {/* Success message */}
           {success && (
-            <div className="rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3 text-sm text-green-700 dark:text-green-300 mb-4">
+            <div className="rounded-lg bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3 text-sm text-green-700 dark:text-green-300 mb-4">
               ✉️ {success}
             </div>
           )}

@@ -78,7 +78,7 @@ export default async function CertificateTemplatesPage() {
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
                                    ${p.hasTemplate
-                                     ? "bg-green-500/10 text-green-600"
+                                     ? "bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600"
                                      : "bg-red-500/10 text-red-500"
                                    }`}
                       >
@@ -98,7 +98,7 @@ export default async function CertificateTemplatesPage() {
                     <div className="flex items-center gap-2">
                       <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                         p.hasTemplate
-                          ? "bg-green-500/10 text-green-600"
+                          ? "bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600"
                           : "bg-orange-500/10 text-orange-600"
                       }`}>
                         {p.hasTemplate ? "Configured" : "Not Set"}

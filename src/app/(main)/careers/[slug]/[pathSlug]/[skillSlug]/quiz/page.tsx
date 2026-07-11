@@ -49,9 +49,9 @@ export default async function QuizPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Header */}
-      <section className="bg-green-50 py-8">
+      <section className="bg-green-50 dark:bg-[#1a1a2e] py-8">
         <div className="container-page max-w-3xl">
-          <nav className="flex items-center gap-2 text-xs text-gray-500 mb-3 flex-wrap">
+          <nav className="flex items-center gap-2 text-xs text-gray-500 dark:text-white/60 mb-3 flex-wrap">
             <a href="/" className="hover:text-accent transition-colors">Home</a>
             <span>/</span>
             <a href={`/careers/${slug}`} className="hover:text-accent transition-colors">
@@ -66,7 +66,7 @@ export default async function QuizPage({ params }: Props) {
               {skill.name}
             </a>
             <span>/</span>
-            <span className="text-gray-700">Quiz</span>
+            <span className="text-gray-700 dark:text-white/80">Quiz</span>
           </nav>
 
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">

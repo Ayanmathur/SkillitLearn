@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import { ThemeInitScript } from "@/components/ui/theme-init-script";
+import { ThemeProvider } from "@/components/theme-provider";
 
 /**
  * Montserrat font loaded via next/font.
@@ -50,12 +50,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Inline script to set theme before paint - prevents flash */}
-        <ThemeInitScript />
-      </head>
       <body className={`${montserrat.variable} font-sans antialiased`}>
-        {children}
+        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -164,7 +164,7 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
         <div
           className={`text-center rounded-2xl p-8 mb-8 border-2 ${
             passed
-              ? "bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800"
+              ? "bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/10 border-green-200 dark:border-green-800"
               : "bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-800"
           }`}
         >
@@ -190,14 +190,14 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
               key={r.questionId}
               className={`rounded-2xl border p-5 ${
                 r.isCorrect
-                  ? "border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/5"
+                  ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-[#1a1a2e]/50 dark:bg-green-900/5"
                   : "border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-900/5"
               }`}
             >
               <div className="flex items-start gap-3 mb-3">
                 <span
                   className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold text-white ${
-                    r.isCorrect ? "bg-green-500" : "bg-red-500"
+                    r.isCorrect ? "bg-green-50 dark:bg-[#1a1a2e]0" : "bg-red-500"
                   }`}
                 >
                   {r.isCorrect ? "✓" : "✗"}
@@ -309,7 +309,7 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
                        shadow-sm transition-all"
           >
             <div className="flex items-start gap-3 mb-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-green-50 text-white flex items-center justify-center text-sm font-bold">
+              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-green-50 dark:bg-[#1a1a2e] text-white flex items-center justify-center text-sm font-bold">
                 {i + 1}
               </span>
               <h3 className="font-semibold text-text-primary text-sm md:text-base leading-relaxed">
@@ -353,7 +353,7 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
                         ${
                           allAnswered
                             ? "bg-accent hover:bg-accent-hover text-white hover:shadow-lg hover:shadow-accent/30"
-                            : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
+                            : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-white/60 dark:text-gray-400 cursor-not-allowed"
                         }`}
           >
             {phase === "submitting" ? (

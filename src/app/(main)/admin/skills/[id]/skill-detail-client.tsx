@@ -48,7 +48,7 @@ export function SkillDetailClient({ skill, modules, questions }: { skill: Skill;
       <div className="card">
         <h2 className="text-lg font-bold text-text-primary mb-4">Edit Skill</h2>
         {error && <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-4">{error}</div>}
-        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
+        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
         <form onSubmit={handleUpdate} className="space-y-4">
           <div className="grid sm:grid-cols-3 gap-4">
             <div><label className="block text-xs font-semibold text-text-secondary mb-1">Name</label><input name="name" defaultValue={skill.name} required className="w-full rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" /></div>
@@ -94,7 +94,7 @@ export function SkillDetailClient({ skill, modules, questions }: { skill: Skill;
         <div className="space-y-2">
           {questions.map((q, i) => (
             <div key={q.id} className="flex items-start gap-3 bg-surface-raised rounded-xl p-3 border border-[var(--border-color)]">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-50 text-white text-xs flex items-center justify-center font-bold mt-0.5">{i + 1}</span>
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-50 dark:bg-[#1a1a2e] text-white text-xs flex items-center justify-center font-bold mt-0.5">{i + 1}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-text-primary truncate">{q.questionText}</p>
                 <p className="text-xs text-text-muted">Correct: {q.correctChoiceId.toUpperCase()}</p>

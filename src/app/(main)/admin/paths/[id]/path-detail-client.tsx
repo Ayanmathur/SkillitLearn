@@ -45,7 +45,7 @@ export function PathDetailClient({ path, skills }: { path: Path; skills: Skill[]
       <div className="card">
         <h2 className="text-lg font-bold text-text-primary mb-4">Edit Path</h2>
         {error && <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-4">{error}</div>}
-        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
+        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
         <form onSubmit={handleUpdate} className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <div><label className="block text-xs font-semibold text-text-secondary mb-1">Name</label><input name="name" defaultValue={path.name} required className="w-full rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" /></div>

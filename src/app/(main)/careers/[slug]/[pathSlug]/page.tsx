@@ -148,32 +148,32 @@ export default async function PathDetailPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Hero */}
-      <section className="bg-green-50 py-12 md:py-20">
+      <section className="bg-green-50 dark:bg-[#1a1a2e] py-12 md:py-20">
         <div className="container-page">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
+          <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-white/60 mb-6 flex-wrap">
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
               {path.career.name}
             </Link>
             <span>/</span>
-            <span className="text-gray-700">{path.name}</span>
+            <span className="text-gray-700 dark:text-white/80">{path.name}</span>
           </nav>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             {path.name}
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mb-6">
+          <p className="text-lg text-gray-600 dark:text-white/75 max-w-2xl leading-relaxed mb-6">
             {path.description}
           </p>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-4 mb-8">
-            <div className="bg-white/80 rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
+            <div className="bg-white/80 dark:bg-white/10 rounded-full px-5 py-2 text-sm text-gray-800 dark:text-white/90 font-medium">
               ⚡ {totalSkills} Skills
             </div>
-            <div className="bg-white/80 rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
+            <div className="bg-white/80 dark:bg-white/10 rounded-full px-5 py-2 text-sm text-gray-800 dark:text-white/90 font-medium">
               ⏱️ ~{totalHours} hours
             </div>
             {user && (
@@ -189,7 +189,7 @@ export default async function PathDetailPage({ params }: Props) {
               <span>Progress</span>
               <span>{progressPercent}%</span>
             </div>
-            <div className="h-3 rounded-full bg-white/80 overflow-hidden">
+            <div className="h-3 rounded-full bg-white/80 dark:bg-white/10 overflow-hidden">
               <div
                 className="h-full rounded-full bg-accent transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
@@ -221,7 +221,7 @@ export default async function PathDetailPage({ params }: Props) {
                                text-xs font-bold transition-all hover:scale-110
                                ${
                                  status === "complete"
-                                   ? "bg-green-500 text-white"
+                                   ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
                                    : status === "in_progress"
                                    ? "bg-accent/20 text-accent border-2 border-accent/40"
                                    : "bg-surface border-2 border-[var(--border-color)] text-text-muted"
@@ -230,7 +230,7 @@ export default async function PathDetailPage({ params }: Props) {
                     {status === "complete" ? "✓" : skill.orderIndex + 1}
                     {/* Tooltip */}
                     <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
-                                     text-[10px] bg-green-50 text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
+                                     text-[10px] bg-green-50 dark:bg-[#1a1a2e] text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
                                      transition-opacity z-10">
                       {skill.name}
                     </span>
@@ -242,7 +242,7 @@ export default async function PathDetailPage({ params }: Props) {
             {/* Legend */}
             <div className="flex items-center gap-4 mt-3 text-[10px] text-text-muted">
               <span className="flex items-center gap-1">
-                <span className="w-3 h-3 rounded bg-green-500" /> Complete
+                <span className="w-3 h-3 rounded bg-green-50 dark:bg-[#1a1a2e]0" /> Complete
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-3 h-3 rounded bg-accent/20 border border-accent/40" /> In progress
@@ -299,7 +299,7 @@ export default async function PathDetailPage({ params }: Props) {
                                flex items-center justify-center text-sm md:text-base font-bold
                                ${
                                  status === "complete"
-                                   ? "bg-green-500 text-white"
+                                   ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
                                    : status === "in_progress"
                                    ? "bg-accent/20 text-accent"
                                    : "bg-accent/10 text-accent"
@@ -323,7 +323,7 @@ export default async function PathDetailPage({ params }: Props) {
                         <span
                           className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                             status === "complete"
-                              ? "bg-green-500/10 text-green-600 dark:text-green-400"
+                              ? "bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600 dark:text-green-400"
                               : status === "in_progress"
                               ? "bg-accent/10 text-accent"
                               : "bg-gray-100 dark:bg-gray-800 text-text-muted"
@@ -368,7 +368,7 @@ export default async function PathDetailPage({ params }: Props) {
                 hasCertificate ? (
                   <Link
                     href={`/certificates/${certId}`}
-                    className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white
+                    className="inline-flex items-center gap-2 bg-green-50 dark:bg-[#1a1a2e]0 hover:bg-green-600 text-white
                                font-semibold rounded-full px-8 py-3.5
                                transition-all duration-300 hover:shadow-lg hover:shadow-green-500/30"
                   >

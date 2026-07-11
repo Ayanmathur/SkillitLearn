@@ -29,7 +29,7 @@ export default async function AdminSkillPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-surface">
-      <header className="sticky top-0 z-50 bg-green-50 shadow-lg">
+      <header className="sticky top-0 z-50 bg-green-50 dark:bg-[#1a1a2e] shadow-lg">
         <div className="container-page flex items-center justify-between h-14">
           <div className="flex items-center gap-3">
             <Link href="/" className="text-lg font-bold text-white">Skill<span className="text-accent">It</span>Learn</Link>
@@ -39,7 +39,7 @@ export default async function AdminSkillPage({ params }: Props) {
             <Link href="/admin/careers" className="hover:text-accent">Careers</Link><span>/</span>
             <Link href={`/admin/careers/${skill.path.career.id}`} className="hover:text-accent">{skill.path.career.name}</Link><span>/</span>
             <Link href={`/admin/paths/${skill.path.id}`} className="hover:text-accent">{skill.path.name}</Link><span>/</span>
-            <span className="text-gray-700">{skill.name}</span>
+            <span className="text-gray-700 dark:text-white/80">{skill.name}</span>
           </nav>
         </div>
       </header>

@@ -54,7 +54,7 @@ export function CareerDetailClient({ career, paths }: { career: Career; paths: P
       <div className="card">
         <h2 className="text-lg font-bold text-text-primary mb-4">Edit Career</h2>
         {error && <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-4">{error}</div>}
-        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
+        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
         <form onSubmit={handleUpdateCareer} className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <div>

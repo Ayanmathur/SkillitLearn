@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/app/auth/actions";
 import { MobileNav } from "./mobile-nav";
 import { SignOutButton } from "./sign-out-button";
+import { ThemeToggle } from "../theme-toggle";
 
 const NAV_LINKS = [
   { href: "/#careers", label: "Careers" },
@@ -49,17 +50,21 @@ export async function Header() {
                   Admin
                 </Link>
               )}
+              <ThemeToggle />
               <SignOutButton />
             </>
           ) : (
-            <Link
-              href="/login"
-              className="bg-accent hover:bg-accent-hover text-white font-semibold
-                         rounded-full px-6 py-2 text-sm
-                         transition-all duration-200 hover:shadow-md hover:shadow-accent/20"
-            >
-              Log in
-            </Link>
+            <>
+              <ThemeToggle />
+              <Link
+                href="/login"
+                className="bg-accent hover:bg-accent-hover text-white font-semibold
+                           rounded-full px-6 py-2 text-sm
+                           transition-all duration-200 hover:shadow-md hover:shadow-accent/20"
+              >
+                Log in
+              </Link>
+            </>
           )}
         </div>
 

@@ -95,8 +95,8 @@ export function SkillBookletContent({
               <div
                 className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                   moduleDone
-                    ? "bg-green-500 text-white"
-                    : "bg-green-50 text-white"
+                    ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
+                    : "bg-green-50 dark:bg-[#1a1a2e] text-white"
                 }`}
               >
                 {moduleDone ? "✓" : mi + 1}
@@ -176,7 +176,7 @@ export function SkillBookletContent({
                     <div
                       key={step.id}
                       className={`border-b border-[var(--border-color)] last:border-b-0 ${
-                        isDone ? "bg-green-50/50 dark:bg-green-900/5" : ""
+                        isDone ? "bg-green-50 dark:bg-[#1a1a2e]/50 dark:bg-green-900/5" : ""
                       }`}
                     >
                       {/* Step header */}
@@ -184,7 +184,7 @@ export function SkillBookletContent({
                         <span
                           className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 ${
                             isDone
-                              ? "bg-green-500 text-white"
+                              ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
                               : "bg-accent/10 text-accent"
                           }`}
                         >
@@ -209,7 +209,7 @@ export function SkillBookletContent({
                         )}
                         {isLoggedIn && isDone && (
                           <span className="flex-shrink-0 text-[10px] px-3 py-1 rounded-full
-                                           bg-green-500/10 text-green-600 dark:text-green-400 font-semibold">
+                                           bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600 dark:text-green-400 font-semibold">
                             Done ✓
                           </span>
                         )}

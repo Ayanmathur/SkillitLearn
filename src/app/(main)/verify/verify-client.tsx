@@ -95,7 +95,7 @@ export function VerifyClient() {
               <p className="text-text-secondary text-sm">{result.error}</p>
             </div>
           ) : result.valid && result.certificate ? (
-            <div className="rounded-2xl border-2 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/10 overflow-hidden">
+            <div className="rounded-2xl border-2 border-green-200 dark:border-green-800 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/10 overflow-hidden">
               {/* Header */}
               <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 text-center">
                 <div className="text-4xl mb-2">✅</div>

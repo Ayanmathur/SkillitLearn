@@ -71,7 +71,7 @@ export function ModuleDetailClient({ module: mod, steps }: { module: Module; ste
       <div className="card">
         <h2 className="text-lg font-bold text-text-primary mb-4">Edit Module</h2>
         {error && <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-4">{error}</div>}
-        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
+        {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
         <form onSubmit={handleUpdateModule} className="flex gap-3">
           <input name="title" defaultValue={mod.title} required className="flex-1 rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" />
           <button type="submit" disabled={loading} className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-6 py-2 text-sm transition-all disabled:opacity-50">{loading ? "Saving..." : "Save"}</button>

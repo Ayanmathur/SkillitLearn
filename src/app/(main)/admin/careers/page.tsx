@@ -15,13 +15,13 @@ export default async function AdminCareersPage() {
 
   return (
     <main className="min-h-screen bg-surface">
-      <header className="sticky top-0 z-50 bg-green-50 shadow-lg">
+      <header className="sticky top-0 z-50 bg-green-50 dark:bg-[#1a1a2e] shadow-lg">
         <div className="container-page flex items-center justify-between h-14">
           <div className="flex items-center gap-3">
             <Link href="/" className="text-lg font-bold text-white">Skill<span className="text-accent">It</span>Learn</Link>
             <span className="text-xs px-2 py-1 rounded-full bg-accent/20 text-accent font-semibold uppercase">Admin</span>
           </div>
-          <div className="flex items-center gap-3 text-sm text-gray-600">
+          <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/75">
             <Link href="/admin" className="hover:text-accent transition-colors">Users</Link>
             <Link href="/admin/careers" className="text-accent font-semibold">Content</Link>
           </div>
