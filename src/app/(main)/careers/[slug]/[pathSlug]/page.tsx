@@ -186,7 +186,7 @@ export default async function PathDetailPage({ params }: Props) {
 
           {/* Progress bar */}
           <div className="max-w-md">
-            <div className="flex items-center justify-between text-sm text-white/60 mb-2">
+            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-white/60 mb-2">
               <span>Progress</span>
               <span>{progressPercent}%</span>
             </div>

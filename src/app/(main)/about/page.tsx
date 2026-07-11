@@ -106,7 +106,7 @@ export default async function AboutPage() {
       {/* Stats */}
       <section className="py-14 md:py-20 bg-green-50 dark:bg-[#1a1a2e]">
         <div className="container-page">
-          <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8">
             Platform at a Glance
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -118,7 +118,7 @@ export default async function AboutPage() {
             ].map((s) => (
               <div key={s.label} className="bg-white/60 dark:bg-white/5 rounded-2xl p-5 text-center border border-gray-200 dark:border-white/10">
                 <div className="text-3xl font-bold text-accent">{s.n}</div>
-                <div className="text-sm text-white/60 mt-1">{s.label}</div>
+                <div className="text-sm text-gray-600 dark:text-white/60 mt-1">{s.label}</div>
               </div>
             ))}
           </div>

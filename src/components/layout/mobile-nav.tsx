@@ -54,7 +54,7 @@ export function MobileNav({ isLoggedIn, userName }: MobileNavProps) {
             <div className="border-t border-gray-200 dark:border-white/10 mt-2 pt-3">
               {isLoggedIn ? (
                 <>
-                  <span className="px-4 py-2 block text-white/60 text-sm">
+                  <span className="px-4 py-2 block text-gray-500 dark:text-white/60 text-sm">
                     {userName}
                   </span>
                   <form action="/auth/signout" method="post">
