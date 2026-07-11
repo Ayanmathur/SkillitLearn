@@ -1,0 +1,296 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================
+// SkillItLearn — Database Schema (Prompt 2)
+//
+// Hierarchy: Career → Path → Skill → Module → Step
+// Auth: users with role-based access
+// Assessment: quiz_questions, quiz_attempts, skill_completion
+// Certification: path_certificate_templates, certificates
+// Auditing: audit_log
+// ============================================================
+
+// ── User Roles ─────────────────────────────────────────────
+enum UserRole {
+  learner
+  instructor
+  admin
+  super_admin
+}
+
+// ── Users ──────────────────────────────────────────────────
+// Synced with Supabase Auth via auth.users UUID.
+// Role defaults to 'learner' on signup.
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  fullName  String   @map("full_name")
+  role      UserRole @default(learner)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  createdCareers   Career[]
+  learnerProgress  LearnerProgress[]
+  quizAttempts     QuizAttempt[]
+  skillCompletions SkillCompletion[]
+  certificates     Certificate[]
+  auditLogs        AuditLog[]
+
+  @@map("users")
+}
+
+// ── Careers ────────────────────────────────────────────────
+// Top-level grouping (e.g. "Software Engineering", "Digital Marketing")
+model Career {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  slug        String   @unique
+  description String
+  iconUrl     String?  @map("icon_url")
+  createdBy   String   @map("created_by") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  creator User   @relation(fields: [createdBy], references: [id])
+  paths   Path[]
+
+  @@index([slug])
+  @@map("careers")
+}
+
+// ── Paths ──────────────────────────────────────────────────
+// A learning path within a career (e.g. "Frontend Development")
+model Path {
+  id          String   @id @default(uuid()) @db.Uuid
+  careerId    String   @map("career_id") @db.Uuid
+  name        String
+  slug        String   @unique
+  description String
+  orderIndex  Int      @map("order_index")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  career              Career                  @relation(fields: [careerId], references: [id], onDelete: Cascade)
+  skills              Skill[]
+  certificateTemplate PathCertificateTemplate?
+  certificates        Certificate[]
+
+  @@index([slug])
+  @@index([careerId])
+  @@map("paths")
+}
+
+// ── Skills ─────────────────────────────────────────────────
+// A skill within a path (e.g. "HTML & CSS Fundamentals")
+model Skill {
+  id             String  @id @default(uuid()) @db.Uuid
+  pathId         String  @map("path_id") @db.Uuid
+  name           String
+  slug           String  @unique
+  description    String
+  orderIndex     Int     @map("order_index")
+  estimatedHours Float   @map("estimated_hours")
+
+  // Relations
+  path             Path              @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  modules          Module[]
+  quizQuestions    QuizQuestion[]
+  quizAttempts     QuizAttempt[]
+  skillCompletions SkillCompletion[]
+
+  @@index([slug])
+  @@index([pathId])
+  @@map("skills")
+}
+
+// ── Modules ────────────────────────────────────────────────
+// A module within a skill (e.g. "Foundations", "Core Techniques")
+model Module {
+  id         String @id @default(uuid()) @db.Uuid
+  skillId    String @map("skill_id") @db.Uuid
+  title      String
+  orderIndex Int    @map("order_index")
+
+  // Relations
+  skill Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  steps Step[]
+
+  @@index([skillId])
+  @@map("modules")
+}
+
+// ── Steps ──────────────────────────────────────────────────
+// A step within a module — the actual learning content.
+// Content is rich text/markdown. media_urls stores image/video references.
+model Step {
+  id         String   @id @default(uuid()) @db.Uuid
+  moduleId   String   @map("module_id") @db.Uuid
+  title      String
+  content    String   @db.Text
+  mediaUrls  String[] @map("media_urls")
+  orderIndex Int      @map("order_index")
+
+  // Relations
+  module          Module            @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  learnerProgress LearnerProgress[]
+
+  @@index([moduleId])
+  @@map("steps")
+}
+
+// ── Learner Progress ───────────────────────────────────────
+// Tracks which steps a learner has completed.
+// Each row = one completed step for one user.
+model LearnerProgress {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  stepId      String   @map("step_id") @db.Uuid
+  completedAt DateTime @default(now()) @map("completed_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  step Step @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  // A user can complete a step only once
+  @@unique([userId, stepId])
+  @@index([userId])
+  @@index([stepId])
+  @@map("learner_progress")
+}
+
+// ── Quiz Questions ─────────────────────────────────────────
+// 5 questions per skill. choices_json is an array of {id, text}.
+// correct_choice_id is NEVER sent to the client — grading is server-side.
+model QuizQuestion {
+  id              String @id @default(uuid()) @db.Uuid
+  skillId         String @map("skill_id") @db.Uuid
+  questionText    String @map("question_text") @db.Text
+  choicesJson     Json   @map("choices_json")
+  correctChoiceId String @map("correct_choice_id")
+  explanation     String @db.Text
+  orderIndex      Int    @map("order_index")
+
+  // Relations
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@index([skillId])
+  @@map("quiz_questions")
+}
+
+// ── Quiz Attempts ──────────────────────────────────────────
+// Records each attempt a learner makes at a skill's quiz.
+model QuizAttempt {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  skillId     String   @map("skill_id") @db.Uuid
+  score       Float
+  passed      Boolean
+  answersJson Json     @map("answers_json")
+  attemptedAt DateTime @default(now()) @map("attempted_at")
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([skillId])
+  @@index([userId, skillId])
+  @@map("quiz_attempts")
+}
+
+// ── Skill Completion ───────────────────────────────────────
+// A skill is complete ONLY when BOTH steps_completed AND quiz_passed are true.
+// This is the source of truth for path progress calculation.
+model SkillCompletion {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @map("user_id") @db.Uuid
+  skillId        String    @map("skill_id") @db.Uuid
+  stepsCompleted Boolean   @default(false) @map("steps_completed")
+  quizPassed     Boolean   @default(false) @map("quiz_passed")
+  completedAt    DateTime? @map("completed_at")
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  // One completion record per user per skill
+  @@unique([userId, skillId])
+  @@index([userId])
+  @@index([skillId])
+  @@map("skill_completion")
+}
+
+// ── Path Certificate Templates ─────────────────────────────
+// One template per path. Must have logo + signature before
+// certificates can be issued (enforced in application code).
+model PathCertificateTemplate {
+  id                 String  @id @default(uuid()) @db.Uuid
+  pathId             String  @unique @map("path_id") @db.Uuid
+  logoUrl            String? @map("logo_url")
+  signatureUrl       String? @map("signature_url")
+  signatoryName      String? @map("signatory_name")
+  signatoryTitle     String? @map("signatory_title")
+  templateLayoutJson Json?   @map("template_layout_json")
+
+  // Relations
+  path Path @relation(fields: [pathId], references: [id], onDelete: Cascade)
+
+  @@map("path_certificate_templates")
+}
+
+// ── Certificates ───────────────────────────────────────────
+// Issued when a learner completes all skills in a path AND
+// the path has a complete certificate template.
+// unique_certificate_id is the public-facing ID (e.g. SIL-2026-XXXXXX).
+// verification_hash is HMAC(cert_id + user_id + path_id, secret).
+// Public read is ONLY via the /verify endpoint (server function),
+// never via direct client DB access.
+model Certificate {
+  id                  String   @id @default(uuid()) @db.Uuid
+  uniqueCertificateId String   @unique @map("unique_certificate_id")
+  userId              String   @map("user_id") @db.Uuid
+  pathId              String   @map("path_id") @db.Uuid
+  issuedAt            DateTime @default(now()) @map("issued_at")
+  qrCodeUrl           String?  @map("qr_code_url")
+  pdfUrl              String?  @map("pdf_url")
+  verificationHash    String   @map("verification_hash")
+  revoked             Boolean  @default(false)
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  path Path @relation(fields: [pathId], references: [id], onDelete: Cascade)
+
+  @@index([uniqueCertificateId])
+  @@index([userId])
+  @@index([pathId])
+  @@map("certificates")
+}
+
+// ── Audit Log ──────────────────────────────────────────────
+// Records certificate issuance and admin content changes.
+// actor_user_id may be null for system-generated events.
+model AuditLog {
+  id           String   @id @default(uuid()) @db.Uuid
+  actorUserId  String?  @map("actor_user_id") @db.Uuid
+  action       String
+  targetTable  String   @map("target_table")
+  targetId     String   @map("target_id")
+  metadataJson Json?    @map("metadata_json")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  // Relations
+  actor User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId])
+  @@index([targetTable, targetId])
+  @@index([createdAt])
+  @@map("audit_log")
+}
