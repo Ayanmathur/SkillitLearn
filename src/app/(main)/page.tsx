@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 import { CareerExplorer } from "@/components/career-explorer";
+import { TestimonialCarousel } from "@/components/testimonial-carousel";
 
 // ── Testimonial data ─────────────────────────────────────────
 const TESTIMONIALS = [
@@ -241,45 +242,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory
-                          md:grid md:grid-cols-3 md:overflow-visible md:pb-0
-                          scrollbar-thin">
-            {TESTIMONIALS.map((t) => (
-              <div
-                key={t.name}
-                className="flex-shrink-0 w-80 md:w-auto snap-center
-                           bg-surface-raised rounded-2xl p-6
-                           border border-[var(--border-color)]
-                           shadow-sm hover:shadow-card
-                           transition-all duration-300"
-              >
-                <div className="mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-accent/30 mb-2">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" />
-                  </svg>
-                  <p className="text-text-secondary text-sm leading-relaxed italic">
-                    &quot;{t.quote}&quot;
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-accent/10 flex-shrink-0">
-                    <Image
-                      src={t.image}
-                      alt={t.name}
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm text-text-primary">{t.name}</div>
-                    <div className="text-xs text-accent font-medium">{t.path}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <TestimonialCarousel testimonials={TESTIMONIALS} />
         </div>
       </section>
     </main>
