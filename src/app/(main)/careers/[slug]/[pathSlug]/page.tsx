@@ -165,7 +165,7 @@ export default async function PathDetailPage({ params }: Props) {
 
           {/* Progress bar */}
           <div className="max-w-md">
-            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-white/60 mb-2">
+            <div className="flex items-center justify-between text-sm text-gray-700 dark:text-white/60 mb-2 font-medium">
               <span>Progress</span>
               <span>{progressPercent}%</span>
             </div>
@@ -201,7 +201,7 @@ export default async function PathDetailPage({ params }: Props) {
                                text-xs font-bold transition-all hover:scale-110
                                ${
                                  status === "complete"
-                                   ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
+                                   ? "bg-green-500 dark:bg-green-600 text-white"
                                    : status === "in_progress"
                                    ? "bg-accent/20 text-accent border-2 border-accent/40"
                                    : "bg-surface border-2 border-[var(--border-color)] text-text-muted"
@@ -210,7 +210,7 @@ export default async function PathDetailPage({ params }: Props) {
                     {status === "complete" ? "✓" : skill.order_index + 1}
                     {/* Tooltip */}
                     <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
-                                     text-[10px] bg-green-50 dark:bg-[#1a1a2e] text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
+                                     text-[10px] bg-gray-900 dark:bg-[#1a1a2e] text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
                                      transition-opacity z-10">
                       {skill.name}
                     </span>
@@ -222,7 +222,7 @@ export default async function PathDetailPage({ params }: Props) {
             {/* Legend */}
             <div className="flex items-center gap-4 mt-3 text-[10px] text-text-muted">
               <span className="flex items-center gap-1">
-                <span className="w-3 h-3 rounded bg-green-50 dark:bg-[#1a1a2e]0" /> Complete
+                <span className="w-3 h-3 rounded bg-green-500 dark:bg-green-600" /> Complete
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-3 h-3 rounded bg-accent/20 border border-accent/40" /> In progress
@@ -279,7 +279,7 @@ export default async function PathDetailPage({ params }: Props) {
                                flex items-center justify-center text-sm md:text-base font-bold
                                ${
                                  status === "complete"
-                                   ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
+                                   ? "bg-green-500 dark:bg-green-600 text-white"
                                    : status === "in_progress"
                                    ? "bg-accent/20 text-accent"
                                    : "bg-accent/10 text-accent"
@@ -303,7 +303,7 @@ export default async function PathDetailPage({ params }: Props) {
                         <span
                           className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                             status === "complete"
-                              ? "bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600 dark:text-green-400"
+                              ? "bg-green-100 dark:bg-[#1a1a2e] text-green-700 dark:text-green-400"
                               : status === "in_progress"
                               ? "bg-accent/10 text-accent"
                               : "bg-gray-100 dark:bg-gray-800 text-text-muted"

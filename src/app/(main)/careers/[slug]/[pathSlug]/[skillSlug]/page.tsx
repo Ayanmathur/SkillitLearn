@@ -177,7 +177,7 @@ export default async function SkillBookletPage({ params }: Props) {
 
               {user ? (
                 hasPassedQuiz ? (
-                  <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600 dark:text-green-400 font-semibold rounded-full px-8 py-3.5">
+                  <div className="inline-flex items-center gap-2 bg-green-100 dark:bg-[#1a1a2e] text-green-700 dark:text-green-400 font-semibold rounded-full px-8 py-3.5">
                     ✅ Quiz Already Passed
                   </div>
                 ) : (
