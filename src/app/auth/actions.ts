@@ -5,6 +5,20 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+// ── Helpers ───────────────────────────────────────────────
+
+function getSiteUrl() {
+  let url =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : "http://localhost:3000");
+
+  url = url.replace(/\/+$/, "");
+  if (!url.startsWith("http")) url = `https://${url}`;
+  return url;
+}
+
 // ── Validators ───────────────────────────────────────────────
 
 const signUpSchema = z.object({
@@ -47,7 +61,7 @@ export async function signUp(formData: FormData) {
     password,
     options: {
       data: { full_name: fullName },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/callback`,
+      emailRedirectTo: `${getSiteUrl()}/auth/callback`,
     },
   });
 
@@ -158,7 +172,7 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/auth/callback`,
+      redirectTo: `${getSiteUrl()}/auth/callback`,
       queryParams: {
         access_type: "offline",
         prompt: "consent",
