@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/app/auth/actions";
 import { AuthPrompt } from "@/components/auth-prompt";
 import { CertificateButton } from "./certificate-button";
 import type { Metadata } from "next";
+import { Prefetcher } from "@/components/prefetcher";
 
 interface Props {
   params: Promise<{ slug: string; pathSlug: string }>;
@@ -403,6 +404,9 @@ export default async function PathDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Prefetch all skill pages for this path */}
+      <Prefetcher urls={path.skills.map((s) => `/careers/${careerSlug}/${pathSlug}/${s.slug}`)} />
     </main>
   );
 }

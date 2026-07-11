@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Prefetcher } from "@/components/prefetcher";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -147,6 +148,9 @@ export default async function CareerDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Prefetch all path pages for this career */}
+      <Prefetcher urls={career.paths.map((p) => `/careers/${slug}/${p.slug}`)} />
     </main>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CareerExplorer } from "@/components/career-explorer";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
+import { Prefetcher } from "@/components/prefetcher";
 
 // ── Testimonial data ─────────────────────────────────────────
 const TESTIMONIALS = [
@@ -245,6 +246,9 @@ export default async function HomePage() {
           <TestimonialCarousel testimonials={TESTIMONIALS} />
         </div>
       </section>
+
+      {/* Prefetch all career detail pages in the background */}
+      <Prefetcher urls={careers.map((c) => `/careers/${c.slug}`)} />
     </main>
   );
 }

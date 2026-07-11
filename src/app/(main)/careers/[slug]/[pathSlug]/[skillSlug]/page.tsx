@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/app/auth/actions";
 import { AuthPrompt } from "@/components/auth-prompt";
 import { SkillBookletContent } from "./booklet-content";
 import type { Metadata } from "next";
+import { Prefetcher } from "@/components/prefetcher";
 
 interface Props {
   params: Promise<{ slug: string; pathSlug: string; skillSlug: string }>;
@@ -216,6 +217,9 @@ export default async function SkillBookletPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Prefetch the quiz page */}
+      <Prefetcher urls={[`/careers/${careerSlug}/${pathSlug}/${skillSlug}/quiz`]} />
     </main>
   );
 }
