@@ -28,9 +28,9 @@ export function createRateLimiter(name: string, opts: RateLimiterOptions) {
   // Cleanup old entries every 5 minutes
   setInterval(() => {
     const now = Date.now();
-    for (const [key, entry] of store) {
+    store.forEach((entry, key) => {
       if (entry.resetAt < now) store.delete(key);
-    }
+    });
   }, 300000);
 
   return {
