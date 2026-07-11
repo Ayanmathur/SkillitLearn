@@ -89,7 +89,7 @@ export default async function HomePage() {
 
         <div className="container-page relative z-10 py-20 md:py-28 lg:py-36">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
               Build Real Skills.{" "}
               <span className="text-accent">Earn Certificates.</span>
             </h1>
@@ -180,10 +180,10 @@ export default async function HomePage() {
       <section className="py-16 md:py-20 bg-green-50">
         <div className="container-page">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Our Impact
             </h2>
-            <p className="text-white/60 text-lg">
+            <p className="text-gray-600 text-lg">
               Real numbers from the SkillItLearn platform
             </p>
           </div>
@@ -206,7 +206,7 @@ export default async function HomePage() {
                   {stat.value.toLocaleString()}
                   {stat.label === "Skills to Master" ? "+" : ""}
                 </div>
-                <div className="text-sm text-white/60 font-medium">
+                <div className="text-sm text-gray-600 font-medium">
                   {stat.label}
                 </div>
               </div>

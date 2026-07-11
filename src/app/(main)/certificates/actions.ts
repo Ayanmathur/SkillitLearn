@@ -7,6 +7,8 @@ import { verifyLimiter, certIssueLimiter } from "@/lib/rate-limit";
 import crypto from "crypto";
 import QRCode from "qrcode";
 import PDFDocument from "pdfkit";
+// @ts-ignore - svg-to-pdfkit does not have official types
+import SVGtoPDF from "svg-to-pdfkit";
 
 /**
  * CERTIFICATE_SECRET - HMAC signing secret for certificate verification.
@@ -93,31 +95,46 @@ async function generateCertificatePDF(data: {
     // -- Background --
     doc.rect(0, 0, width, height).fill("#ffffff");
 
-    // -- Border (double line) --
-    doc.rect(20, 20, width - 40, height - 40).lineWidth(2).stroke("#1a1a2e");
-    doc.rect(28, 28, width - 56, height - 56).lineWidth(0.5).stroke("#5bbd72");
-
-    // -- Decorative corner accents --
-    const cornerSize = 30;
-    const corners = [
-      [35, 35], [width - 35 - cornerSize, 35],
-      [35, height - 35 - cornerSize], [width - 35 - cornerSize, height - 35 - cornerSize]
-    ];
-    corners.forEach(([x, y]) => {
-      doc.rect(x, y, cornerSize, cornerSize).lineWidth(1).stroke("#5bbd72");
-    });
-
-    // -- Logo --
+    let isSvgTemplate = false;
     let yPos = 55;
+
     if (data.logoBuffer) {
-      try {
-        doc.image(data.logoBuffer, centerX - 40, yPos, { width: 80, height: 80, fit: [80, 80], align: "center" });
-      } catch {
-        // Skip if image fails
+      // Try to determine if it's an SVG
+      const logoStr = data.logoBuffer.toString('utf-8');
+      if (logoStr.includes('<svg') || logoStr.includes('<?xml')) {
+        isSvgTemplate = true;
+        // Render SVG as full-page background
+        SVGtoPDF(doc, logoStr, 0, 0, { width, height, preserveAspectRatio: "xMidYMid slice" });
+        yPos += 30; // Push text down a bit
       }
-      yPos += 90;
-    } else {
-      yPos += 10;
+    }
+
+    if (!isSvgTemplate) {
+      // -- Border (double line) --
+      doc.rect(20, 20, width - 40, height - 40).lineWidth(2).stroke("#1a1a2e");
+      doc.rect(28, 28, width - 56, height - 56).lineWidth(0.5).stroke("#5bbd72");
+
+      // -- Decorative corner accents --
+      const cornerSize = 30;
+      const corners = [
+        [35, 35], [width - 35 - cornerSize, 35],
+        [35, height - 35 - cornerSize], [width - 35 - cornerSize, height - 35 - cornerSize]
+      ];
+      corners.forEach(([x, y]) => {
+        doc.rect(x, y, cornerSize, cornerSize).lineWidth(1).stroke("#5bbd72");
+      });
+
+      // -- Logo --
+      if (data.logoBuffer) {
+        try {
+          doc.image(data.logoBuffer, centerX - 40, yPos, { width: 80, height: 80, fit: [80, 80], align: "center" });
+        } catch {
+          // Skip if image fails
+        }
+        yPos += 90;
+      } else {
+        yPos += 10;
+      }
     }
 
     // -- Certificate Title --
