@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getCachedPathBySlug } from "@/lib/data";
+import { getPathBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/app/auth/actions";
@@ -14,7 +14,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { pathSlug } = await params;
-  const path = await getCachedPathBySlug(pathSlug);
+  const path = await getPathBySlug(pathSlug);
   if (!path) return { title: "Path Not Found" };
   return {
     title: `${path.name} - SkillItLearn`,
@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PathDetailPage({ params }: Props) {
   const { slug: careerSlug, pathSlug } = await params;
 
-  const path = await getCachedPathBySlug(pathSlug);
+  const path = await getPathBySlug(pathSlug);
 
   if (!path) notFound();
 
   const user = await getCurrentUser();
-  const totalHours = path.skills.reduce((s, sk) => s + sk.estimatedHours, 0);
+  const totalHours = path.skills.reduce((s, sk) => s + sk.estimated_hours, 0);
   const totalSkills = path.skills.length;
 
   // ── Progress tracking ──────────────────────────────────
@@ -135,7 +135,7 @@ export default async function PathDetailPage({ params }: Props) {
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
-              {path.career.name}
+              {(path.careers as any)?.name}
             </Link>
             <span>/</span>
             <span className="text-gray-700 dark:text-white/80">{path.name}</span>
@@ -207,7 +207,7 @@ export default async function PathDetailPage({ params }: Props) {
                                    : "bg-surface border-2 border-[var(--border-color)] text-text-muted"
                                }`}
                   >
-                    {status === "complete" ? "✓" : skill.orderIndex + 1}
+                    {status === "complete" ? "✓" : skill.order_index + 1}
                     {/* Tooltip */}
                     <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
                                      text-[10px] bg-green-50 dark:bg-[#1a1a2e] text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
@@ -326,7 +326,7 @@ export default async function PathDetailPage({ params }: Props) {
 
                   {/* Hours */}
                   <div className="hidden sm:flex flex-shrink-0 items-center gap-1 text-sm text-text-muted">
-                    <span>~{skill.estimatedHours}h</span>
+                    <span>~{skill.estimated_hours}h</span>
                   </div>
 
                   {/* Arrow / Resume */}

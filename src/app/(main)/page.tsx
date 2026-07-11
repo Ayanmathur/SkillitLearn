@@ -1,4 +1,4 @@
-import { getCachedCareers, getCachedCareerStats } from "@/lib/data";
+import { getAllCareers, getStats } from "@/lib/data";
 import Link from "next/link";
 import Image from "next/image";
 import { CareerExplorer } from "@/components/career-explorer";
@@ -51,8 +51,8 @@ export const revalidate = 3600;
 
 export default async function HomePage() {
   const [careers, stats] = await Promise.all([
-    getCachedCareers(),
-    getCachedCareerStats(),
+    getAllCareers(),
+    getStats(),
   ]);
 
   const { careerCount, pathCount, skillCount, certCount } = stats;

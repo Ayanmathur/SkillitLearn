@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { getSkillBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/app/auth/actions";
@@ -13,10 +14,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { skillSlug } = await params;
-  const skill = await prisma.skill.findUnique({
-    where: { slug: skillSlug },
-    select: { name: true, description: true },
-  });
+  const skill = await getSkillBySlug(skillSlug);
   if (!skill) return { title: "Skill Not Found" };
   return {
     title: `${skill.name} - SkillItLearn`,
@@ -27,20 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SkillBookletPage({ params }: Props) {
   const { slug: careerSlug, pathSlug, skillSlug } = await params;
 
-  const skill = await prisma.skill.findUnique({
-    where: { slug: skillSlug },
-    include: {
-      path: {
-        include: { career: { select: { name: true, slug: true } } },
-      },
-      modules: {
-        orderBy: { orderIndex: "asc" },
-        include: {
-          steps: { orderBy: { orderIndex: "asc" } },
-        },
-      },
-    },
-  });
+  const skill = await getSkillBySlug(skillSlug);
 
   if (!skill) notFound();
 
@@ -91,20 +76,20 @@ export default async function SkillBookletPage({ params }: Props) {
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
-              {skill.path.career.name}
+              {(skill.paths as any)?.careers?.name}
             </Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}/${pathSlug}`} className="hover:text-accent transition-colors">
-              {skill.path.name}
+              {(skill.paths as any)?.name}
             </Link>
             <span>/</span>
             <span className="text-gray-700 dark:text-white/80">{skill.name}</span>
           </nav>
 
-          <h1 className="text-2xl md:text-4xl font-bold text-white mb-3">
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
             {skill.name}
           </h1>
-          <p className="text-sm md:text-base text-white/60 leading-relaxed mb-4 max-w-2xl">
+          <p className="text-sm md:text-base text-gray-600 dark:text-white/60 leading-relaxed mb-4 max-w-2xl">
             {skill.description}
           </p>
 
@@ -116,7 +101,7 @@ export default async function SkillBookletPage({ params }: Props) {
               📄 {totalSteps} step{totalSteps !== 1 ? "s" : ""}
             </span>
             <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
-              ⏱️ ~{skill.estimatedHours}h
+              ⏱️ ~{skill.estimated_hours}h
             </span>
             {skillComplete && (
               <span className="bg-accent/20 rounded-full px-4 py-1.5 text-accent font-medium">
@@ -161,7 +146,11 @@ export default async function SkillBookletPage({ params }: Props) {
       <section className="py-8 md:py-14">
         <div className="container-page max-w-4xl">
           <SkillBookletContent
-            modules={skill.modules}
+            modules={skill.modules.map((m: any) => ({
+              ...m,
+              orderIndex: m.order_index,
+              steps: m.steps.map((s: any) => ({ ...s, orderIndex: s.order_index })),
+            }))}
             completedStepIds={Array.from(completedStepIds)}
             isLoggedIn={!!user}
             skillId={skill.id}

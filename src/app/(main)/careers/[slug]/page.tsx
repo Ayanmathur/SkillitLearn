@@ -1,4 +1,4 @@
-import { getCachedCareerBySlug } from "@/lib/data";
+import { getCareerBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -12,7 +12,7 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const career = await getCachedCareerBySlug(slug);
+  const career = await getCareerBySlug(slug);
 
   if (!career) return { title: "Career Not Found" };
 
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CareerDetailPage({ params }: Props) {
   const { slug } = await params;
-  const career = await getCachedCareerBySlug(slug);
+  const career = await getCareerBySlug(slug);
 
   if (!career) notFound();
 
@@ -66,7 +66,7 @@ export default async function CareerDetailPage({ params }: Props) {
               ⏱️{" "}
               {career.paths.reduce(
                 (s, p) =>
-                  s + p.skills.reduce((ss, sk) => ss + sk.estimatedHours, 0),
+                  s + p.skills.reduce((ss, sk) => ss + sk.estimated_hours, 0),
                 0
               )}{" "}
               hours total
@@ -85,7 +85,7 @@ export default async function CareerDetailPage({ params }: Props) {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {career.paths.map((path, i) => {
               const totalHours = path.skills.reduce(
-                (s, sk) => s + sk.estimatedHours,
+                (s, sk) => s + sk.estimated_hours,
                 0
               );
               return (

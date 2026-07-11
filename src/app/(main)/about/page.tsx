@@ -1,4 +1,4 @@
-import { getCachedAboutStats } from "@/lib/data";
+import { getStats } from "@/lib/data";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function AboutPage() {
-  const { careerCount, pathCount, skillCount, certCount } = await getCachedAboutStats();
+  const { careerCount, pathCount, skillCount, certCount } = await getStats();
 
   return (
     <main className="min-h-screen bg-surface">
