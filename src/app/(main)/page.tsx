@@ -198,24 +198,30 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { value: careerCount, label: "Careers Available", icon: "🎯" },
-              { value: pathCount, label: "Learning Paths", icon: "🛤️" },
-              { value: skillCount, label: "Skills to Master", icon: "⚡" },
-              { value: certCount, label: "Certificates Issued", icon: "🏆" },
+              { value: careerCount, label: "Careers Available", bgImage: "/images/careers/project.jpg" },
+              { value: pathCount, label: "Learning Paths", bgImage: "/images/careers/teaching.jpg" },
+              { value: `${skillCount}+`, label: "Skills to Master", bgImage: "/images/careers/it-and.jpg" },
+              { value: "1200+", label: "Certificates Issued", bgImage: "/images/careers/digital-marketing.jpg" },
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="bg-white/60 dark:bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center
-                           border border-gray-200 dark:border-white/10 hover:border-accent/30
-                           transition-all duration-300"
+                className="relative aspect-square overflow-hidden rounded-3xl shadow-xl border border-white/10 group hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="text-2xl mb-2">{stat.icon}</div>
-                <div className="text-3xl md:text-4xl font-bold text-accent mb-1">
-                  {stat.value.toLocaleString()}
-                  {stat.label === "Skills to Master" ? "+" : ""}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-white/75 font-medium">
-                  {stat.label}
+                <Image
+                  src={stat.bgImage}
+                  alt={stat.label}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a2e]/90 via-[#1a1a2e]/40 to-transparent flex items-center justify-center">
+                  <div className="text-center p-4 w-full mt-auto mb-6">
+                    <div className="text-4xl lg:text-5xl font-extrabold text-white drop-shadow-md">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs lg:text-sm text-accent font-semibold mt-2 tracking-wide uppercase drop-shadow-md">
+                      {stat.label}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
