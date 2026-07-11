@@ -122,7 +122,7 @@ export default async function HomePage() {
             <div className="relative">
               <div className="relative aspect-square max-w-md mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
                 <Image 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80" 
+                  src="/images/hero-learning.jpg" 
                   alt="Students learning" 
                   fill 
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
