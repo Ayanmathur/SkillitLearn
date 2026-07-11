@@ -309,7 +309,7 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
                        shadow-sm transition-all"
           >
             <div className="flex items-start gap-3 mb-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-[#1a1a2e] text-white flex items-center justify-center text-sm font-bold">
+              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-green-50 text-white flex items-center justify-center text-sm font-bold">
                 {i + 1}
               </span>
               <h3 className="font-semibold text-text-primary text-sm md:text-base leading-relaxed">

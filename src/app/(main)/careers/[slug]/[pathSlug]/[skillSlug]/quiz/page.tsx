@@ -49,24 +49,24 @@ export default async function QuizPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Header */}
-      <section className="bg-[#1a1a2e] py-8">
+      <section className="bg-green-50 py-8">
         <div className="container-page max-w-3xl">
-          <nav className="flex items-center gap-2 text-xs text-white/50 mb-3 flex-wrap">
-            <a href="/" className="hover:text-white transition-colors">Home</a>
+          <nav className="flex items-center gap-2 text-xs text-gray-500 mb-3 flex-wrap">
+            <a href="/" className="hover:text-accent transition-colors">Home</a>
             <span>/</span>
-            <a href={`/careers/${slug}`} className="hover:text-white transition-colors">
+            <a href={`/careers/${slug}`} className="hover:text-accent transition-colors">
               {skill.path.career.name}
             </a>
             <span>/</span>
-            <a href={`/careers/${slug}/${pathSlug}`} className="hover:text-white transition-colors">
+            <a href={`/careers/${slug}/${pathSlug}`} className="hover:text-accent transition-colors">
               {skill.path.name}
             </a>
             <span>/</span>
-            <a href={`/careers/${slug}/${pathSlug}/${skillSlug}`} className="hover:text-white transition-colors">
+            <a href={`/careers/${slug}/${pathSlug}/${skillSlug}`} className="hover:text-accent transition-colors">
               {skill.name}
             </a>
             <span>/</span>
-            <span className="text-white/80">Quiz</span>
+            <span className="text-gray-700">Quiz</span>
           </nav>
 
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">

@@ -148,32 +148,32 @@ export default async function PathDetailPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Hero */}
-      <section className="bg-[#1a1a2e] py-12 md:py-20">
+      <section className="bg-green-50 py-12 md:py-20">
         <div className="container-page">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-white/50 mb-6 flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
+            <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
-            <Link href={`/careers/${careerSlug}`} className="hover:text-white transition-colors">
+            <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
               {path.career.name}
             </Link>
             <span>/</span>
-            <span className="text-white/80">{path.name}</span>
+            <span className="text-gray-700">{path.name}</span>
           </nav>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             {path.name}
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl leading-relaxed mb-6">
+          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mb-6">
             {path.description}
           </p>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-4 mb-8">
-            <div className="bg-white/10 rounded-full px-5 py-2 text-sm text-white/90 font-medium">
+            <div className="bg-white/80 rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
               ⚡ {totalSkills} Skills
             </div>
-            <div className="bg-white/10 rounded-full px-5 py-2 text-sm text-white/90 font-medium">
+            <div className="bg-white/80 rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
               ⏱️ ~{totalHours} hours
             </div>
             {user && (
@@ -189,7 +189,7 @@ export default async function PathDetailPage({ params }: Props) {
               <span>Progress</span>
               <span>{progressPercent}%</span>
             </div>
-            <div className="h-3 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-3 rounded-full bg-white/80 overflow-hidden">
               <div
                 className="h-full rounded-full bg-accent transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
@@ -230,7 +230,7 @@ export default async function PathDetailPage({ params }: Props) {
                     {status === "complete" ? "✓" : skill.orderIndex + 1}
                     {/* Tooltip */}
                     <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
-                                     text-[10px] bg-[#1a1a2e] text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
+                                     text-[10px] bg-green-50 text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
                                      transition-opacity z-10">
                       {skill.name}
                     </span>

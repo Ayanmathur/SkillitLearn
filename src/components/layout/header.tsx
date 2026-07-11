@@ -15,11 +15,11 @@ export async function Header() {
   const isLoggedIn = !!user;
 
   return (
-    <header className="sticky top-0 z-50 bg-[#1a1a2e] shadow-lg">
+    <header className="sticky top-0 z-50 bg-green-50 shadow-lg">
       <div className="container-page flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <img src="/logo.jpg" alt="SkillItLearn" className="h-10 w-auto rounded" />
+          <img src="/logo.svg" alt="SkillItLearn" className="h-10 w-auto rounded" />
         </Link>
 
         {/* Desktop Nav */}
@@ -28,7 +28,7 @@ export async function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 rounded-lg text-white/75 hover:text-white hover:bg-white/5
+              className="px-4 py-2 rounded-lg text-gray-600 hover:text-accent hover:bg-white/60
                          transition-all duration-200 text-sm font-medium"
             >
               {link.label}
@@ -40,7 +40,7 @@ export async function Header() {
         <div className="hidden md:flex items-center gap-3">
           {isLoggedIn ? (
             <>
-              <span className="text-sm text-white/70">{user.fullName}</span>
+              <span className="text-sm text-gray-600">{user.fullName}</span>
               {(user.role === "admin" || user.role === "super_admin") && (
                 <Link
                   href="/admin"

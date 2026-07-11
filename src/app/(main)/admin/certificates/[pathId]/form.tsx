@@ -183,7 +183,7 @@ export function CertTemplateForm({ pathId, pathName, existing }: Props) {
                 <img src={logoPreview} alt="Logo" className="h-16 mx-auto object-contain" />
               </div>
             )}
-            <h4 className="text-xl font-bold text-[#1a1a2e] mb-2">{certTitle || "Certificate Title"}</h4>
+            <h4 className="text-xl font-bold text-gray-900 mb-2">{certTitle || "Certificate Title"}</h4>
             <p className="text-sm text-gray-500 mb-4">This is to certify that</p>
             <p className="text-2xl font-bold text-accent mb-1">Learner Name</p>
             <p className="text-sm text-gray-500 mb-6">
@@ -193,7 +193,7 @@ export function CertTemplateForm({ pathId, pathName, existing }: Props) {
               {sigPreview && (
                 <img src={sigPreview} alt="Signature" className="h-12 mx-auto object-contain mb-1" />
               )}
-              <p className="font-bold text-[#1a1a2e] text-sm">{sigName || "Signatory Name"}</p>
+              <p className="font-bold text-gray-900 text-sm">{sigName || "Signatory Name"}</p>
               <p className="text-xs text-gray-500">{sigTitle || "Title"}</p>
             </div>
           </div>

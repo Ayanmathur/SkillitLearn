@@ -83,21 +83,21 @@ export default async function SkillBookletPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Compact header */}
-      <section className="bg-[#1a1a2e] py-8 md:py-12">
+      <section className="bg-green-50 py-8 md:py-12">
         <div className="container-page max-w-4xl">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs text-white/50 mb-4 flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="flex items-center gap-2 text-xs text-gray-500 mb-4 flex-wrap">
+            <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
-            <Link href={`/careers/${careerSlug}`} className="hover:text-white transition-colors">
+            <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
               {skill.path.career.name}
             </Link>
             <span>/</span>
-            <Link href={`/careers/${careerSlug}/${pathSlug}`} className="hover:text-white transition-colors">
+            <Link href={`/careers/${careerSlug}/${pathSlug}`} className="hover:text-accent transition-colors">
               {skill.path.name}
             </Link>
             <span>/</span>
-            <span className="text-white/80">{skill.name}</span>
+            <span className="text-gray-700">{skill.name}</span>
           </nav>
 
           <h1 className="text-2xl md:text-4xl font-bold text-white mb-3">
@@ -108,13 +108,13 @@ export default async function SkillBookletPage({ params }: Props) {
           </p>
 
           <div className="flex flex-wrap gap-3 text-xs mb-5">
-            <span className="bg-white/10 rounded-full px-4 py-1.5 text-white/80 font-medium">
+            <span className="bg-white/80 rounded-full px-4 py-1.5 text-gray-700 font-medium">
               📖 {skill.modules.length} module{skill.modules.length !== 1 ? "s" : ""}
             </span>
-            <span className="bg-white/10 rounded-full px-4 py-1.5 text-white/80 font-medium">
+            <span className="bg-white/80 rounded-full px-4 py-1.5 text-gray-700 font-medium">
               📄 {totalSteps} step{totalSteps !== 1 ? "s" : ""}
             </span>
-            <span className="bg-white/10 rounded-full px-4 py-1.5 text-white/80 font-medium">
+            <span className="bg-white/80 rounded-full px-4 py-1.5 text-gray-700 font-medium">
               ⏱️ ~{skill.estimatedHours}h
             </span>
             {skillComplete && (
@@ -131,7 +131,7 @@ export default async function SkillBookletPage({ params }: Props) {
                 <span>Progress</span>
                 <span>{overallPercent}%</span>
               </div>
-              <div className="h-2.5 rounded-full bg-white/10 overflow-hidden flex">
+              <div className="h-2.5 rounded-full bg-white/80 overflow-hidden flex">
                 {/* Steps portion (green) */}
                 <div
                   className="h-full bg-accent transition-all duration-500"

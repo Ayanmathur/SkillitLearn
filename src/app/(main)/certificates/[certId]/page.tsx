@@ -70,7 +70,7 @@ export default async function CertificateViewPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Header */}
-      <section className="bg-[#1a1a2e] py-10 md:py-14">
+      <section className="bg-green-50 py-10 md:py-14">
         <div className="container-page text-center">
           <div className="text-5xl mb-3">🎉</div>
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">

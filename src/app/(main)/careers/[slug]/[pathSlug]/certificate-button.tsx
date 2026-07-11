@@ -38,10 +38,10 @@ export function CertificateButton({ pathId, hasTemplate }: Props) {
           🎓 Done - Proceed to Certificate
         </button>
         <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
-                        bg-[#1a1a2e] text-white text-xs rounded-lg px-4 py-2 whitespace-nowrap
+                        bg-green-50 text-white text-xs rounded-lg px-4 py-2 whitespace-nowrap
                         pointer-events-none transition-opacity shadow-lg z-10">
           Certificate is being prepared for this path
-          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2 h-2 bg-[#1a1a2e] rotate-45" />
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2 h-2 bg-green-50 rotate-45" />
         </div>
       </div>
     );

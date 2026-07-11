@@ -80,7 +80,7 @@ export default async function HomePage() {
   return (
     <main>
       {/* ── 1. Hero Banner ───────────────────────────────── */}
-      <section className="relative bg-[#1a1a2e] overflow-hidden">
+      <section className="relative bg-green-50 overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
@@ -93,7 +93,7 @@ export default async function HomePage() {
               Build Real Skills.{" "}
               <span className="text-accent">Earn Certificates.</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-xl">
               Explore 50+ career paths with structured, step-by-step learning.
               Master skills at your own pace, prove your competency with quizzes,
               and earn verifiable certificates.
@@ -177,7 +177,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 4. Stats Band ─────────────────────────────────── */}
-      <section className="py-16 md:py-20 bg-[#1a1a2e]">
+      <section className="py-16 md:py-20 bg-green-50">
         <div className="container-page">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
@@ -197,8 +197,8 @@ export default async function HomePage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center
-                           border border-white/10 hover:border-accent/30
+                className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 text-center
+                           border border-gray-200 hover:border-accent/30
                            transition-all duration-300"
               >
                 <div className="text-2xl mb-2">{stat.icon}</div>

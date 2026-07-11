@@ -96,7 +96,7 @@ export function SkillBookletContent({
                 className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                   moduleDone
                     ? "bg-green-500 text-white"
-                    : "bg-[#1a1a2e] text-white"
+                    : "bg-green-50 text-white"
                 }`}
               >
                 {moduleDone ? "✓" : mi + 1}
@@ -201,7 +201,7 @@ export function SkillBookletContent({
                             disabled={isPending}
                             className="flex-shrink-0 text-[10px] px-3 py-1 rounded-full
                                        border border-accent/30 text-accent
-                                       hover:bg-accent hover:text-white
+                                       hover:bg-accent hover:text-accent
                                        transition-all font-semibold disabled:opacity-50"
                           >
                             Mark done

@@ -14,9 +14,9 @@
   --bg-surface-overlay: #ffffff;
 
   /* ── Text ─────────────────────────────────────────────── */
-  --text-primary: #1a1a2e;
-  --text-secondary: #3d3d5c;
-  --text-muted: #8e95b2;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
 
   /* ── Accent ───────────────────────────────────────────── */
   --accent: #5bbd72;
@@ -27,8 +27,8 @@
   --border-color: #e5e7ed;
 
   /* ── Header ───────────────────────────────────────────── */
-  --header-bg: #1a1a2e;
-  --header-text: #f7f8fb;
+  --header-bg: #ffffff;
+  --header-text: #1f2937;
 
   /* ── Shadows ──────────────────────────────────────────── */
   --shadow-color: 230 20% 10%;

@@ -14,9 +14,9 @@ export default async function CertificatesPage() {
   if (!user) {
     return (
       <main className="min-h-screen bg-surface">
-        <section className="bg-[#1a1a2e] py-16">
+        <section className="bg-green-50 py-16">
           <div className="container-page text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Certificates</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Certificates</h1>
             <p className="text-white/60 mb-6">Log in to view your earned certificates.</p>
             <Link href="/login?redirect=/certificates" className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-8 py-3 transition-all">
               Log in
@@ -72,7 +72,7 @@ export default async function CertificatesPage() {
 
   return (
     <main className="min-h-screen bg-surface">
-      <section className="bg-[#1a1a2e] py-12 md:py-16">
+      <section className="bg-green-50 py-12 md:py-16">
         <div className="container-page">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">My Certificates</h1>
           <p className="text-white/60">Your earned credentials and path progress.</p>

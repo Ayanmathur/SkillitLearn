@@ -38,15 +38,15 @@ const SOCIAL = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#1a1a2e] text-white/70">
+    <footer className="bg-green-50 text-gray-600">
       <div className="container-page py-12 md:py-16">
         <div className="grid md:grid-cols-3 gap-10">
           {/* Col 1: Logo + blurb */}
           <div>
             <div className="mb-3">
-              <img src="/logo.jpg" alt="SkillItLearn" className="h-12 w-auto rounded" />
+              <img src="/logo.svg" alt="SkillItLearn" className="h-12 w-auto rounded" />
             </div>
-            <p className="text-sm leading-relaxed text-white/50">
+            <p className="text-sm leading-relaxed text-gray-500">
               A structured learning platform that organizes professional
               skills into clear career paths, step-by-step booklets, and
               verifiable certificates.
@@ -63,7 +63,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/50 hover:text-accent transition-colors"
+                    className="text-sm text-gray-500 hover:text-accent transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -83,9 +83,9 @@ export function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-accent/20
+                  className="w-10 h-10 rounded-full bg-white/60 hover:bg-accent/20
                              flex items-center justify-center
-                             text-white/50 hover:text-accent
+                             text-gray-500 hover:text-accent
                              transition-all duration-200"
                 >
                   {s.icon}
@@ -97,7 +97,7 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-gray-200">
         <div className="container-page py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40">
           <span>© {new Date().getFullYear()} SkillItLearn. All rights reserved.</span>
           <Link href="/verify" className="hover:text-accent transition-colors">

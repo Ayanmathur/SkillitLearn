@@ -18,12 +18,12 @@ export default async function AboutPage() {
   return (
     <main className="min-h-screen bg-surface">
       {/* Hero */}
-      <section className="bg-[#1a1a2e] py-16 md:py-24">
+      <section className="bg-green-50 py-16 md:py-24">
         <div className="container-page max-w-3xl text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             About Skill<span className="text-accent">It</span>Learn
           </h1>
-          <p className="text-lg text-white/70 leading-relaxed">
+          <p className="text-lg text-gray-600 leading-relaxed">
             We organize professional knowledge into clear career paths so
             you can build real skills, prove your competency, and earn
             verifiable certificates - all at your own pace.
@@ -104,7 +104,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="py-14 md:py-20 bg-[#1a1a2e]">
+      <section className="py-14 md:py-20 bg-green-50">
         <div className="container-page">
           <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8">
             Platform at a Glance
@@ -116,7 +116,7 @@ export default async function AboutPage() {
               { n: skillCount, label: "Skills" },
               { n: certCount, label: "Certificates Issued" },
             ].map((s) => (
-              <div key={s.label} className="bg-white/5 rounded-2xl p-5 text-center border border-white/10">
+              <div key={s.label} className="bg-white/60 rounded-2xl p-5 text-center border border-gray-200">
                 <div className="text-3xl font-bold text-accent">{s.n}</div>
                 <div className="text-sm text-white/60 mt-1">{s.label}</div>
               </div>

@@ -42,38 +42,38 @@ export default async function CareerDetailPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-surface">
       {/* Hero */}
-      <section className="bg-[#1a1a2e] py-12 md:py-20">
+      <section className="bg-green-50 py-12 md:py-20">
         <div className="container-page">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-white/50 mb-6">
-            <Link href="/" className="hover:text-white transition-colors">
+          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+            <Link href="/" className="hover:text-accent transition-colors">
               Home
             </Link>
             <span>/</span>
-            <Link href="/#careers" className="hover:text-white transition-colors">
+            <Link href="/#careers" className="hover:text-accent transition-colors">
               Careers
             </Link>
             <span>/</span>
-            <span className="text-white/80">{career.name}</span>
+            <span className="text-gray-700">{career.name}</span>
           </nav>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             {career.name}
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl leading-relaxed mb-6">
+          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mb-6">
             {career.description}
           </p>
 
           {/* Quick stats */}
           <div className="flex flex-wrap gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-white/90 font-medium">
+            <div className="bg-white/80 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
               🛤️ {career.paths.length} Learning Path{career.paths.length !== 1 ? "s" : ""}
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-white/90 font-medium">
+            <div className="bg-white/80 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
               ⚡{" "}
               {career.paths.reduce((s, p) => s + p.skills.length, 0)} Skills
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-white/90 font-medium">
+            <div className="bg-white/80 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-gray-800 font-medium">
               ⏱️{" "}
               {career.paths.reduce(
                 (s, p) =>
@@ -129,7 +129,7 @@ export default async function CareerDetailPage({ params }: Props) {
                         {path.skills.length} skill{path.skills.length !== 1 ? "s" : ""}
                       </span>
                       <span className="flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#1a1a2e]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-50" />
                         ~{totalHours}h
                       </span>
                     </div>

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function VerifyPage() {
   return (
     <main className="min-h-screen bg-surface">
-      <section className="bg-[#1a1a2e] py-12 md:py-16">
+      <section className="bg-green-50 py-12 md:py-16">
         <div className="container-page text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Verify a Certificate

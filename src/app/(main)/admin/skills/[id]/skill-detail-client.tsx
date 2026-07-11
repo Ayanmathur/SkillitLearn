@@ -94,7 +94,7 @@ export function SkillDetailClient({ skill, modules, questions }: { skill: Skill;
         <div className="space-y-2">
           {questions.map((q, i) => (
             <div key={q.id} className="flex items-start gap-3 bg-surface-raised rounded-xl p-3 border border-[var(--border-color)]">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a1a2e] text-white text-xs flex items-center justify-center font-bold mt-0.5">{i + 1}</span>
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-50 text-white text-xs flex items-center justify-center font-bold mt-0.5">{i + 1}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-text-primary truncate">{q.questionText}</p>
                 <p className="text-xs text-text-muted">Correct: {q.correctChoiceId.toUpperCase()}</p>
