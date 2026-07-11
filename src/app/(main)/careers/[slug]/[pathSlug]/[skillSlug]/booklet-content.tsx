@@ -95,8 +95,8 @@ export function SkillBookletContent({
               <div
                 className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                   moduleDone
-                    ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
-                    : "bg-green-50 dark:bg-[#1a1a2e] text-white"
+                    ? "bg-green-500 dark:bg-green-600 text-white"
+                    : "bg-gray-800 dark:bg-gray-700 text-white"
                 }`}
               >
                 {moduleDone ? "✓" : mi + 1}
@@ -184,7 +184,7 @@ export function SkillBookletContent({
                         <span
                           className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 ${
                             isDone
-                              ? "bg-green-50 dark:bg-[#1a1a2e]0 text-white"
+                              ? "bg-green-500 dark:bg-green-600 text-white"
                               : "bg-accent/10 text-accent"
                           }`}
                         >
