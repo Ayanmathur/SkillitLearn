@@ -69,10 +69,10 @@ export default async function QuizPage({ params }: Props) {
             <span className="text-gray-700 dark:text-white/80">Quiz</span>
           </nav>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             {skill.name} - Quiz
           </h1>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-gray-700 dark:text-white/60">
             Answer 5 questions. You need 4/5 (80%) to pass. Take your time.
           </p>
         </div>

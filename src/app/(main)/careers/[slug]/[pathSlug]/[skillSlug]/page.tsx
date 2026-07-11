@@ -113,7 +113,7 @@ export default async function SkillBookletPage({ params }: Props) {
           {/* Progress bar (logged in only) */}
           {user && (
             <div className="max-w-md">
-              <div className="flex items-center justify-between text-xs text-white/60 mb-1.5">
+              <div className="flex items-center justify-between text-xs text-gray-700 dark:text-white/60 mb-1.5 font-medium">
                 <span>Progress</span>
                 <span>{overallPercent}%</span>
               </div>
@@ -130,10 +130,10 @@ export default async function SkillBookletPage({ params }: Props) {
                 />
               </div>
               <div className="flex justify-between mt-1">
-                <span className="text-[10px] text-white/40">
+                <span className="text-[10px] text-gray-500 dark:text-white/40">
                   Steps: {completedStepCount}/{totalSteps}
                 </span>
-                <span className="text-[10px] text-white/40">
+                <span className="text-[10px] text-gray-500 dark:text-white/40">
                   Quiz: {hasPassedQuiz ? "Passed ✓" : "Not taken"}
                 </span>
               </div>

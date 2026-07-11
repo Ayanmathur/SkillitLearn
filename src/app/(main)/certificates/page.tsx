@@ -74,8 +74,8 @@ export default async function CertificatesPage() {
     <main className="min-h-screen bg-surface">
       <section className="bg-green-50 dark:bg-[#1a1a2e] py-12 md:py-16">
         <div className="container-page">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">My Certificates</h1>
-          <p className="text-white/60">Your earned credentials and path progress.</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">My Certificates</h1>
+          <p className="text-gray-600 dark:text-white/60">Your earned credentials and path progress.</p>
         </div>
       </section>
 
