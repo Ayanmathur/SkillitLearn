@@ -20,7 +20,7 @@ export async function Header() {
       <div className="container-page flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <img src="/logo.jpg" alt="SkillItLearn" className="h-10 w-auto rounded" />
+          <img src="/logo.png" alt="SkillItLearn" className="h-10 w-auto rounded" />
         </Link>
 
         {/* Desktop Nav */}

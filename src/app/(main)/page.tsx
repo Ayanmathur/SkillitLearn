@@ -121,8 +121,10 @@ export default async function HomePage() {
             {/* Left: visual */}
             <div className="relative">
               <div className="aspect-square max-w-md mx-auto rounded-3xl bg-gradient-to-br from-accent/20 to-[#1a1a2e]/20 flex items-center justify-center overflow-hidden">
-                <div className="text-center p-8">
-                  <img src="/logo.jpg" alt="SkillItLearn" className="w-32 h-32 mx-auto rounded-2xl mb-4 object-cover" />
+                <div className="text-center p-8 w-full h-full flex flex-col items-center justify-center">
+                  <div className="relative w-32 h-32 mx-auto rounded-2xl mb-4 overflow-hidden shadow-lg border border-white/20">
+                    <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80" alt="Students learning" fill className="object-cover" />
+                  </div>
                   <div className="text-5xl font-bold text-accent">{careerCount}+</div>
                   <div className="text-lg text-text-secondary font-medium mt-1">Career Paths</div>
                 </div>

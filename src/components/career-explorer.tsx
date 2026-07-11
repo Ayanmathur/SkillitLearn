@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 // ── Category mapping for "Explore Course Topics" ─────────────
 const COURSE_TOPICS = [
@@ -42,6 +43,14 @@ const CAREER_IMAGES: Record<string, string> = {
   "mobile": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=250&fit=crop",
   "project": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=250&fit=crop",
   "entrepreneur": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=250&fit=crop",
+  "real-estate": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=250&fit=crop",
+  "automotive": "https://images.unsplash.com/photo-1503376712394-6d9b139db080?w=400&h=250&fit=crop",
+  "sales": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop",
+  "retail": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=250&fit=crop",
+  "insurance": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=250&fit=crop",
+  "supply-chain": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=250&fit=crop",
+  "e-commerce": "https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=400&h=250&fit=crop",
+  "human-resources": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop",
   "default": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop",
 };
 
@@ -196,12 +205,13 @@ export function CareerExplorer({ careers }: Props) {
                        transition-all duration-300 hover:-translate-y-1"
           >
             {/* Image */}
-            <div className="h-40 overflow-hidden bg-surface-raised">
-              <img
+            <div className="h-40 relative overflow-hidden bg-surface-raised">
+              <Image
                 src={getCareerImage(career.slug)}
                 alt={career.name}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
 

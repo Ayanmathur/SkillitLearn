@@ -44,7 +44,7 @@ export function Footer() {
           {/* Col 1: Logo + blurb */}
           <div>
             <div className="mb-3">
-              <img src="/logo.jpg" alt="SkillItLearn" className="h-12 w-auto rounded" />
+              <img src="/logo.png" alt="SkillItLearn" className="h-12 w-auto rounded" />
             </div>
             <p className="text-sm leading-relaxed text-white/60">
               A structured learning platform that organizes professional
