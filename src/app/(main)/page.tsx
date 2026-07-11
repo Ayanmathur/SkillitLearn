@@ -120,13 +120,19 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left: visual */}
             <div className="relative">
-              <div className="aspect-square max-w-md mx-auto rounded-3xl bg-gradient-to-br from-accent/20 to-[#1a1a2e]/20 flex items-center justify-center overflow-hidden">
-                <div className="text-center p-8 w-full h-full flex flex-col items-center justify-center">
-                  <div className="relative w-32 h-32 mx-auto rounded-2xl mb-4 overflow-hidden shadow-lg border border-white/20">
-                    <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80" alt="Students learning" fill className="object-cover" />
+              <div className="relative aspect-square max-w-md mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+                <Image 
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80" 
+                  alt="Students learning" 
+                  fill 
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                {/* Gradient overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a2e]/90 via-[#1a1a2e]/40 to-transparent flex items-center justify-center">
+                  <div className="text-center p-8 w-full mt-auto mb-10">
+                    <div className="text-7xl font-extrabold text-white drop-shadow-md">{careerCount}+</div>
+                    <div className="text-xl text-accent font-semibold mt-2 tracking-wide uppercase drop-shadow-md">Career Paths</div>
                   </div>
-                  <div className="text-5xl font-bold text-accent">{careerCount}+</div>
-                  <div className="text-lg text-text-secondary font-medium mt-1">Career Paths</div>
                 </div>
               </div>
             </div>
