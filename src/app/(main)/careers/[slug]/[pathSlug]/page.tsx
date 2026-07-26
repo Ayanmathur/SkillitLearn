@@ -15,13 +15,17 @@ interface Props {
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { pathSlug } = await params;
-  const path = await getPathBySlug(pathSlug);
-  if (!path) return { title: "Path Not Found" };
-  return {
-    title: `${path.name} - SkillItLearn`,
-    description: path.description,
-  };
+  try {
+    const { pathSlug } = await params;
+    const path = await getPathBySlug(pathSlug);
+    if (!path) return { title: "Path Not Found - SkillItLearn" };
+    return {
+      title: `${path.name} - SkillItLearn`,
+      description: path.description || "Master new skills with guided learning tracks.",
+    };
+  } catch {
+    return { title: "SkillItLearn" };
+  }
 }
 
 export default async function PathDetailPage({ params }: Props) {
@@ -31,9 +35,10 @@ export default async function PathDetailPage({ params }: Props) {
 
   if (!path) notFound();
 
-  const user = await getCurrentUser();
-  const totalHours = path.skills.reduce((s, sk) => s + sk.estimatedHours, 0);
-  const totalSkills = path.skills.length;
+  const user = await getCurrentUser().catch(() => null);
+  const skillsList = path.skills || [];
+  const totalHours = skillsList.reduce((s, sk) => s + (sk.estimatedHours || 0), 0);
+  const totalSkills = skillsList.length;
 
   // ── Progress tracking ──────────────────────────────────
   type SkillStatus = "not_started" | "in_progress" | "complete";
