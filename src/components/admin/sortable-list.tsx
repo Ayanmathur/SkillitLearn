@@ -18,7 +18,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { reorderItems } from "@/app/(main)/admin/actions/reorder-actions";
+import { reorderItems } from "@/app/(admin)/admin/actions/reorder-actions";
 
 interface SortableItem {
   id: string;

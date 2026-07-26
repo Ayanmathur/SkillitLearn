@@ -30,29 +30,13 @@ export default async function AdminPage() {
   });
 
   return (
-    <main className="min-h-screen bg-surface">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-navy-header">
-        <div className="container-page flex items-center justify-between h-16">
-          <div className="flex items-center gap-4">
-            <a href="/" className="text-xl font-bold text-white tracking-tight">
-              Skill<span className="text-accent">It</span>Learn
-            </a>
-            <span className="hidden sm:inline-block px-2.5 py-1 rounded-full bg-accent/20 text-accent text-xs font-semibold uppercase tracking-wider">
-              Admin Panel
-            </span>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-white/80">
-            <span>{user.fullName}</span>
-            <span className="text-accent text-xs font-semibold uppercase">
-              {user.role}
-            </span>
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <div className="container-page py-8">
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">Admin Dashboard</h1>
+        <p className="text-text-secondary text-sm">
+          Manage system users, assign roles, and configure career paths & certificate templates.
+        </p>
+      </div>
         {/* Quick Nav */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <a href="/admin/careers" className="card compact text-center hover:shadow-card-hover transition-all group">
@@ -111,7 +95,6 @@ export default async function AdminPage() {
 
         {/* User Table */}
         <AdminUserTable users={users} currentUserId={user.id} />
-      </div>
-    </main>
+    </div>
   );
 }

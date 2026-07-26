@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { uploadContentImage } from "@/app/(main)/admin/actions/upload-actions";
+import { uploadContentImage } from "@/app/(admin)/admin/actions/upload-actions";
 
 interface Props {
   value: string;
