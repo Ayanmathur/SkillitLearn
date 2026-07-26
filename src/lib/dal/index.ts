@@ -283,14 +283,6 @@ export async function getSkillBySlug(skillSlug: string) {
           media_urls,
           order_index
         )
-      ),
-      quiz_questions (
-        id,
-        question_text,
-        options,
-        correct_option_index,
-        explanation,
-        order_index
       )
     `)
     .eq("slug", skillSlug)
@@ -336,15 +328,6 @@ export async function getSkillBySlug(skillSlug: string) {
             orderIndex: s.order_index ?? 0,
           })),
       })),
-    quizQuestions: (data.quiz_questions || [])
-      .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-      .map((q: any) => ({
-        id: q.id,
-        questionText: q.question_text,
-        options: q.options || [],
-        correctOptionIndex: q.correct_option_index,
-        explanation: q.explanation,
-        orderIndex: q.order_index ?? 0,
-      })),
+    quizQuestions: [],
   };
 }
