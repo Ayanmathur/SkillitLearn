@@ -195,51 +195,64 @@ export async function signOut() {
 }
 
 // ── Get Current User (server-side, DB-verified) ──────────────
-// CRITICAL: This always checks the DB for the authoritative role,
-// never trusts the JWT/session alone.
+// Uses Prisma for the DB lookup to bypass RLS restrictions.
+// The Supabase JS anon client respects RLS, which can block
+// reads on the users table in serverless environments where
+// auth cookies aren't always forwarded correctly.
 
 export async function getCurrentUser() {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const supabase = await createServerSupabaseClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user) return null;
+    if (!user) return null;
 
-  // Always fetch from DB - the single source of truth for role
-  // We use Supabase JS instead of Prisma here to prevent heavy cold starts on every page load
-  const { data: dbUser } = await supabase
-    .from("users")
-    .select("id, email, full_name, role")
-    .eq("id", user.id)
-    .single();
+    // Use Prisma for DB lookup - bypasses RLS and is always reliable
+    try {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { id: true, email: true, fullName: true, role: true },
+      });
 
-  if (!dbUser) {
-    // Auth user exists but no DB record - create one (fallback to prisma for writes)
-    const newUser = await prisma.user.create({
-      data: {
+      if (dbUser) {
+        return dbUser;
+      }
+
+      // Auth user exists but no DB record - create one
+      const newUser = await prisma.user.upsert({
+        where: { id: user.id },
+        update: {
+          email: user.email!,
+          fullName:
+            user.user_metadata?.full_name || user.email!.split("@")[0],
+        },
+        create: {
+          id: user.id,
+          email: user.email!,
+          fullName:
+            user.user_metadata?.full_name || user.email!.split("@")[0],
+          role: "learner",
+        },
+        select: { id: true, email: true, fullName: true, role: true },
+      });
+      return newUser;
+    } catch (dbError) {
+      // DB query failed but auth user exists - return minimal user info
+      // so the user is still recognized as logged in
+      console.error("getCurrentUser DB error (returning auth fallback):", dbError);
+      return {
         id: user.id,
         email: user.email!,
-        fullName:
-          user.user_metadata?.full_name || user.email!.split("@")[0],
-        role: "learner",
-      },
-      select: {
-        id: true,
-        email: true,
-        fullName: true,
-        role: true,
-      },
-    });
-    return newUser;
+        fullName: user.user_metadata?.full_name || user.email!.split("@")[0],
+        role: "learner" as const,
+      };
+    }
+  } catch (error) {
+    console.error("getCurrentUser auth error:", error);
+    return null;
   }
-
-  return {
-    id: dbUser.id,
-    email: dbUser.email,
-    fullName: dbUser.full_name,
-    role: dbUser.role,
-  };
 }
 
 // ── Require Auth (helper for server actions) ─────────────────
