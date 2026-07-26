@@ -56,8 +56,8 @@ export default async function PathDetailPage({ params }: Props) {
   if (user) {
     try {
       // Batch queries for all skills
-      const allStepIds = path.skills.flatMap((sk: any) =>
-        sk.modules.flatMap((m: any) => m.steps.map((s: any) => s.id))
+      const allStepIds = (path.skills || []).flatMap((sk: any) =>
+        (sk.modules || []).flatMap((m: any) => (m.steps || []).map((s: any) => s.id))
       );
 
       const [completedSteps, completions, existingCert, template] = await Promise.all([
@@ -68,7 +68,7 @@ export default async function PathDetailPage({ params }: Props) {
         prisma.skillCompletion.findMany({
           where: {
             userId: user.id,
-            skillId: { in: path.skills.map((s) => s.id) },
+            skillId: { in: (path.skills || []).map((s) => s.id) },
           },
           select: { skillId: true, quizPassed: true, stepsCompleted: true },
         }).catch(() => []),
@@ -89,8 +89,8 @@ export default async function PathDetailPage({ params }: Props) {
       certId = existingCert?.uniqueCertificateId || null;
       hasTemplate = !!template;
 
-      for (const skill of path.skills) {
-        const stepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
+      for (const skill of (path.skills || [])) {
+        const stepIds = (skill.modules || []).flatMap((m: any) => (m.steps || []).map((s: any) => s.id));
         const doneCount = stepIds.filter((id: any) => completedStepSet.has(id)).length;
         const totalSteps = stepIds.length;
         const comp = completionMap.get(skill.id);
