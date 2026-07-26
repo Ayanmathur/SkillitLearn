@@ -15,7 +15,7 @@ interface Props {
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { pathSlug } = await params;
+  const {  pathSlug  } = await Promise.resolve(params);
   const path = await getPathBySlug(pathSlug);
   if (!path) return { title: "Path Not Found" };
   return {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PathDetailPage({ params }: Props) {
-  const { slug: careerSlug, pathSlug } = await params;
+  const {  slug: careerSlug, pathSlug  } = await Promise.resolve(params);
 
   const path = await getPathBySlug(pathSlug);
 

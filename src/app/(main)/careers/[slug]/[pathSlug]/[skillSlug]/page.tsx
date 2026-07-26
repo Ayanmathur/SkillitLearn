@@ -15,7 +15,7 @@ interface Props {
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { skillSlug } = await params;
+  const {  skillSlug  } = await Promise.resolve(params);
   const skill = await getSkillBySlug(skillSlug);
   if (!skill) return { title: "Skill Not Found" };
   return {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SkillBookletPage({ params }: Props) {
-  const { slug: careerSlug, pathSlug, skillSlug } = await params;
+  const {  slug: careerSlug, pathSlug, skillSlug  } = await Promise.resolve(params);
 
   const skill = await getSkillBySlug(skillSlug);
 

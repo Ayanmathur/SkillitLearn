@@ -11,7 +11,7 @@ interface Props {
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const {  slug  } = await Promise.resolve(params);
   const career = await getCareerBySlug(slug);
 
   if (!career) return { title: "Career Not Found" };
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CareerDetailPage({ params }: Props) {
-  const { slug } = await params;
+  const {  slug  } = await Promise.resolve(params);
   const career = await getCareerBySlug(slug);
 
   if (!career) notFound();

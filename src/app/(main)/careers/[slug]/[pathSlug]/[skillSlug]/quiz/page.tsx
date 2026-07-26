@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function QuizPage({ params }: Props) {
-  const { slug, pathSlug, skillSlug } = await params;
+  const {  slug, pathSlug, skillSlug  } = await Promise.resolve(params);
 
   // Require authentication
   const user = await getCurrentUser();
