@@ -101,7 +101,7 @@ model Skill {
 
   // Relations
   path             Path              @relation(fields: [pathId], references: [id], onDelete: Cascade)
-  tracks           Track[]
+  modules          Module[]
   quizQuestions    QuizQuestion[]
   quizAttempts     QuizAttempt[]
   skillCompletions SkillCompletion[]
@@ -111,9 +111,9 @@ model Skill {
   @@map("skills")
 }
 
-// ── Tracks ─────────────────────────────────────────────────
-// A track within a skill (e.g. "Foundations", "Core Techniques")
-model Track {
+// ── Modules ────────────────────────────────────────────────
+// A module within a skill (e.g. "Foundations", "Core Techniques")
+model Module {
   id         String @id @default(uuid()) @db.Uuid
   skillId    String @map("skill_id") @db.Uuid
   title      String
@@ -128,21 +128,21 @@ model Track {
 }
 
 // ── Steps ──────────────────────────────────────────────────
-// A step within a track — the actual learning content.
+// A step within a module — the actual learning content.
 // Content is rich text/markdown. media_urls stores image/video references.
 model Step {
   id         String   @id @default(uuid()) @db.Uuid
-  trackId    String   @map("module_id") @db.Uuid
+  moduleId   String   @map("module_id") @db.Uuid
   title      String
   content    String   @db.Text
   mediaUrls  String[] @map("media_urls")
   orderIndex Int      @map("order_index")
 
   // Relations
-  track           Track             @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  module          Module            @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   learnerProgress LearnerProgress[]
 
-  @@index([trackId])
+  @@index([moduleId])
   @@map("steps")
 }
 

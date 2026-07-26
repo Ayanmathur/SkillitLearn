@@ -15,7 +15,7 @@ interface Props {
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const {  skillSlug  } = await Promise.resolve(params);
+  const { skillSlug } = await params;
   const skill = await getSkillBySlug(skillSlug);
   if (!skill) return { title: "Skill Not Found" };
   return {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SkillBookletPage({ params }: Props) {
-  const {  slug: careerSlug, pathSlug, skillSlug  } = await Promise.resolve(params);
+  const { slug: careerSlug, pathSlug, skillSlug } = await params;
 
   const skill = await getSkillBySlug(skillSlug);
 
@@ -148,7 +148,7 @@ export default async function SkillBookletPage({ params }: Props) {
       <section className="py-8 md:py-14">
         <div className="container-page max-w-4xl">
           <SkillBookletContent
-            modules={skill.modules.map((m: any) => ({
+            tracks={skill.modules.map((m: any) => ({
               ...m,
               orderIndex: m.order_index,
               steps: m.steps.map((s: any) => ({ ...s, orderIndex: s.order_index })),

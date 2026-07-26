@@ -2,10 +2,12 @@ import { createClient } from "@supabase/supabase-js";
 
 /**
  * High-Performance Data Access Layer (DAL) for Public Content.
+ * Uses lightweight Supabase PostgREST client to completely bypass
+ * Prisma serverless cold starts (~15MB binary overhead).
  */
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://pghgxwjkwrkxnncpsrwu.supabase.co',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnaGd4d2prd3JreG5uY3Bzcnd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwODMzMTksImV4cCI6MjEwMDY1OTMxOX0.4-x4MrkPCktc_GtGZZwnF2QWRo5r3b9zYecRFP9mSOA'
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 // ── Types ───────────────────────────────────────────────────
@@ -18,8 +20,6 @@ export interface SkillSummary {
   estimatedHours: number;
   orderIndex: number;
   stepsTotal?: number;
-  modules?: any[];
-  tracks?: any[];
 }
 
 export interface PathSummary {
@@ -187,7 +187,7 @@ export async function getCareerBySlug(slug: string) {
   };
 }
 
-// ── Path Detail (Decoupled, ultra-fast & resilient) ─────────
+// ── Path Detail ─────────────────────────────────────────────
 
 export async function getPathBySlug(pathSlug: string) {
   const { data, error } = await supabase
@@ -209,7 +209,13 @@ export async function getPathBySlug(pathSlug: string) {
         name,
         slug,
         description,
-        order_index
+        order_index,
+        modules(
+          id,
+          steps (
+            id
+          )
+        )
       )
     `)
     .eq("slug", pathSlug)
@@ -239,13 +245,12 @@ export async function getPathBySlug(pathSlug: string) {
         description: s.description,
         estimatedHours: 0,
         orderIndex: s.order_index ?? 0,
-        modules: [],
-        tracks: [],
+        modules: s.tracks || [],
       })),
   };
 }
 
-// ── Skill Booklet Detail (Decoupled & resilient) ────────────
+// ── Skill Booklet Track Detail ────────────────────────────────────
 
 export async function getSkillBySlug(skillSlug: string) {
   const { data, error } = await supabase
@@ -266,6 +271,18 @@ export async function getSkillBySlug(skillSlug: string) {
           name,
           slug
         )
+      ),
+      modules(
+        id,
+        title,
+        order_index,
+        steps (
+          id,
+          title,
+          content,
+          media_urls,
+          order_index
+        )
       )
     `)
     .eq("slug", skillSlug)
@@ -276,45 +293,8 @@ export async function getSkillBySlug(skillSlug: string) {
     return null;
   }
 
-  // Fetch tracks for this skill cleanly (support modules or tracks table)
-  let tracksData: any[] = [];
-  const { data: mData } = await supabase
-    .from("modules")
-    .select("id, title, order_index, steps(id, title, content, media_urls, order_index)")
-    .eq("skill_id", data.id)
-    .order("order_index", { ascending: true });
-
-  if (mData) {
-    tracksData = mData;
-  } else {
-    const { data: tData } = await supabase
-      .from("tracks")
-      .select("id, title, order_index, steps(id, title, content, media_urls, order_index)")
-      .eq("skill_id", data.id)
-      .order("order_index", { ascending: true });
-
-    if (tData) tracksData = tData;
-  }
-
   const pathObj = Array.isArray(data.career_paths) ? data.career_paths[0] : data.career_paths;
   const careerObj = pathObj?.careers ? (Array.isArray(pathObj.careers) ? pathObj.careers[0] : pathObj.careers) : null;
-
-  const tracksList = (tracksData || [])
-    .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-    .map((m: any) => ({
-      id: m.id,
-      title: m.title,
-      orderIndex: m.order_index ?? 0,
-      steps: (m.steps || [])
-        .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-        .map((s: any) => ({
-          id: s.id,
-          title: s.title,
-          content: s.content,
-          mediaUrls: s.media_urls || [],
-          orderIndex: s.order_index ?? 0,
-        })),
-    }));
 
   return {
     id: data.id,
@@ -332,8 +312,22 @@ export async function getSkillBySlug(skillSlug: string) {
           career: careerObj ? { id: careerObj.id, name: careerObj.name, slug: careerObj.slug } : null,
         }
       : null,
-    modules: tracksList,
-    tracks: tracksList,
+    modules: (data.modules || [])
+      .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
+      .map((m: any) => ({
+        id: m.id,
+        title: m.title,
+        orderIndex: m.order_index ?? 0,
+        steps: (m.steps || [])
+          .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
+          .map((s: any) => ({
+            id: s.id,
+            title: s.title,
+            content: s.content,
+            mediaUrls: s.media_urls || [],
+            orderIndex: s.order_index ?? 0,
+          })),
+      })),
     quizQuestions: [],
   };
 }
@@ -398,3 +392,4 @@ export async function getQuizForSkill(skillSlug: string) {
     })),
   };
 }
+

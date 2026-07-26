@@ -19,7 +19,7 @@ interface Track {
 }
 
 interface Props {
-  modules: Track[];
+  tracks: Track[];
   completedStepIds: string[];
   isLoggedIn: boolean;
   skillId: string;
@@ -33,25 +33,25 @@ interface Props {
  * Locked tracks show a themed green lock icon that redirects to login.
  */
 export function SkillBookletContent({
-  modules,
+  tracks,
   completedStepIds: initialCompleted,
   isLoggedIn,
   skillId,
 }: Props) {
   const router = useRouter();
   // Sort tracks by orderIndex to guarantee correct ordering
-  const sortedModules = [...modules].sort((a, b) => a.orderIndex - b.orderIndex);
+  const sortedTracks = [...tracks].sort((a, b) => a.orderIndex - b.orderIndex);
 
-  const [expandedModules, setExpandedModules] = useState<Set<string>>(
-    () => new Set(sortedModules.length > 0 ? [sortedModules[0].id] : [])
+  const [expandedTracks, setExpandedTracks] = useState<Set<string>>(
+    () => new Set(sortedTracks.length > 0 ? [sortedTracks[0].id] : [])
   );
   const [completedIds, setCompletedIds] = useState<Set<string>>(
     () => new Set(initialCompleted)
   );
   const [isPending, startTransition] = useTransition();
 
-  function toggleModule(id: string) {
-    setExpandedModules((prev) => {
+  function toggleTrack(id: string) {
+    setExpandedTracks((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
@@ -83,8 +83,8 @@ export function SkillBookletContent({
 
   return (
     <div className="space-y-4">
-      {sortedModules.map((mod, mi) => {
-        const isExpanded = expandedModules.has(mod.id);
+      {sortedTracks.map((mod, mi) => {
+        const isExpanded = expandedTracks.has(mod.id);
         const { completed, total } = moduleProgress(mod);
         const moduleDone = completed === total && total > 0;
 
@@ -106,7 +106,7 @@ export function SkillBookletContent({
                 if (isLocked) {
                   router.push("/login");
                 } else {
-                  toggleModule(mod.id);
+                  toggleTrack(mod.id);
                 }
               }}
               className="w-full flex items-center gap-4 p-5 md:p-6 text-left

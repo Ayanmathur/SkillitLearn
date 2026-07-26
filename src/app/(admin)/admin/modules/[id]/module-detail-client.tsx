@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { updateModule, createStep, updateStep, deleteStep } from "../../actions/module-step-actions";
+import { updateTrack, createStep, updateStep, deleteStep } from "../../actions/module-step-actions";
 import { SortableList } from "@/components/admin/sortable-list";
 import { MarkdownEditor } from "@/components/admin/markdown-editor";
 
 interface Track { id: string; title: string; skillId: string }
 interface Step { id: string; title: string; content: string }
 
-export function ModuleDetailClient({ track: mod, steps }: { track: Track; steps: Step[] }) {
+export function TrackDetailClient({ track: mod, steps }: { track: Track; steps: Step[] }) {
   const [editingStep, setEditingStep] = useState<Step | null>(null);
   const [showStepForm, setShowStepForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,11 +22,11 @@ export function ModuleDetailClient({ track: mod, steps }: { track: Track; steps:
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
-  async function handleUpdateModule(e: React.FormEvent<HTMLFormElement>) {
+  async function handleUpdateTrack(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); setLoading(true); setError(null); setSaveMsg(null);
     const fd = new FormData(e.currentTarget);
     fd.set("id", mod.id); fd.set("skillId", mod.skillId);
-    const r = await updateModule(fd);
+    const r = await updateTrack(fd);
     if (r?.error) setError(r.error); else setSaveMsg("Saved!");
     setLoading(false); setTimeout(() => setSaveMsg(null), 3000);
   }
@@ -72,7 +72,7 @@ export function ModuleDetailClient({ track: mod, steps }: { track: Track; steps:
         <h2 className="text-lg font-bold text-text-primary mb-4">Edit Track</h2>
         {error && <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-4">{error}</div>}
         {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
-        <form onSubmit={handleUpdateModule} className="flex gap-3">
+        <form onSubmit={handleUpdateTrack} className="flex gap-3">
           <input name="title" defaultValue={mod.title} required className="flex-1 rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" />
           <button type="submit" disabled={loading} className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-6 py-2 text-sm transition-all disabled:opacity-50">{loading ? "Saving..." : "Save"}</button>
         </form>

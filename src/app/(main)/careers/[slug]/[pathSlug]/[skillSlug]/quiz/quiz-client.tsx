@@ -122,7 +122,7 @@ export function QuizClient({ skillSlug, skillName, backUrl, pathUrl }: Props) {
           href={backUrl}
           className="inline-flex items-center gap-2 bg-accent text-white font-semibold rounded-full px-6 py-2.5 text-sm"
         >
-          Back to Skill Booklet
+          Back to Skill Booklet Track
         </a>
       </div>
     );

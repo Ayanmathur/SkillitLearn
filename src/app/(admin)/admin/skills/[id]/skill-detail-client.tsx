@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { updateSkill } from "../../actions/skill-actions";
-import { createModule, deleteModule } from "../../actions/module-step-actions";
+import { createTrack, deleteTrack } from "../../actions/module-step-actions";
 import { createQuestion, updateQuestion, deleteQuestion } from "../../actions/quiz-actions";
 import { SortableList } from "@/components/admin/sortable-list";
 
@@ -28,17 +28,17 @@ export function SkillDetailClient({ skill, tracks, questions }: { skill: Skill; 
     setLoading(false); setTimeout(() => setSaveMsg(null), 3000);
   }
 
-  async function handleCreateModule(e: React.FormEvent<HTMLFormElement>) {
+  async function handleCreateTrack(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); setLoading(true); setError(null);
     const fd = new FormData(e.currentTarget); fd.set("skillId", skill.id);
-    const r = await createModule(fd);
+    const r = await createTrack(fd);
     if (r?.error) setError(r.error); else { setShowModForm(false); window.location.reload(); }
     setLoading(false);
   }
 
-  async function handleDeleteModule(id: string) {
+  async function handleDeleteTrack(id: string) {
     if (!confirm("Delete this track?")) return;
-    const r = await deleteModule(id);
+    const r = await deleteTrack(id);
     if (r?.error) alert(r.error); else window.location.reload();
   }
 
@@ -67,12 +67,12 @@ export function SkillDetailClient({ skill, tracks, questions }: { skill: Skill; 
           <button onClick={() => setShowModForm(!showModForm)} className="text-xs px-4 py-1.5 rounded-full bg-accent/10 text-accent font-semibold hover:bg-accent/20 transition-colors">{showModForm ? "Cancel" : "+ New Track"}</button>
         </div>
         {showModForm && (
-          <form onSubmit={handleCreateModule} className="flex gap-3 mb-4">
+          <form onSubmit={handleCreateTrack} className="flex gap-3 mb-4">
             <input name="title" placeholder="Track title" required className="flex-1 rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" />
             <button type="submit" disabled={loading} className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-5 py-2 text-sm transition-all disabled:opacity-50">Create</button>
           </form>
         )}
-        <SortableList table="tracks" items={tracks.map((m) => ({ id: m.id, label: m.title, sublabel: `${m.stepCount} steps` }))} editHref={(id) => `/admin/tracks/${id}`} onDelete={handleDeleteModule} />
+        <SortableList table="tracks" items={tracks.map((m) => ({ id: m.id, label: m.title, sublabel: `${m.stepCount} steps` }))} editHref={(id) => `/admin/tracks/${id}`} onDelete={handleDeleteTrack} />
       </div>
 
       {/* Quiz Questions */}

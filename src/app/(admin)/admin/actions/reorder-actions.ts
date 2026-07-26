@@ -25,7 +25,7 @@ export async function reorderItems(data: { table: string; items: Array<{ id: str
   const modelMap: Record<string, any> = {
     paths: prisma.path,
     skills: prisma.skill,
-    tracks: prisma.track,
+    modules: prisma.track,
     steps: prisma.step,
     quizQuestions: prisma.quizQuestion,
   };

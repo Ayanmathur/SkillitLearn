@@ -2,11 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/app/auth/actions";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { ModuleDetailClient } from "./module-detail-client";
+import { TrackDetailClient } from "./module-detail-client";
 
 interface Props { params: Promise<{ id: string }> }
 
-export default async function AdminModulePage({ params }: Props) {
+export default async function AdminTrackPage({ params }: Props) {
   const user = await requireRole(["admin", "super_admin"]).catch(() => null);
   if (!user) redirect("/login");
   const { id } = await params;
@@ -38,7 +38,7 @@ export default async function AdminModulePage({ params }: Props) {
         </div>
       </header>
       <div className="container-page py-8">
-        <ModuleDetailClient
+        <TrackDetailClient
           track={{ id: mod.id, title: mod.title, skillId: mod.skill.id }}
           steps={mod.steps.map((s) => ({ id: s.id, title: s.title, content: s.content }))}
         />

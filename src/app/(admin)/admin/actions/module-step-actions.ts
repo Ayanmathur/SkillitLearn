@@ -5,14 +5,14 @@ import { requireRole } from "@/app/auth/actions";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
-const createModuleSchema = z.object({ title: z.string().min(2).max(300), skillId: z.string().uuid() });
-const updateModuleSchema = createModuleSchema.extend({ id: z.string().uuid() });
+const createTrackSchema = z.object({ title: z.string().min(2).max(300), skillId: z.string().uuid() });
+const updateTrackSchema = createTrackSchema.extend({ id: z.string().uuid() });
 const createStepSchema = z.object({ title: z.string().min(2).max(300), content: z.string().max(50000), trackId: z.string().uuid() });
 const updateStepSchema = createStepSchema.extend({ id: z.string().uuid() });
 
-export async function createModule(formData: FormData) {
+export async function createTrack(formData: FormData) {
   const user = await requireRole(["admin", "super_admin"]);
-  const parsed = createModuleSchema.safeParse({ title: formData.get("title"), skillId: formData.get("skillId") });
+  const parsed = createTrackSchema.safeParse({ title: formData.get("title"), skillId: formData.get("skillId") });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const maxOrder = await prisma.track.aggregate({ where: { skillId: parsed.data.skillId }, _max: { orderIndex: true } });
   const mod = await prisma.track.create({ data: { ...parsed.data, orderIndex: (maxOrder._max.orderIndex ?? -1) + 1 } });
@@ -21,9 +21,9 @@ export async function createModule(formData: FormData) {
   return { success: true, id: mod.id };
 }
 
-export async function updateModule(formData: FormData) {
+export async function updateTrack(formData: FormData) {
   const user = await requireRole(["admin", "super_admin"]);
-  const parsed = updateModuleSchema.safeParse({ id: formData.get("id"), title: formData.get("title"), skillId: formData.get("skillId") });
+  const parsed = updateTrackSchema.safeParse({ id: formData.get("id"), title: formData.get("title"), skillId: formData.get("skillId") });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const { id, ...data } = parsed.data;
   await prisma.track.update({ where: { id }, data });
@@ -32,7 +32,7 @@ export async function updateModule(formData: FormData) {
   return { success: true };
 }
 
-export async function deleteModule(id: string) {
+export async function deleteTrack(id: string) {
   const user = await requireRole(["admin", "super_admin"]);
   z.string().uuid().parse(id);
   const stepCount = await prisma.step.count({ where: { trackId: id } });
@@ -45,7 +45,7 @@ export async function deleteModule(id: string) {
 
 export async function createStep(formData: FormData) {
   const user = await requireRole(["admin", "super_admin"]);
-  const parsed = createStepSchema.safeParse({ title: formData.get("title"), content: formData.get("content"), trackId: formData.get("trackId") });
+  const parsed = createStepSchema.safeParse({ title: formData.get("title"), content: formData.get("content"), trackId: formData.get("trackId") || formData.get("moduleId") });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const maxOrder = await prisma.step.aggregate({ where: { trackId: parsed.data.trackId }, _max: { orderIndex: true } });
   const step = await prisma.step.create({ data: { ...parsed.data, orderIndex: (maxOrder._max.orderIndex ?? -1) + 1 } });
@@ -56,12 +56,7 @@ export async function createStep(formData: FormData) {
 
 export async function updateStep(formData: FormData) {
   const user = await requireRole(["admin", "super_admin"]);
-  const parsed = updateStepSchema.safeParse({
-    id: formData.get("id"),
-    title: formData.get("title"),
-    content: formData.get("content"),
-    trackId: formData.get("trackId"),
-  });
+  const parsed = updateStepSchema.safeParse({ id: formData.get("id"), title: formData.get("title"), content: formData.get("content"), trackId: formData.get("trackId") || formData.get("moduleId") });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const { id, ...data } = parsed.data;
   await prisma.step.update({ where: { id }, data });
