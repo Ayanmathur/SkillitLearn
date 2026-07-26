@@ -246,8 +246,8 @@ export async function getPathBySlug(pathSlug: string) {
       .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
       .map((s: any) => {
         const tracksList = s.tracks || [];
-        const stepCount = tracksList.reduce((acc: number, t: any) => acc + ((t.steps || []).length), 0);
-        const estHours = Math.max(1, Math.round(stepCount * 0.35 + 0.5));
+        const trackCount = Math.max(tracksList.length, 3);
+        const estHours = trackCount * 5 + 3;
         return {
           id: s.id,
           name: s.name,
@@ -307,8 +307,8 @@ export async function getSkillBySlug(skillSlug: string) {
   const pathObj = Array.isArray(data.career_paths) ? data.career_paths[0] : data.career_paths;
   const careerObj = pathObj?.careers ? (Array.isArray(pathObj.careers) ? pathObj.careers[0] : pathObj.careers) : null;
   const tracksList = data.tracks || [];
-  const totalStepCount = tracksList.reduce((acc: number, t: any) => acc + ((t.steps || []).length), 0);
-  const estimatedHours = Math.max(1, Math.round(totalStepCount * 0.35 + 0.5));
+  const trackCount = Math.max(tracksList.length, 3);
+  const estimatedHours = trackCount * 5 + 3;
 
   return {
     id: data.id,

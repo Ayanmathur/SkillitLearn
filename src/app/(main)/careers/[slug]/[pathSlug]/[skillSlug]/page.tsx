@@ -12,7 +12,7 @@ interface Props {
   params: Promise<{ slug: string; pathSlug: string; skillSlug: string }>;
 }
 
-export const revalidate = 3600;
+export const revalidate = 0;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
