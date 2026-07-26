@@ -65,10 +65,10 @@ export default async function HomePage() {
   return (
     <main>
       {/* ── 1. Hero Banner ───────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#1a1a2e] via-[#1a1a2e] to-[#141627] text-white overflow-hidden py-20 md:py-28 lg:py-32">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
+      <section className="relative bg-gradient-to-b from-green-50/80 via-white to-surface dark:from-[#1a1a2e] dark:via-[#1a1a2e] dark:to-[#141627] text-text-primary dark:text-white overflow-hidden py-20 md:py-28 lg:py-32 transition-colors duration-300">
+        <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#5bbd72]/30 dark:bg-accent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#45bdff]/30 dark:bg-accent rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
         </div>
 
         <div className="container-page relative z-10">
@@ -84,12 +84,12 @@ export default async function HomePage() {
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-2xl">
+            <p className="text-lg md:text-xl text-text-secondary dark:text-white/80 mb-8 leading-relaxed max-w-2xl">
               Explore 50+ structured career paths with step-by-step booklets, hands-on module steps,
               competency quizzes, and verifiable industry certificates.
             </p>
 
-            <ul className="grid sm:grid-cols-2 gap-3 mb-10 text-sm font-medium text-white/90">
+            <ul className="grid sm:grid-cols-2 gap-3 mb-10 text-sm font-medium text-text-secondary dark:text-white/90">
               <li className="flex items-center gap-2.5">
                 <span className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold">✓</span>
                 Structured step-by-step career booklets
@@ -122,7 +122,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/verify"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20
+                className="inline-flex items-center gap-2 bg-surface hover:bg-surface-raised dark:bg-white/10 dark:hover:bg-white/20 text-text-primary dark:text-white border border-border-color dark:border-white/20
                            font-semibold rounded-full px-8 py-4 text-base transition-all duration-300"
               >
                 Verify Certificate
