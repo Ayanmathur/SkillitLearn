@@ -50,9 +50,9 @@ export async function getAllCareers(): Promise<CareerSummary[]> {
       name,
       slug,
       description,
-      icon_url,
+      icon,
       created_at,
-      paths (
+      career_paths (
         id,
         name,
         slug,
@@ -63,7 +63,6 @@ export async function getAllCareers(): Promise<CareerSummary[]> {
           name,
           slug,
           description,
-          estimated_hours,
           order_index
         )
       )
@@ -80,9 +79,9 @@ export async function getAllCareers(): Promise<CareerSummary[]> {
     name: c.name,
     slug: c.slug,
     description: c.description,
-    iconUrl: c.icon_url,
+    iconUrl: c.icon,
     createdAt: c.created_at,
-    paths: (c.paths || [])
+    paths: (c.career_paths || [])
       .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
       .map((p: any) => ({
         id: p.id,
