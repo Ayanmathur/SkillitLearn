@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ClientAuthWidget } from "./client-auth-widget";
 import { MobileNav } from "./mobile-nav";
+import { MobileHeaderControls } from "./mobile-header-controls";
 
 const NAV_LINKS = [
   { href: "/#careers", label: "Careers" },
@@ -11,19 +12,18 @@ const NAV_LINKS = [
 
 /**
  * Site header — renders instantly with no server-side auth check.
- *
- * PERFORMANCE: Auth state is handled by <ClientAuthWidget /> on the client,
- * so this component is a pure static render. This allows Vercel to cache
- * every public page at the edge via ISR.
  */
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#1a1a2e] shadow-lg">
       <div className="container-page flex items-center justify-between h-16">
-        {/* Logo */}
-        <Link href="/" className="flex-shrink-0">
-          <img src="/logo.png" alt="SkillItLearn" className="h-10 w-auto rounded" />
-        </Link>
+        {/* Left Side: Back Button + Logo */}
+        <div className="flex items-center">
+          <MobileHeaderControls />
+          <Link href="/" className="flex-shrink-0">
+            <img src="/logo.png" alt="SkillItLearn" className="h-9 md:h-10 w-auto rounded" />
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">

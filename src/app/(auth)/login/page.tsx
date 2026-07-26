@@ -3,14 +3,10 @@
 import { useState } from "react";
 import { signIn, signInWithGoogle } from "@/app/auth/actions";
 import Link from "next/link";
+import { PwaInstallBanner } from "@/components/pwa-install-banner";
 
 /**
  * Login page - email/password + Google OAuth.
- *
- * This is the same form for learners AND admins.
- * Admin access is determined by the DB role on the account
- * (mathurayan1@gmail.com / may@2002 → super_admin),
- * not by a separate admin login form.
  */
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -38,8 +34,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-surface flex items-center justify-center px-4">
+    <main className="min-h-screen bg-surface flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
+        {/* PWA Download App Banner - Strictly on Login Page */}
+        <PwaInstallBanner />
+
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">

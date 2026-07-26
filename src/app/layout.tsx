@@ -1,14 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PwaRegister } from "@/components/pwa-register";
 
-/**
- * Montserrat font loaded via next/font.
- * Weights: 400 (regular), 600 (semibold), 700 (bold), 800 (extrabold)
- * Italic: 400, 600
- * Applied as a CSS variable for Tailwind's font-sans.
- */
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
@@ -17,13 +12,31 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#1a1a2e",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: {
-    default: "SkillItLearn - Career Paths, Skills & Verifiable Certificates",
+    default: "SkillItLearn — Career Paths, Skills & Verifiable Certificates",
     template: "%s | SkillItLearn",
   },
   description:
     "Discover structured career paths, master in-demand skills through guided modules, prove your expertise with quizzes, and earn verifiable certificates.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "SkillItLearn",
+  },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   keywords: [
     "career development",
     "skill learning",
@@ -37,7 +50,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "SkillItLearn",
-    title: "SkillItLearn - Career Paths, Skills & Verifiable Certificates",
+    title: "SkillItLearn — Career Paths, Skills & Verifiable Certificates",
     description:
       "Discover structured career paths, master in-demand skills, and earn verifiable certificates.",
   },
@@ -52,6 +65,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.variable} font-sans antialiased`}>
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          <PwaRegister />
           {children}
         </ThemeProvider>
       </body>
