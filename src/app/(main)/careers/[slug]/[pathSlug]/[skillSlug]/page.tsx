@@ -15,13 +15,17 @@ interface Props {
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { skillSlug } = await params;
-  const skill = await getSkillBySlug(skillSlug);
-  if (!skill) return { title: "Skill Not Found" };
-  return {
-    title: `${skill.name} - SkillItLearn`,
-    description: skill.description,
-  };
+  try {
+    const { skillSlug } = await params;
+    const skill = await getSkillBySlug(skillSlug);
+    if (!skill) return { title: "Skill Not Found - SkillItLearn" };
+    return {
+      title: `${skill.name} - SkillItLearn`,
+      description: skill.description || "Learn skills step-by-step with guided learning tracks.",
+    };
+  } catch {
+    return { title: "SkillItLearn" };
+  }
 }
 
 export default async function SkillBookletPage({ params }: Props) {
@@ -31,8 +35,11 @@ export default async function SkillBookletPage({ params }: Props) {
 
   if (!skill) notFound();
 
-  const user = await getCurrentUser();
-  const allStepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
+  const user = await getCurrentUser().catch(() => null);
+  const modulesList = skill.modules || [];
+  const allStepIds = modulesList.flatMap((m: any) =>
+    (m.steps || []).map((s: any) => s.id)
+  );
   const totalSteps = allStepIds.length;
 
   // Fetch user's progress for this skill
@@ -41,24 +48,28 @@ export default async function SkillBookletPage({ params }: Props) {
   let skillComplete = false;
 
   if (user) {
-    const [completedSteps, quizAttempt, completion] = await Promise.all([
-      prisma.learnerProgress.findMany({
-        where: { userId: user.id, stepId: { in: allStepIds } },
-        select: { stepId: true },
-      }),
-      prisma.quizAttempt.findFirst({
-        where: { userId: user.id, skillId: skill.id, passed: true },
-        select: { id: true },
-      }),
-      prisma.skillCompletion.findFirst({
-        where: { userId: user.id, skillId: skill.id, quizPassed: true, stepsCompleted: true },
-        select: { id: true },
-      }),
-    ]);
+    try {
+      const [completedSteps, quizAttempt, completion] = await Promise.all([
+        prisma.learnerProgress.findMany({
+          where: { userId: user.id, stepId: { in: allStepIds } },
+          select: { stepId: true },
+        }).catch(() => []),
+        prisma.quizAttempt.findFirst({
+          where: { userId: user.id, skillId: skill.id, passed: true },
+          select: { id: true },
+        }).catch(() => null),
+        prisma.skillCompletion.findFirst({
+          where: { userId: user.id, skillId: skill.id, quizPassed: true, stepsCompleted: true },
+          select: { id: true },
+        }).catch(() => null),
+      ]);
 
-    completedStepIds = new Set(completedSteps.map((s) => s.stepId));
-    hasPassedQuiz = !!quizAttempt;
-    skillComplete = !!completion;
+      completedStepIds = new Set(completedSteps.map((s) => s.stepId));
+      hasPassedQuiz = !!quizAttempt;
+      skillComplete = !!completion;
+    } catch (e) {
+      console.error("Skill progress query error:", e);
+    }
   }
 
   const completedStepCount = completedStepIds.size;
@@ -78,11 +89,11 @@ export default async function SkillBookletPage({ params }: Props) {
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
-              {skill.path?.career?.name}
+              {skill.path?.career?.name || "Career"}
             </Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}/${pathSlug}`} className="hover:text-accent transition-colors">
-              {skill.path?.name}
+              {skill.path?.name || "Path"}
             </Link>
             <span>/</span>
             <span className="text-gray-700 dark:text-white/80">{skill.name}</span>
@@ -97,13 +108,10 @@ export default async function SkillBookletPage({ params }: Props) {
 
           <div className="flex flex-wrap gap-3 text-xs mb-5">
             <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
-              📖 {skill.modules.length} track{skill.modules.length !== 1 ? "s" : ""}
+              📖 {modulesList.length} track{modulesList.length !== 1 ? "s" : ""}
             </span>
             <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
               📄 {totalSteps} step{totalSteps !== 1 ? "s" : ""}
-            </span>
-            <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
-              ⏱️ ~{skill.estimatedHours}h
             </span>
             {skillComplete && (
               <span className="bg-accent/20 rounded-full px-4 py-1.5 text-accent font-medium">
@@ -148,10 +156,10 @@ export default async function SkillBookletPage({ params }: Props) {
       <section className="py-8 md:py-14">
         <div className="container-page max-w-4xl">
           <SkillBookletContent
-            tracks={skill.modules.map((m: any) => ({
+            tracks={modulesList.map((m: any) => ({
               ...m,
-              orderIndex: m.order_index,
-              steps: m.steps.map((s: any) => ({ ...s, orderIndex: s.order_index })),
+              orderIndex: m.order_index ?? 0,
+              steps: (m.steps || []).map((s: any) => ({ ...s, orderIndex: s.order_index ?? 0 })),
             }))}
             completedStepIds={Array.from(completedStepIds)}
             isLoggedIn={!!user}
@@ -173,7 +181,7 @@ export default async function SkillBookletPage({ params }: Props) {
               )}
 
               <p className="text-text-secondary text-sm mb-6">
-                Take a 5-question quiz to complete this skill and earn progress
+                Take a 15-question quiz to complete this skill and earn progress
                 toward your certificate.
               </p>
 
