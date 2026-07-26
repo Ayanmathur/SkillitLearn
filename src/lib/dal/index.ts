@@ -238,15 +238,20 @@ export async function getPathBySlug(pathSlug: string) {
     career: careerObj ? { name: careerObj.name, slug: careerObj.slug } : null,
     skills: (data.skills || [])
       .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-      .map((s: any) => ({
-        id: s.id,
-        name: s.name,
-        slug: s.slug,
-        description: s.description,
-        estimatedHours: 0,
-        orderIndex: s.order_index ?? 0,
-        modules: s.tracks || [],
-      })),
+      .map((s: any) => {
+        const tracksList = s.tracks || [];
+        const stepCount = tracksList.reduce((acc: number, t: any) => acc + ((t.steps || []).length), 0);
+        const estHours = Math.max(1, Math.round(stepCount * 0.35 + 0.5));
+        return {
+          id: s.id,
+          name: s.name,
+          slug: s.slug,
+          description: s.description,
+          estimatedHours: estHours,
+          orderIndex: s.order_index ?? 0,
+          modules: tracksList,
+        };
+      }),
   };
 }
 
@@ -295,13 +300,16 @@ export async function getSkillBySlug(skillSlug: string) {
 
   const pathObj = Array.isArray(data.career_paths) ? data.career_paths[0] : data.career_paths;
   const careerObj = pathObj?.careers ? (Array.isArray(pathObj.careers) ? pathObj.careers[0] : pathObj.careers) : null;
+  const tracksList = data.tracks || [];
+  const totalStepCount = tracksList.reduce((acc: number, t: any) => acc + ((t.steps || []).length), 0);
+  const estimatedHours = Math.max(1, Math.round(totalStepCount * 0.35 + 0.5));
 
   return {
     id: data.id,
     name: data.name,
     slug: data.slug,
     description: data.description,
-    estimatedHours: 0,
+    estimatedHours: estimatedHours,
     orderIndex: data.order_index ?? 0,
     pathId: data.path_id,
     path: pathObj
