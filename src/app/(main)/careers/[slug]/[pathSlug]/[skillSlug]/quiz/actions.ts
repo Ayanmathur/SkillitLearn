@@ -1,7 +1,7 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { requireAuth } from "@/app/auth/actions";
+import { getCurrentUser, requireAuth } from "@/app/auth/actions";
 import { getQuizForSkill } from "@/lib/dal";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
@@ -155,7 +155,11 @@ export async function submitQuiz(data: {
  */
 export async function markStepComplete(stepId: string) {
   try {
-    const user = await requireAuth();
+    const user = await getCurrentUser();
+    if (!user) {
+      return { error: "not_authenticated" };
+    }
+
     await prisma.learnerProgress.upsert({
       where: {
         userId_stepId: {
@@ -171,6 +175,7 @@ export async function markStepComplete(stepId: string) {
         stepId: stepId,
       },
     });
+
     return { success: true };
   } catch (error: any) {
     console.error("markStepComplete error:", error?.message || error);

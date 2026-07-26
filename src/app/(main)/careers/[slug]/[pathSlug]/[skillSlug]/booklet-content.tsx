@@ -63,8 +63,18 @@ export function SkillBookletContent({
     setCompletedIds((prev) => new Set([...Array.from(prev), stepId]));
 
     startTransition(async () => {
-      const result = await markStepComplete(stepId);
-      if (!result.success) {
+      try {
+        const result = await markStepComplete(stepId);
+        if (result?.success) {
+          router.refresh();
+        } else {
+          setCompletedIds((prev) => {
+            const next = new Set(prev);
+            next.delete(stepId);
+            return next;
+          });
+        }
+      } catch {
         setCompletedIds((prev) => {
           const next = new Set(prev);
           next.delete(stepId);
