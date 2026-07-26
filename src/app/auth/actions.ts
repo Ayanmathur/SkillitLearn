@@ -74,7 +74,6 @@ export async function signUp(formData: FormData) {
   }
 
   // Create corresponding user record in our DB
-  // Default role: 'learner'
   try {
     await prisma.user.upsert({
       where: { id: data.user.id },
@@ -87,15 +86,26 @@ export async function signUp(formData: FormData) {
       },
     });
   } catch (dbError) {
-    // If DB insert fails, the user can still verify email
-    // and the DB record will be created on first login
     console.error("Failed to create user record:", dbError);
+  }
+
+  // Auto-login fallback: attempt immediate sign-in so user doesn't wait for email verification
+  if (data.session) {
+    redirect("/");
+  }
+
+  const { data: signInData, error: signInErr } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (signInData?.user) {
+    redirect("/");
   }
 
   return {
     success: true,
-    message:
-      "Check your email for a verification link. You must verify your email before logging in.",
+    message: "Account created successfully! You can now log in.",
   };
 }
 
