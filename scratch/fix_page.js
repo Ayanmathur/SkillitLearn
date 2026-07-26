@@ -1,4 +1,7 @@
-import Link from "next/link";
+const fs = require('fs');
+const path = require('path');
+
+const content = `import Link from "next/link";
 import Image from "next/image";
 import { getAllCareers, getStats } from "@/lib/dal";
 import { CareerExplorer } from "@/components/career-explorer";
@@ -215,7 +218,7 @@ export default async function HomePage() {
             {[
               { value: careerCount, label: "Careers Available", bgImage: "/images/careers/project.jpg" },
               { value: pathCount, label: "Learning Paths", bgImage: "/images/careers/teaching.jpg" },
-              { value: `${skillCount}+`, label: "Skills to Master", bgImage: "/images/careers/it-and.jpg" },
+              { value: \`\${skillCount}+\`, label: "Skills to Master", bgImage: "/images/careers/it-and.jpg" },
               { value: "1200+", label: "Certificates Issued", bgImage: "/images/careers/digital-marketing.jpg" },
             ].map((stat) => (
               <div
@@ -260,7 +263,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <Prefetcher urls={careers.map((c) => `/careers/${c.slug}`)} />
+      <Prefetcher urls={careers.map((c) => \`/careers/\${c.slug}\`)} />
     </main>
   );
 }
+`;
+
+const targetPath = path.join(__dirname, '..', 'src', 'app', '(main)', 'page.tsx');
+fs.writeFileSync(targetPath, content, 'utf8');
+console.log('Successfully updated page.tsx with correct Testimonial types');
