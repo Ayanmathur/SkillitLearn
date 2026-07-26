@@ -95,8 +95,7 @@ export default async function CareerDetailPage({ params }: Props) {
                   className={`group relative bg-surface-raised rounded-2xl p-6
                              border border-[var(--border-color)]
                              shadow-sm hover:shadow-card
-                             transition-all duration-300 hover:-translate-y-1
-                             ${i % 3 === 1 ? "sm:translate-y-3" : ""}`}
+                             transition-all duration-300 hover:-translate-y-1`}
                 >
                   {/* Order badge */}
                   <div className="absolute top-4 left-4 w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center text-sm font-bold">
