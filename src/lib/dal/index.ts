@@ -331,3 +331,65 @@ export async function getSkillBySlug(skillSlug: string) {
     quizQuestions: [],
   };
 }
+
+// ── Quiz Question Selection (15 Questions: 5 Easy, 5 Moderate, 5 Difficult) ──
+
+export async function getQuizForSkill(skillSlug: string) {
+  const { data: skill, error: sErr } = await supabase
+    .from("skills")
+    .select("id, name, slug")
+    .eq("slug", skillSlug)
+    .single();
+
+  if (sErr || !skill) return null;
+
+  const { data: questions, error: qErr } = await supabase
+    .from("quiz_questions")
+    .select(`
+      id,
+      question_text,
+      options,
+      correct_option_index,
+      explanation,
+      difficulty,
+      order_index
+    `)
+    .eq("skill_id", skill.id);
+
+  if (qErr || !questions || questions.length === 0) {
+    return { skill, questions: [] };
+  }
+
+  // Shuffle helper
+  const shuffle = <T>(array: T[]): T[] => [...array].sort(() => 0.5 - Math.random());
+
+  const easy = shuffle(questions.filter((q: any) => q.difficulty === "easy"));
+  const moderate = shuffle(questions.filter((q: any) => q.difficulty === "moderate"));
+  const difficult = shuffle(questions.filter((q: any) => q.difficulty === "difficult"));
+
+  // Select 5 of each difficulty level
+  const selectedEasy = easy.slice(0, 5);
+  const selectedModerate = moderate.slice(0, 5);
+  const selectedDifficult = difficult.slice(0, 5);
+
+  let selected = [...selectedEasy, ...selectedModerate, ...selectedDifficult];
+
+  // Fallback if difficulty counts are uneven
+  if (selected.length < 15) {
+    const remaining = shuffle(questions.filter((q: any) => !selected.some((s) => s.id === q.id)));
+    selected = [...selected, ...remaining.slice(0, 15 - selected.length)];
+  }
+
+  return {
+    skill,
+    questions: selected.map((q: any) => ({
+      id: q.id,
+      questionText: q.question_text,
+      options: q.options || [],
+      correctOptionIndex: q.correct_option_index,
+      explanation: q.explanation,
+      difficulty: q.difficulty,
+    })),
+  };
+}
+

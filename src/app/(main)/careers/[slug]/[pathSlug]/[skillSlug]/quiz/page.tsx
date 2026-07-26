@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/app/auth/actions";
 import { redirect } from "next/navigation";
 import { QuizClient } from "./quiz-client";
@@ -9,71 +8,52 @@ interface Props {
 }
 
 export const metadata: Metadata = {
-  title: "Quiz - SkillItLearn",
+  title: "Quiz — SkillItLearn",
 };
 
 export default async function QuizPage({ params }: Props) {
   const { slug, pathSlug, skillSlug } = await params;
 
-  // Require login
+  // Require authentication
   const user = await getCurrentUser();
   if (!user) {
     redirect(`/login?redirect=/careers/${slug}/${pathSlug}/${skillSlug}/quiz`);
   }
 
-  // Fetch skill info
-  const skill = await prisma.skill.findUnique({
-    where: { slug: skillSlug },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      path: {
-        select: {
-          name: true,
-          slug: true,
-          career: { select: { name: true, slug: true } },
-        },
-      },
-    },
-  });
-
-  if (!skill) redirect(`/careers/${slug}/${pathSlug}`);
-
-  // Check if already passed
-  const existingPass = await prisma.quizAttempt.findFirst({
-    where: { userId: user.id, skillId: skill.id, passed: true },
-    select: { score: true },
-  });
+  // Format readable skill name from slug
+  const skillName = skillSlug
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 
   return (
     <main className="min-h-screen bg-surface">
       {/* Header */}
-      <section className="bg-green-50 dark:bg-[#1a1a2e] py-8">
+      <section className="bg-green-50/80 dark:bg-[#1a1a2e] py-8 border-b border-border-color">
         <div className="container-page max-w-3xl">
-          <nav className="flex items-center gap-2 text-xs text-gray-500 dark:text-white/60 mb-3 flex-wrap">
+          <nav className="flex items-center gap-2 text-xs text-text-secondary mb-3 flex-wrap">
             <a href="/" className="hover:text-accent transition-colors">Home</a>
             <span>/</span>
             <a href={`/careers/${slug}`} className="hover:text-accent transition-colors">
-              {skill.path.career.name}
+              Career
             </a>
             <span>/</span>
             <a href={`/careers/${slug}/${pathSlug}`} className="hover:text-accent transition-colors">
-              {skill.path.name}
+              Learning Path
             </a>
             <span>/</span>
             <a href={`/careers/${slug}/${pathSlug}/${skillSlug}`} className="hover:text-accent transition-colors">
-              {skill.name}
+              {skillName}
             </a>
             <span>/</span>
-            <span className="text-gray-700 dark:text-white/80">Quiz</span>
+            <span className="text-text-primary font-medium">Quiz</span>
           </nav>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            {skill.name} - Quiz
+          <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
+            {skillName} — Quiz Evaluation
           </h1>
-          <p className="text-sm text-gray-700 dark:text-white/60">
-            Answer 5 questions. You need 4/5 (80%) to pass. Take your time.
+          <p className="text-sm text-text-secondary">
+            15 Randomized Questions (5 Easy, 5 Moderate, 5 Difficult). Answer 10 out of 15 correctly (66%) to pass and unlock your certificate.
           </p>
         </div>
       </section>
@@ -81,32 +61,12 @@ export default async function QuizPage({ params }: Props) {
       {/* Quiz body */}
       <section className="py-8 md:py-12">
         <div className="container-page max-w-3xl">
-          {existingPass ? (
-            <div className="text-center py-12">
-              <div className="text-5xl mb-4">🎉</div>
-              <h2 className="text-2xl font-bold text-text-primary mb-2">
-                You&apos;ve already passed!
-              </h2>
-              <p className="text-text-secondary mb-6">
-                You scored {existingPass.score}/5 on this quiz.
-              </p>
-              <a
-                href={`/careers/${slug}/${pathSlug}`}
-                className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
-                           font-semibold rounded-full px-8 py-3
-                           transition-all duration-300"
-              >
-                Back to Path
-              </a>
-            </div>
-          ) : (
-            <QuizClient
-              skillId={skill.id}
-              skillName={skill.name}
-              backUrl={`/careers/${slug}/${pathSlug}/${skillSlug}`}
-              pathUrl={`/careers/${slug}/${pathSlug}`}
-            />
-          )}
+          <QuizClient
+            skillSlug={skillSlug}
+            skillName={skillName}
+            backUrl={`/careers/${slug}/${pathSlug}/${skillSlug}`}
+            pathUrl={`/careers/${slug}/${pathSlug}`}
+          />
         </div>
       </section>
     </main>

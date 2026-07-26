@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { getQuizQuestions, submitQuiz } from "./actions";
+import { getQuizQuestionsBySlug, submitQuiz } from "./actions";
 
 interface Question {
   id: string;
   questionText: string;
   choices: Array<{ id: string; text: string }>;
+  difficulty?: string;
 }
 
 interface Result {
@@ -17,26 +18,28 @@ interface Result {
   correctAnswer: string;
   isCorrect: boolean;
   explanation: string;
+  difficulty?: string;
 }
 
 interface Props {
-  skillId: string;
+  skillSlug: string;
   skillName: string;
   backUrl: string;
   pathUrl: string;
 }
 
-type Phase = "loading" | "steps_incomplete" | "quiz" | "submitting" | "results";
+type Phase = "loading" | "no_questions" | "quiz" | "submitting" | "results";
 
-export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
+export function QuizClient({ skillSlug, skillName, backUrl, pathUrl }: Props) {
   const [phase, setPhase] = useState<Phase>("loading");
+  const [skillId, setSkillId] = useState<string>("");
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, number>>({});
   const [results, setResults] = useState<Result[] | null>(null);
   const [score, setScore] = useState(0);
+  const [total, setTotal] = useState(15);
   const [passed, setPassed] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [stepsInfo, setStepsInfo] = useState({ completed: 0, total: 0 });
 
   const loadQuestions = useCallback(async () => {
     setPhase("loading");
@@ -45,46 +48,34 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
     setError(null);
 
     try {
-      const data = await getQuizQuestions(skillId);
+      const data = await getQuizQuestionsBySlug(skillSlug);
 
       if ("error" in data) {
-        if (data.error === "complete_steps_first") {
-          setStepsInfo({
-            completed: (data as any).completed || 0,
-            total: (data as any).total || 0,
-          });
-          setPhase("steps_incomplete");
-        } else if (data.error === "not_enough_questions") {
-          setError("This skill doesn't have enough quiz questions yet. Check back later.");
-          setPhase("quiz");
-        } else {
-          setError(data.error as string);
-          setPhase("quiz");
-        }
+        setPhase("no_questions");
         return;
       }
 
-      if (data.questions) {
-        setQuestions(data.questions);
-        setPhase("quiz");
-      }
-    } catch (err: any) {
-      setError(err.message || "Failed to load quiz questions.");
+      setSkillId(data.skillId);
+      setQuestions(data.questions);
+      setTotal(data.questions.length);
       setPhase("quiz");
+    } catch (err: any) {
+      setError(err.message || "Failed to load quiz.");
+      setPhase("no_questions");
     }
-  }, [skillId]);
+  }, [skillSlug]);
 
   useEffect(() => {
     loadQuestions();
   }, [loadQuestions]);
 
-  function selectAnswer(questionId: string, choiceId: string) {
-    setAnswers((prev) => ({ ...prev, [questionId]: choiceId }));
-  }
+  const handleSelectChoice = (questionId: string, optionIndex: number) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: optionIndex }));
+  };
 
-  async function handleSubmit() {
-    if (Object.keys(answers).length < 5) {
-      setError("Please answer all 5 questions before submitting.");
+  const handleSubmit = async () => {
+    if (Object.keys(answers).length < questions.length) {
+      setError(`Please answer all ${questions.length} questions before submitting.`);
       return;
     }
 
@@ -92,249 +83,227 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
     setError(null);
 
     try {
-      const result = await submitQuiz({ skillId, answers });
-
-      if ("error" in result && result.error) {
-        setError(result.error as string);
+      const res = await submitQuiz({ skillId, answers });
+      if (res.error) {
+        setError(res.error);
         setPhase("quiz");
         return;
       }
 
-      setScore(result.score!);
-      setPassed(result.passed!);
-      setResults(result.results!);
+      setScore(res.score ?? 0);
+      setTotal(res.total || 15);
+      setPassed(res.passed ?? false);
+      setResults(res.results || []);
       setPhase("results");
     } catch (err: any) {
-      setError(err.message || "Failed to submit quiz.");
+      setError(err.message || "Failed to grade quiz.");
       setPhase("quiz");
     }
+  };
+
+  if (phase === "loading") {
+    return (
+      <div className="text-center py-16">
+        <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-text-secondary text-sm font-medium">Preparing your 15-question quiz...</p>
+      </div>
+    );
   }
 
-  // ── Steps Incomplete ─────────────────────────────────
-  if (phase === "steps_incomplete") {
+  if (phase === "no_questions") {
     return (
-      <div className="text-center py-12">
-        <div className="text-5xl mb-4">📖</div>
-        <h2 className="text-2xl font-bold text-text-primary mb-2">
-          Complete the steps first
-        </h2>
-        <p className="text-text-secondary mb-2">
-          You&apos;ve completed {stepsInfo.completed} of {stepsInfo.total} steps
-          in &ldquo;{skillName}&rdquo;.
+      <div className="bg-surface-raised rounded-2xl p-8 text-center border border-border-color">
+        <div className="text-4xl mb-3">📝</div>
+        <h3 className="text-lg font-bold text-text-primary mb-2">Quiz Questions Coming Soon</h3>
+        <p className="text-sm text-text-secondary mb-6">
+          Quiz questions for &quot;{skillName}&quot; are currently being finalized.
         </p>
-        <p className="text-text-secondary mb-6">
-          Finish all steps before taking the quiz.
-        </p>
-        <div className="max-w-xs mx-auto mb-6">
-          <div className="h-3 rounded-full bg-accent/10 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-accent transition-all"
-              style={{
-                width: `${stepsInfo.total > 0 ? (stepsInfo.completed / stepsInfo.total) * 100 : 0}%`,
-              }}
-            />
-          </div>
-        </div>
         <a
           href={backUrl}
-          className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
-                     font-semibold rounded-full px-8 py-3 transition-all"
+          className="inline-flex items-center gap-2 bg-accent text-white font-semibold rounded-full px-6 py-2.5 text-sm"
         >
-          Go to Skill Content
+          Back to Skill Booklet
         </a>
       </div>
     );
   }
 
-  // ── Loading ──────────────────────────────────────────
-  if (phase === "loading") {
-    return (
-      <div className="text-center py-16">
-        <div className="inline-block w-10 h-10 border-4 border-accent/20 border-t-accent rounded-full animate-spin mb-4" />
-        <p className="text-text-secondary">Loading quiz questions...</p>
-      </div>
-    );
-  }
-
-  // ── Results ──────────────────────────────────────────
   if (phase === "results" && results) {
+    const percent = Math.round((score / total) * 100);
+
     return (
-      <div>
-        {/* Score card */}
+      <div className="space-y-8 animate-fade-in">
+        {/* Banner */}
         <div
-          className={`text-center rounded-2xl p-8 mb-8 border-2 ${
+          className={`rounded-3xl p-8 text-center border shadow-lg ${
             passed
-              ? "bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/10 border-green-200 dark:border-green-800"
-              : "bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-800"
+              ? "bg-green-50 dark:bg-green-950/30 border-green-300 dark:border-green-800"
+              : "bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800"
           }`}
         >
-          <div className="text-5xl mb-3">{passed ? "🎉" : "😔"}</div>
-          <h2 className="text-2xl font-bold text-text-primary mb-1">
-            {passed ? "Congratulations! You passed!" : "Not quite - try again!"}
+          <div className="text-5xl mb-3">{passed ? "🎉" : "💪"}</div>
+          <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
+            {passed ? "Congratulations! You Passed!" : "Keep Going! Practice Makes Perfect."}
           </h2>
-          <p className="text-lg text-text-secondary mb-1">
-            Score: <span className="font-bold text-text-primary">{score}/5</span>{" "}
-            ({Math.round((score / 5) * 100)}%)
-          </p>
-          <p className="text-sm text-text-muted">
+          <p className="text-sm text-text-secondary max-w-md mx-auto mb-6">
             {passed
-              ? "This skill is now marked as complete. Your quiz_passed status has been updated."
-              : "You need 4/5 (80%) to pass. Review the explanations below and try again."}
+              ? `You answered ${score} out of ${total} questions correctly (${percent}%). Passing criteria is 10/15 (66%).`
+              : `You scored ${score}/${total} (${percent}%). You need 10/15 (66%) to pass.`}
           </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            {!passed && (
+              <button
+                onClick={loadQuestions}
+                className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-8 py-3 text-sm transition-all"
+              >
+                Try New Question Set
+              </button>
+            )}
+            <a
+              href={pathUrl}
+              className="bg-surface border border-border-color hover:border-accent text-text-primary font-semibold rounded-full px-8 py-3 text-sm transition-all"
+            >
+              Back to Learning Path
+            </a>
+          </div>
         </div>
 
-        {/* Question results */}
-        <div className="space-y-6 mb-8">
+        {/* Detailed Breakdown */}
+        <div className="space-y-6">
+          <h3 className="text-xl font-bold text-text-primary">Question Review</h3>
           {results.map((r, i) => (
             <div
               key={r.questionId}
-              className={`rounded-2xl border p-5 ${
-                r.isCorrect
-                  ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-[#1a1a2e]/50 dark:bg-green-900/5"
-                  : "border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-900/5"
+              className={`rounded-2xl p-6 border bg-surface-raised ${
+                r.isCorrect ? "border-green-300 dark:border-green-800" : "border-red-300 dark:border-red-800"
               }`}
             >
-              <div className="flex items-start gap-3 mb-3">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <span className="font-bold text-sm text-text-primary">
+                  Question {i + 1} of {total}
+                </span>
                 <span
-                  className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold text-white ${
-                    r.isCorrect ? "bg-green-50 dark:bg-[#1a1a2e]0" : "bg-red-500"
+                  className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                    r.isCorrect
+                      ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300"
+                      : "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300"
                   }`}
                 >
-                  {r.isCorrect ? "✓" : "✗"}
+                  {r.isCorrect ? "Correct ✓" : "Incorrect ✗"}
                 </span>
-                <h3 className="font-semibold text-text-primary text-sm">
-                  Q{i + 1}: {r.questionText}
-                </h3>
               </div>
 
-              <div className="space-y-2 ml-10 mb-3">
-                {r.choices.map((c) => {
-                  const isUserPick = c.id === r.userAnswer;
-                  const isCorrect = c.id === r.correctAnswer;
-                  let classes = "rounded-xl px-4 py-2.5 text-sm border transition-all ";
+              <p className="text-base font-semibold text-text-primary mb-4">{r.questionText}</p>
 
-                  if (isCorrect) {
-                    classes +=
-                      "border-green-300 dark:border-green-700 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 font-medium";
-                  } else if (isUserPick && !isCorrect) {
-                    classes +=
-                      "border-red-300 dark:border-red-700 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 line-through";
-                  } else {
-                    classes +=
-                      "border-[var(--border-color)] bg-surface text-text-secondary";
+              <div className="space-y-2 mb-4">
+                {r.choices.map((c) => {
+                  const isUserChoice = String(c.id) === String(r.userAnswer);
+                  const isCorrectChoice = String(c.id) === String(r.correctAnswer);
+
+                  let btnStyle = "border-border-color text-text-secondary";
+                  if (isCorrectChoice) {
+                    btnStyle = "border-green-500 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 font-semibold";
+                  } else if (isUserChoice && !r.isCorrect) {
+                    btnStyle = "border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300";
                   }
 
                   return (
-                    <div key={c.id} className={classes}>
-                      <span className="font-mono text-xs mr-2 opacity-50">
-                        {c.id.toUpperCase()}.
-                      </span>
-                      {c.text}
-                      {isCorrect && " ✓"}
-                      {isUserPick && !isCorrect && " (your answer)"}
+                    <div key={c.id} className={`p-3 rounded-xl border text-sm flex items-center justify-between ${btnStyle}`}>
+                      <span>{c.text}</span>
+                      {isCorrectChoice && <span className="text-xs font-bold text-green-600">Correct Answer</span>}
+                      {isUserChoice && !isCorrectChoice && <span className="text-xs font-bold text-red-500">Your Selection</span>}
                     </div>
                   );
                 })}
               </div>
 
-              {/* Explanation */}
-              <div className="ml-10 rounded-xl bg-accent/5 border border-accent/10 px-4 py-3">
-                <p className="text-xs font-semibold text-accent mb-1">
-                  Explanation
-                </p>
-                <p className="text-sm text-text-secondary">{r.explanation}</p>
-              </div>
+              {r.explanation && (
+                <div className="bg-accent/10 border border-accent/20 rounded-xl p-3 text-xs text-text-secondary">
+                  💡 <strong className="text-accent">Explanation:</strong> {r.explanation}
+                </div>
+              )}
             </div>
           ))}
-        </div>
-
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          {passed ? (
-            <a
-              href={pathUrl}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
-                         font-semibold rounded-full px-8 py-3 transition-all"
-            >
-              Back to Path
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-              </svg>
-            </a>
-          ) : (
-            <button
-              onClick={loadQuestions}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
-                         font-semibold rounded-full px-8 py-3 transition-all"
-            >
-              Try Again (New Questions)
-            </button>
-          )}
-          <a
-            href={backUrl}
-            className="text-sm text-text-secondary hover:text-accent transition-colors"
-          >
-            ← Back to skill content
-          </a>
         </div>
       </div>
     );
   }
 
-  // ── Quiz Form ────────────────────────────────────────
-  const allAnswered = Object.keys(answers).length === questions.length;
+  const answeredCount = Object.keys(answers).length;
 
   return (
-    <div>
+    <div className="space-y-8">
+      {/* Top Header Card */}
+      <div className="bg-surface-raised border border-border-color rounded-2xl p-6 flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <div className="text-xs text-accent font-semibold uppercase tracking-wider mb-1">
+            Competency Evaluation
+          </div>
+          <h2 className="text-lg font-bold text-text-primary">
+            15 Randomized Questions (5 Easy, 5 Moderate, 5 Difficult)
+          </h2>
+          <p className="text-xs text-text-secondary mt-1">
+            Passing criteria: Answer <strong>10 out of 15</strong> questions correctly (66%).
+          </p>
+        </div>
+
+        <div className="bg-accent/10 text-accent font-bold px-4 py-2 rounded-full text-xs">
+          {answeredCount} / {questions.length} Answered
+        </div>
+      </div>
+
       {error && (
-        <div className="rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-300 mb-6">
-          {error}
+        <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-300 text-xs font-medium">
+          ⚠️ {error}
         </div>
       )}
 
-      {questions.length === 0 && !error && (
-        <div className="text-center py-12">
-          <p className="text-text-secondary">No quiz questions available yet.</p>
-          <a href={backUrl} className="text-accent text-sm mt-2 inline-block">
-            ← Back to skill
-          </a>
-        </div>
-      )}
-
+      {/* Questions list */}
       <div className="space-y-6">
-        {questions.map((q, i) => (
+        {questions.map((q, qIdx) => (
           <div
             key={q.id}
-            className="rounded-2xl border border-[var(--border-color)] bg-surface-raised p-5 md:p-6
-                       shadow-sm transition-all"
+            className="bg-surface-raised border border-border-color rounded-2xl p-6 shadow-sm hover:border-accent/40 transition-all"
           >
-            <div className="flex items-start gap-3 mb-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-green-50 dark:bg-[#1a1a2e] text-white flex items-center justify-center text-sm font-bold">
-                {i + 1}
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <span className="text-xs font-bold text-accent">
+                Question {qIdx + 1} of {questions.length}
               </span>
-              <h3 className="font-semibold text-text-primary text-sm md:text-base leading-relaxed">
-                {q.questionText}
-              </h3>
+              {q.difficulty && (
+                <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-surface border border-border-color text-text-muted">
+                  {q.difficulty}
+                </span>
+              )}
             </div>
 
-            <div className="space-y-2 ml-11">
-              {q.choices.map((c) => {
-                const isSelected = answers[q.id] === c.id;
+            <h3 className="text-base font-bold text-text-primary mb-4 leading-snug">
+              {q.questionText}
+            </h3>
+
+            <div className="space-y-2">
+              {q.choices.map((c, cIdx) => {
+                const selected = answers[q.id] === cIdx;
                 return (
                   <button
                     key={c.id}
-                    onClick={() => selectAnswer(q.id, c.id)}
-                    className={`w-full text-left rounded-xl px-4 py-3 text-sm border-2 transition-all duration-200
-                      ${
-                        isSelected
-                          ? "border-accent bg-accent/10 text-text-primary font-medium"
-                          : "border-[var(--border-color)] bg-surface text-text-secondary hover:border-accent/30 hover:bg-accent/5"
-                      }`}
+                    onClick={() => handleSelectChoice(q.id, cIdx)}
+                    className={`w-full text-left p-4 rounded-xl border text-sm font-medium transition-all flex items-center gap-3 ${
+                      selected
+                        ? "border-accent bg-accent/10 text-text-primary shadow-sm"
+                        : "border-border-color bg-surface hover:bg-surface-raised text-text-secondary"
+                    }`}
                   >
-                    <span className="font-mono text-xs mr-2 opacity-50">
-                      {c.id.toUpperCase()}.
-                    </span>
-                    {c.text}
+                    <div
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center text-xs font-bold ${
+                        selected
+                          ? "border-accent bg-accent text-white"
+                          : "border-border-color text-text-muted"
+                      }`}
+                    >
+                      {String.fromCharCode(65 + cIdx)}
+                    </div>
+                    <span className="flex-1">{c.text}</span>
                   </button>
                 );
               })}
@@ -343,35 +312,20 @@ export function QuizClient({ skillId, skillName, backUrl, pathUrl }: Props) {
         ))}
       </div>
 
-      {questions.length > 0 && (
-        <div className="mt-8 text-center">
-          <button
-            onClick={handleSubmit}
-            disabled={!allAnswered || phase === "submitting"}
-            className={`inline-flex items-center gap-2 font-semibold rounded-full px-10 py-3.5
-                        transition-all duration-300 text-base
-                        ${
-                          allAnswered
-                            ? "bg-accent hover:bg-accent-hover text-white hover:shadow-lg hover:shadow-accent/30"
-                            : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-white/60 dark:text-gray-400 cursor-not-allowed"
-                        }`}
-          >
-            {phase === "submitting" ? (
-              <>
-                <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Grading...
-              </>
-            ) : (
-              `Submit Quiz (${Object.keys(answers).length}/5 answered)`
-            )}
-          </button>
-          {!allAnswered && (
-            <p className="text-xs text-text-muted mt-2">
-              Answer all 5 questions to submit
-            </p>
-          )}
-        </div>
-      )}
+      {/* Submit Button Bar */}
+      <div className="sticky bottom-4 z-20 bg-surface-raised/90 backdrop-blur-md border border-border-color rounded-2xl p-4 flex items-center justify-between gap-4 shadow-xl">
+        <span className="text-xs text-text-secondary font-medium">
+          {answeredCount === questions.length ? "✅ Ready to Submit" : `Answer remaining ${questions.length - answeredCount} questions`}
+        </span>
+
+        <button
+          onClick={handleSubmit}
+          disabled={phase === "submitting" || answeredCount < questions.length}
+          className="bg-accent hover:bg-accent-hover text-white font-bold rounded-full px-8 py-3 text-sm transition-all disabled:opacity-50 shadow-md"
+        >
+          {phase === "submitting" ? "Grading Quiz..." : "Submit Quiz"}
+        </button>
+      </div>
     </div>
   );
 }

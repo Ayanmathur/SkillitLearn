@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { markStepComplete } from "./quiz/actions";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Step {
   id: string;
@@ -26,11 +26,11 @@ interface Props {
 }
 
 /**
- * Skill booklet content - renders modules and steps in a
- * step-wise, booklet/manual format with collapsible sections.
+ * Skill booklet content - renders modules and steps.
  *
  * Module 1 is always unlocked (free preview).
- * Modules 2+ require sign-in to access.
+ * Modules 2+ are VISIBLE but NOT expandable without sign-in.
+ * Locked modules show a themed green lock icon that redirects to login.
  */
 export function SkillBookletContent({
   modules,
@@ -38,6 +38,7 @@ export function SkillBookletContent({
   isLoggedIn,
   skillId,
 }: Props) {
+  const router = useRouter();
   // Sort modules by orderIndex to guarantee correct ordering
   const sortedModules = [...modules].sort((a, b) => a.orderIndex - b.orderIndex);
 
@@ -59,13 +60,11 @@ export function SkillBookletContent({
   }
 
   function handleMarkComplete(stepId: string) {
-    // 0ms Optimistic Instant Update
     setCompletedIds((prev) => new Set([...Array.from(prev), stepId]));
 
     startTransition(async () => {
       const result = await markStepComplete(stepId);
       if (!result.success) {
-        // Revert on error
         setCompletedIds((prev) => {
           const next = new Set(prev);
           next.delete(stepId);
@@ -77,7 +76,6 @@ export function SkillBookletContent({
 
   let globalStepIndex = 0;
 
-  // Calculate per-module progress
   function moduleProgress(mod: Module) {
     const completed = mod.steps.filter((s) => completedIds.has(s.id)).length;
     return { completed, total: mod.steps.length };
@@ -97,32 +95,32 @@ export function SkillBookletContent({
           <div
             key={mod.id}
             className={`rounded-2xl border overflow-hidden shadow-sm transition-all ${
-              isLocked
-                ? "border-[var(--border-color)] bg-surface-raised opacity-75"
-                : moduleDone
+              moduleDone
                 ? "border-green-200 dark:border-green-800 bg-surface-raised"
                 : "border-[var(--border-color)] bg-surface-raised"
             }`}
           >
-            {/* Module header (collapsible) */}
+            {/* Module header */}
             <button
-              onClick={() => !isLocked && toggleModule(mod.id)}
-              className={`w-full flex items-center gap-4 p-5 md:p-6 text-left transition-colors ${
-                isLocked ? "cursor-not-allowed" : "hover:bg-accent/5"
-              }`}
-              disabled={isLocked}
+              onClick={() => {
+                if (isLocked) {
+                  router.push("/login");
+                } else {
+                  toggleModule(mod.id);
+                }
+              }}
+              className="w-full flex items-center gap-4 p-5 md:p-6 text-left
+                         hover:bg-accent/5 transition-colors cursor-pointer"
             >
               {/* Module number */}
               <div
                 className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
-                  isLocked
-                    ? "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400"
-                    : moduleDone
+                  moduleDone
                     ? "bg-green-500 dark:bg-green-600 text-white"
                     : "bg-gray-800 dark:bg-gray-700 text-white"
                 }`}
               >
-                {isLocked ? "🔒" : moduleDone ? "✓" : mi + 1}
+                {moduleDone ? "✓" : mi + 1}
               </div>
 
               <div className="flex-1 min-w-0">
@@ -136,7 +134,7 @@ export function SkillBookletContent({
                   {isLocked && (
                     <>
                       <span className="text-xs text-text-muted">·</span>
-                      <span className="text-xs font-medium text-amber-600 dark:text-amber-400">
+                      <span className="text-xs font-medium text-accent">
                         Sign in to unlock
                       </span>
                     </>
@@ -156,7 +154,7 @@ export function SkillBookletContent({
                 </div>
               </div>
 
-              {/* Progress ring */}
+              {/* Progress ring (unlocked + logged in) */}
               {!isLocked && isLoggedIn && total > 0 && (
                 <div className="flex-shrink-0 w-8 h-8 relative mr-2">
                   <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
@@ -180,11 +178,13 @@ export function SkillBookletContent({
                 </div>
               )}
 
-              {/* Chevron or Lock */}
+              {/* Green Lock Icon (locked) or Chevron (unlocked) */}
               {isLocked ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 text-text-muted">
-                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
+                <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-accent/15 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
               ) : (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -203,25 +203,6 @@ export function SkillBookletContent({
               )}
             </button>
 
-            {/* Locked overlay for modules 2+ when not signed in */}
-            {isLocked && (
-              <div className="border-t border-[var(--border-color)] bg-surface/50 px-5 md:px-6 py-4 text-center">
-                <p className="text-sm text-text-secondary mb-3">
-                  Sign in to unlock this module and track your progress.
-                </p>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
-                             font-semibold rounded-full px-6 py-2 text-sm transition-all"
-                >
-                  Sign in to continue
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-                  </svg>
-                </Link>
-              </div>
-            )}
-
             {/* Steps (only shown if expanded and not locked) */}
             {isExpanded && !isLocked && (
               <div className="border-t border-[var(--border-color)]">
@@ -234,7 +215,7 @@ export function SkillBookletContent({
                     <div
                       key={step.id}
                       className={`border-b border-[var(--border-color)] last:border-b-0 ${
-                        isDone ? "bg-green-50 dark:bg-[#1a1a2e]/50 dark:bg-green-900/5" : ""
+                        isDone ? "bg-green-50 dark:bg-green-900/5" : ""
                       }`}
                     >
                       {/* Step header */}
@@ -273,7 +254,7 @@ export function SkillBookletContent({
                         )}
                       </div>
 
-                      {/* Step content (rendered as formatted text) */}
+                      {/* Step content */}
                       {step.content && (
                         <div className="px-5 md:px-6 pb-5 md:pb-6 pl-[3.25rem] md:pl-[3.75rem]">
                           <div className="prose prose-sm max-w-none

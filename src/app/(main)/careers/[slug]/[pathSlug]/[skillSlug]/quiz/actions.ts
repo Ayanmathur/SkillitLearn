@@ -1,106 +1,61 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { requireAuth } from "@/app/auth/actions";
+import { getQuizForSkill } from "@/lib/dal";
 import { z } from "zod";
 
 const submitQuizSchema = z.object({
   skillId: z.string().uuid(),
-  answers: z.record(z.string().uuid(), z.string()), // questionId -> choiceId
+  answers: z.record(z.string().uuid(), z.number()), // questionId -> selectedOptionIndex
 });
 
 /**
- * Fetch 5 random quiz questions for a skill.
+ * Fetch 15 random quiz questions for a skill:
+ * 5 Easy, 5 Moderate, 5 Difficult.
  *
- * CRITICAL: Never sends correct_choice_id to the client.
- * Only returns question text, choices (without marking correct), and IDs.
+ * CRITICAL: Never sends correct_option_index to the client.
  */
-export async function getQuizQuestions(skillId: string) {
+export async function getQuizQuestionsBySlug(skillSlug: string) {
   const user = await requireAuth();
 
-  // Verify all steps are completed for this skill
-  const skill = await prisma.skill.findUnique({
-    where: { id: skillId },
-    include: {
-      modules: {
-        include: {
-          steps: { select: { id: true } },
-        },
-      },
-    },
-  });
+  const quizData = await getQuizForSkill(skillSlug);
 
-  if (!skill) throw new Error("Skill not found");
-
-  const allStepIds = skill.modules.flatMap((m) =>
-    m.steps.map((s) => s.id)
-  );
-
-  // Check step completion
-  const completedSteps = await prisma.learnerProgress.count({
-    where: {
-      userId: user.id,
-      stepId: { in: allStepIds },
-    },
-  });
-
-  const allStepsComplete = completedSteps >= allStepIds.length;
-
-  // If no steps exist for this skill (data not yet seeded), allow quiz
-  // Otherwise require all steps to be completed
-  if (allStepIds.length > 0 && !allStepsComplete) {
-    return {
-      error: "complete_steps_first",
-      completed: completedSteps,
-      total: allStepIds.length,
-    };
+  if (!quizData || !quizData.questions || quizData.questions.length === 0) {
+    return { error: "no_questions_found" };
   }
 
-  // Fetch all questions for this skill and pick 5 at random
-  const allQuestions = await prisma.quizQuestion.findMany({
-    where: { skillId },
-    select: {
-      id: true,
-      questionText: true,
-      choicesJson: true,
-      // NOTE: correctChoiceId is NOT selected - never sent to client
-      orderIndex: true,
-    },
-  });
-
-  if (allQuestions.length < 5) {
-    return { error: "not_enough_questions", count: allQuestions.length };
-  }
-
-  // Fisher-Yates shuffle and take 5
-  const shuffled = [...allQuestions];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
-  const selected = shuffled.slice(0, 5).map((q) => ({
+  // Sanitize questions - omit correctOptionIndex from payload sent to client
+  const clientQuestions = quizData.questions.map((q: any) => ({
     id: q.id,
     questionText: q.questionText,
-    choices: q.choicesJson as Array<{ id: string; text: string }>,
+    choices: q.options.map((optText: string, idx: number) => ({
+      id: String(idx),
+      text: optText,
+    })),
+    difficulty: q.difficulty,
   }));
 
-  return { questions: selected, skillId };
+  return {
+    skillId: quizData.skill.id,
+    skillName: quizData.skill.name,
+    questions: clientQuestions,
+  };
 }
 
 /**
- * Grade a quiz submission. Server-side only.
- *
- * - Checks answers against correct_choice_id from DB
- * - Pass threshold: 80% (4/5)
- * - Creates quiz_attempts row
- * - On pass: updates skill_completion.quiz_passed = true
+ * Grade a 15-question quiz submission.
+ * - Checks answers against correct_option_index from DB
+ * - Passing threshold: 10 / 15 correct (66% / 10 required)
+ * - Records quiz_attempts row
+ * - On pass: updates skill completion
  */
 export async function submitQuiz(data: {
   skillId: string;
-  answers: Record<string, string>;
+  answers: Record<string, number>;
 }) {
   const user = await requireAuth();
+  const supabase = await createServerSupabaseClient();
 
   const parsed = submitQuizSchema.safeParse(data);
   if (!parsed.success) {
@@ -110,123 +65,93 @@ export async function submitQuiz(data: {
   const { skillId, answers } = parsed.data;
   const questionIds = Object.keys(answers);
 
-  if (questionIds.length !== 5) {
-    return { error: "Please answer all 5 questions." };
+  if (questionIds.length < 1) {
+    return { error: "Please answer the quiz questions." };
   }
 
-  // Fetch the correct answers from DB
-  const questions = await prisma.quizQuestion.findMany({
-    where: { id: { in: questionIds }, skillId },
-    select: {
-      id: true,
-      questionText: true,
-      choicesJson: true,
-      correctChoiceId: true,
-      explanation: true,
-    },
-  });
+  // Fetch true correct answers from DB
+  const { data: questions, error: qErr } = await supabase
+    .from("quiz_questions")
+    .select("id, question_text, options, correct_option_index, explanation, difficulty")
+    .in("id", questionIds)
+    .eq("skill_id", skillId);
 
-  if (questions.length !== 5) {
-    return { error: "Invalid quiz submission - question mismatch." };
+  if (qErr || !questions) {
+    return { error: "Failed to grade quiz submission." };
   }
 
-  // Grade
   let score = 0;
-  const results = questions.map((q) => {
-    const userAnswer = answers[q.id];
-    const isCorrect = userAnswer === q.correctChoiceId;
+  const total = questions.length;
+
+  const results = questions.map((q: any) => {
+    const userChoiceIdx = answers[q.id];
+    const isCorrect = userChoiceIdx === q.correct_option_index;
     if (isCorrect) score++;
 
     return {
       questionId: q.id,
-      questionText: q.questionText,
-      choices: q.choicesJson as Array<{ id: string; text: string }>,
-      userAnswer,
-      correctAnswer: q.correctChoiceId,
+      questionText: q.question_text,
+      choices: (q.options || []).map((optText: string, idx: number) => ({
+        id: String(idx),
+        text: optText,
+      })),
+      userAnswer: String(userChoiceIdx),
+      correctAnswer: String(q.correct_option_index),
       isCorrect,
       explanation: q.explanation,
+      difficulty: q.difficulty,
     };
   });
 
-  const passed = score >= 4; // 80% threshold = 4/5
+  // Passing criteria: 10 out of 15 correct (>= 10 or >= 66%)
+  const passed = score >= 10 || (total < 15 && score / total >= 0.66);
 
-  // Insert quiz attempt
-  await prisma.quizAttempt.create({
-    data: {
-      userId: user.id,
-      skillId,
-      score,
-      passed,
-      answersJson: answers,
-    },
-  });
-
-  // If passed, update skill_completion
-  if (passed) {
-    // Check if all steps are completed too
-    const skill = await prisma.skill.findUnique({
-      where: { id: skillId },
-      include: {
-        modules: { include: { steps: { select: { id: true } } } },
-      },
+  // Record quiz attempt
+  try {
+    await supabase.from("quiz_attempts").insert({
+      user_id: user.id,
+      skill_id: skillId,
+      score: score,
+      total_questions: total,
+      passed: passed,
+      answers_json: answers,
     });
-
-    const allStepIds = skill?.modules.flatMap((m) =>
-      m.steps.map((s) => s.id)
-    ) || [];
-
-    const completedSteps = await prisma.learnerProgress.count({
-      where: { userId: user.id, stepId: { in: allStepIds } },
-    });
-
-    const stepsCompleted = allStepIds.length === 0 || completedSteps >= allStepIds.length;
-
-    await prisma.skillCompletion.upsert({
-      where: {
-        userId_skillId: { userId: user.id, skillId },
-      },
-      update: {
-        quizPassed: true,
-        stepsCompleted,
-        completedAt: stepsCompleted ? new Date() : null,
-      },
-      create: {
-        userId: user.id,
-        skillId,
-        quizPassed: true,
-        stepsCompleted,
-        completedAt: stepsCompleted ? new Date() : null,
-      },
-    });
+  } catch (e) {
+    // Ignore logging error
   }
 
-  return { score, passed, results, total: 5 };
+  if (passed) {
+    try {
+      await supabase.from("skill_completions").upsert({
+        user_id: user.id,
+        skill_id: skillId,
+        quiz_passed: true,
+        completed_at: new Date().toISOString(),
+      }, { onConflict: "user_id,skill_id" });
+    } catch (e) {
+      // Ignore logging error
+    }
+  }
+
+  return { score, total, passed, results };
 }
 
 /**
- * Mark a step as completed for the current user.
+ * Mark step complete (helper)
  */
 export async function markStepComplete(stepId: string) {
   const user = await requireAuth();
+  const supabase = await createServerSupabaseClient();
 
-  // Check step exists
-  const step = await prisma.step.findUnique({
-    where: { id: stepId },
-    select: { id: true },
-  });
-  if (!step) return { error: "Step not found" };
+  const { error } = await supabase.from("learner_progress").upsert({
+    user_id: user.id,
+    step_id: stepId,
+  }, { onConflict: "user_id,step_id" });
 
-  // Upsert (idempotent)
-  await prisma.learnerProgress.upsert({
-    where: {
-      userId_stepId: { userId: user.id, stepId },
-    },
-    update: {},
-    create: {
-      userId: user.id,
-      stepId,
-    },
-  });
+  if (error) {
+    console.error("markStepComplete error:", error.message);
+    return { error: error.message };
+  }
 
   return { success: true };
 }
