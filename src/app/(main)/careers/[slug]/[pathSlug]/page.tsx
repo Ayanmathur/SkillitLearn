@@ -54,66 +54,70 @@ export default async function PathDetailPage({ params }: Props) {
   let hasTemplate = false;
 
   if (user) {
-    // Batch queries for all skills
-    const allStepIds = path.skills.flatMap((sk: any) =>
-      sk.modules.flatMap((m: any) => m.steps.map((s: any) => s.id))
-    );
+    try {
+      // Batch queries for all skills
+      const allStepIds = path.skills.flatMap((sk: any) =>
+        sk.modules.flatMap((m: any) => m.steps.map((s: any) => s.id))
+      );
 
-    const [completedSteps, completions, existingCert, template] = await Promise.all([
-      prisma.learnerProgress.findMany({
-        where: { userId: user.id, stepId: { in: allStepIds } },
-        select: { stepId: true },
-      }),
-      prisma.skillCompletion.findMany({
-        where: {
-          userId: user.id,
-          skillId: { in: path.skills.map((s) => s.id) },
-        },
-        select: { skillId: true, quizPassed: true, stepsCompleted: true },
-      }),
-      prisma.certificate.findFirst({
-        where: { userId: user.id, pathId: path.id, revoked: false },
-        select: { uniqueCertificateId: true },
-      }),
-      prisma.pathCertificateTemplate.findFirst({
-        where: { pathId: path.id },
-        select: { id: true },
-      }),
-    ]);
+      const [completedSteps, completions, existingCert, template] = await Promise.all([
+        prisma.learnerProgress.findMany({
+          where: { userId: user.id, stepId: { in: allStepIds } },
+          select: { stepId: true },
+        }).catch(() => []),
+        prisma.skillCompletion.findMany({
+          where: {
+            userId: user.id,
+            skillId: { in: path.skills.map((s) => s.id) },
+          },
+          select: { skillId: true, quizPassed: true, stepsCompleted: true },
+        }).catch(() => []),
+        prisma.certificate.findFirst({
+          where: { userId: user.id, pathId: path.id, revoked: false },
+          select: { uniqueCertificateId: true },
+        }).catch(() => null),
+        prisma.pathCertificateTemplate.findFirst({
+          where: { pathId: path.id },
+          select: { id: true },
+        }).catch(() => null),
+      ]);
 
-    const completedStepSet = new Set(completedSteps.map((s) => s.stepId));
-    const completionMap = new Map(completions.map((c) => [c.skillId, c]));
+      const completedStepSet = new Set(completedSteps.map((s) => s.stepId));
+      const completionMap = new Map(completions.map((c) => [c.skillId, c]));
 
-    hasCertificate = !!existingCert;
-    certId = existingCert?.uniqueCertificateId || null;
-    hasTemplate = !!template;
+      hasCertificate = !!existingCert;
+      certId = existingCert?.uniqueCertificateId || null;
+      hasTemplate = !!template;
 
-    for (const skill of path.skills) {
-      const stepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
-      const doneCount = stepIds.filter((id: any) => completedStepSet.has(id)).length;
-      const totalSteps = stepIds.length;
-      const comp = completionMap.get(skill.id);
-      const quizPassed = comp?.quizPassed || false;
-      const isComplete = comp?.quizPassed && comp?.stepsCompleted;
+      for (const skill of path.skills) {
+        const stepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
+        const doneCount = stepIds.filter((id: any) => completedStepSet.has(id)).length;
+        const totalSteps = stepIds.length;
+        const comp = completionMap.get(skill.id);
+        const quizPassed = comp?.quizPassed || false;
+        const isComplete = comp?.quizPassed && comp?.stepsCompleted;
 
-      let status: SkillStatus = "not_started";
-      if (isComplete) {
-        status = "complete";
-        completedSkills++;
-      } else if (doneCount > 0 || quizPassed) {
-        status = "in_progress";
+        let status: SkillStatus = "not_started";
+        if (isComplete) {
+          status = "complete";
+          completedSkills++;
+        } else if (doneCount > 0 || quizPassed) {
+          status = "in_progress";
+        }
+
+        skillProgress.set(skill.id, {
+          skillId: skill.id,
+          status,
+          stepsCompleted: doneCount,
+          stepsTotal: totalSteps,
+          quizPassed,
+        });
       }
 
-      skillProgress.set(skill.id, {
-        skillId: skill.id,
-        status,
-        stepsCompleted: doneCount,
-        stepsTotal: totalSteps,
-        quizPassed,
-      });
+      allComplete = completedSkills === totalSkills && totalSkills > 0;
+    } catch (e) {
+      console.error("Progress tracking calculation error:", e);
     }
-
-    allComplete = completedSkills === totalSkills && totalSkills > 0;
   }
 
   const progressPercent =
