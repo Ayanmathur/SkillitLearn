@@ -89,23 +89,10 @@ export async function signUp(formData: FormData) {
     console.error("Failed to create user record:", dbError);
   }
 
-  // Auto-login fallback: attempt immediate sign-in so user doesn't wait for email verification
-  if (data.session) {
-    redirect("/");
-  }
-
-  const { data: signInData, error: signInErr } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (signInData?.user) {
-    redirect("/");
-  }
-
   return {
     success: true,
-    message: "Account created successfully! You can now log in.",
+    message:
+      "✉️ Check your email for a verification link. You must verify your email before logging in.",
   };
 }
 
