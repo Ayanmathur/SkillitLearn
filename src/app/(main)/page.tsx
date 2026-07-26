@@ -69,37 +69,74 @@ export default async function HomePage() {
 
   return (
     <main>
-      {/* ── 1. Hero Banner ───────────────────────────────── */}
-      <section className="relative bg-green-50 dark:bg-[#1a1a2e] overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-10">
+      {/* ── 1. Hero Banner (Be10X-inspired high-impact layout) ─── */}
+      <section className="relative bg-gradient-to-b from-[#1a1a2e] via-[#1a1a2e] to-[#141627] text-white overflow-hidden py-20 md:py-28 lg:py-32">
+        {/* Glowing background circles */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
         </div>
 
-        <div className="container-page relative z-10 py-20 md:py-28 lg:py-36">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
-              Build Real Skills.{" "}
-              <span className="text-accent">Earn Certificates.</span>
+        <div className="container-page relative z-10">
+          <div className="max-w-3xl">
+            {/* Top pill badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/20 border border-accent/40 text-accent font-semibold text-xs tracking-wider uppercase mb-6">
+              <span>🚀</span> Become a 10X Version of Yourself
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 tracking-tight">
+              Build Real Skills. <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5bbd72] via-[#92fde7] to-[#45bdff]">
+                Become 10X More Productive.
+              </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-700 dark:text-white/80 mb-8 leading-relaxed max-w-xl">
-              Explore 50+ career paths with structured, step-by-step learning.
-              Master skills at your own pace, prove your competency with quizzes,
-              and earn verifiable certificates.
+
+            <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-2xl">
+              Explore 50+ structured career paths with step-by-step booklets, hands-on module steps,
+              competency quizzes, and verifiable industry certificates.
             </p>
-            <Link
-              href="#careers"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
-                         font-semibold rounded-full px-8 py-3.5 text-base
-                         transition-all duration-300 hover:shadow-lg hover:shadow-accent/30
-                         hover:-translate-y-0.5"
-            >
-              Explore Careers
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-              </svg>
-            </Link>
+
+            {/* Be10X Bullet Feature List */}
+            <ul className="grid sm:grid-cols-2 gap-3 mb-10 text-sm font-medium text-white/90">
+              <li className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold">✓</span>
+                10X your productivity with structured booklets
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold">✓</span>
+                Instant self-paced step progress tracking
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold">✓</span>
+                Competency quizzes & verifiable certificates
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold">✓</span>
+                Zero cold-start instant edge performance
+              </li>
+            </ul>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="#careers"
+                className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white
+                           font-semibold rounded-full px-8 py-4 text-base shadow-lg shadow-accent/25
+                           transition-all duration-300 hover:scale-105"
+              >
+                Explore Courses & Careers
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                </svg>
+              </Link>
+              <Link
+                href="/verify"
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20
+                           font-semibold rounded-full px-8 py-4 text-base transition-all duration-300"
+              >
+                Verify Certificate
+              </Link>
+            </div>
           </div>
         </div>
       </section>

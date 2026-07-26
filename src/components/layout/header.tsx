@@ -18,7 +18,13 @@ const NAV_LINKS = [
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-[#1a1a2e] shadow-lg">
+    <>
+      {/* Top Announcement Bar */}
+      <div className="bg-gradient-to-r from-[#5bbd72] via-[#45bdff] to-[#5bbd72] text-[#1a1a2e] py-1.5 px-4 text-center text-xs font-bold tracking-wide">
+        🚀 Upgrade your career with 50+ structured learning paths & verifiable certificates
+      </div>
+
+      <header className="sticky top-0 z-50 bg-[#1a1a2e] shadow-lg border-b border-white/10">
       <div className="container-page flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
@@ -48,5 +54,6 @@ export function Header() {
         <MobileNav />
       </div>
     </header>
+    </>
   );
 }
