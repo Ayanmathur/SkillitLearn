@@ -202,47 +202,55 @@ export async function signOut() {
 // never trusts the JWT/session alone.
 
 export async function getCurrentUser() {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const supabase = await createServerSupabaseClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user) return null;
+    if (!user) return null;
 
-  // Always fetch from DB - the single source of truth for role
-  // We use Supabase JS instead of Prisma here to prevent heavy cold starts on every page load
-  const { data: dbUser } = await supabase
-    .from("users")
-    .select("id, email, full_name, role")
-    .eq("id", user.id)
-    .single();
+    // Always fetch from DB - the single source of truth for role
+    const { data: dbUser } = await supabase
+      .from("users")
+      .select("id, email, full_name, role")
+      .eq("id", user.id)
+      .single();
 
-  if (!dbUser) {
-    // Auth user exists but no DB record - create one (fallback to prisma for writes)
-    const newUser = await prisma.user.create({
-      data: {
+    if (!dbUser) {
+      // Create user record in Supabase users table directly
+      try {
+        await supabase.from("users").insert({
+          id: user.id,
+          email: user.email!,
+          full_name: user.user_metadata?.full_name || user.email!.split("@")[0],
+          role: "learner",
+        });
+      } catch (e) {
+        // Ignore duplicate insert error
+      }
+
+      return {
         id: user.id,
         email: user.email!,
-        fullName:
-          user.user_metadata?.full_name || user.email!.split("@")[0],
+        fullName: user.user_metadata?.full_name || user.email!.split("@")[0],
         role: "learner",
-      },
-      select: {
-        id: true,
-        email: true,
-        fullName: true,
-        role: true,
-      },
-    });
-    return newUser;
-  }
+      };
+    }
 
-  return {
-    id: dbUser.id,
-    email: dbUser.email,
-    fullName: dbUser.full_name,
-    role: dbUser.role,
-  };
+    return {
+      id: dbUser.id,
+      email: dbUser.email,
+      fullName: dbUser.full_name,
+      role: dbUser.role,
+    };
+  } catch (err: any) {
+    if (err?.digest === "DYNAMIC_SERVER_USAGE" || err?.message?.includes("DYNAMIC_SERVER_USAGE")) {
+      throw err;
+    }
+    console.error("getCurrentUser fail-safe caught error:", err);
+    return null;
+  }
 }
 
 // ── Require Auth (helper for server actions) ─────────────────

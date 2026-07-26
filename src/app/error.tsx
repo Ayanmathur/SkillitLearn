@@ -9,6 +9,9 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  if (error?.digest === "NEXT_NOT_FOUND" || error?.message?.includes("NEXT_NOT_FOUND")) {
+    throw error;
+  }
   return (
     <main className="min-h-screen bg-surface flex items-center justify-center px-4">
       <div className="text-center max-w-md">
