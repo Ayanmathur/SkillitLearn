@@ -3,6 +3,7 @@ import { getSkillBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/app/auth/actions";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { AuthPrompt } from "@/components/auth-prompt";
 import { SkillBookletContent } from "./booklet-content";
 import type { Metadata } from "next";
@@ -49,6 +50,10 @@ export default async function SkillBookletPage({ params }: Props) {
 
   if (user) {
     try {
+      const supabase = await createServerSupabaseClient();
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      const metaStepIds: string[] = authUser?.user_metadata?.completed_step_ids || [];
+
       const [completedSteps, quizAttempt, completion] = await Promise.all([
         prisma.learnerProgress.findMany({
           where: { userId: user.id, stepId: { in: allStepIds } },
@@ -64,7 +69,8 @@ export default async function SkillBookletPage({ params }: Props) {
         }).catch(() => null),
       ]);
 
-      completedStepIds = new Set(completedSteps.map((s) => s.stepId));
+      const dbStepIds = completedSteps.map((s) => s.stepId);
+      completedStepIds = new Set([...metaStepIds, ...dbStepIds]);
       hasPassedQuiz = !!quizAttempt;
       skillComplete = !!completion;
     } catch (e) {

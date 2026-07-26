@@ -3,6 +3,7 @@ import { getPathBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/app/auth/actions";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { AuthPrompt } from "@/components/auth-prompt";
 import { CertificateButton } from "./certificate-button";
 import type { Metadata } from "next";
@@ -60,6 +61,10 @@ export default async function PathDetailPage({ params }: Props) {
 
   if (user) {
     try {
+      const supabase = await createServerSupabaseClient();
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      const metaStepIds: string[] = authUser?.user_metadata?.completed_step_ids || [];
+
       // Batch queries for all skills
       const allStepIds = (path.skills || []).flatMap((sk: any) =>
         (sk.modules || []).flatMap((m: any) => (m.steps || []).map((s: any) => s.id))
@@ -87,7 +92,8 @@ export default async function PathDetailPage({ params }: Props) {
         }).catch(() => null),
       ]);
 
-      const completedStepSet = new Set(completedSteps.map((s) => s.stepId));
+      const dbStepIds = completedSteps.map((s) => s.stepId);
+      const completedStepSet = new Set([...metaStepIds, ...dbStepIds]);
       const completionMap = new Map(completions.map((c) => [c.skillId, c]));
 
       hasCertificate = !!existingCert;

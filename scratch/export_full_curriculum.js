@@ -93,14 +93,14 @@ async function exportFullCurriculum() {
         const trackIds = tracks.map(t => t.id);
         const { data: steps } = await supabase
           .from("steps")
-          .select("id, module_id, title, content, order_index")
-          .in("module_id", trackIds)
+          .select("id, track_id, title, content, order_index")
+          .in("track_id", trackIds)
           .order("order_index", { ascending: true });
 
         const stepsByTrack = new Map();
         (steps || []).forEach(st => {
-          if (!stepsByTrack.has(st.module_id)) stepsByTrack.set(st.module_id, []);
-          stepsByTrack.get(st.module_id).push(st);
+          if (!stepsByTrack.has(st.track_id)) stepsByTrack.set(st.track_id, []);
+          stepsByTrack.get(st.track_id).push(st);
         });
 
         mdContent += `\n  **Tracks & Steps (${tracks.length} Tracks)**:\n`;
