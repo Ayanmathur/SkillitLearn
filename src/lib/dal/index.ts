@@ -210,7 +210,7 @@ export async function getPathBySlug(pathSlug: string) {
         slug,
         description,
         order_index,
-        modules(
+        tracks (
           id,
           steps (
             id
@@ -272,7 +272,7 @@ export async function getSkillBySlug(skillSlug: string) {
           slug
         )
       ),
-      modules(
+      tracks (
         id,
         title,
         order_index,
@@ -312,7 +312,7 @@ export async function getSkillBySlug(skillSlug: string) {
           career: careerObj ? { id: careerObj.id, name: careerObj.name, slug: careerObj.slug } : null,
         }
       : null,
-    modules: (data.modules || [])
+    modules: (data.tracks || [])
       .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
       .map((m: any) => ({
         id: m.id,
