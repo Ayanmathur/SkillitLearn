@@ -3,6 +3,7 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { requireAuth } from "@/app/auth/actions";
 import { getQuizForSkill } from "@/lib/dal";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const submitQuizSchema = z.object({
@@ -106,30 +107,43 @@ export async function submitQuiz(data: {
   // Passing criteria: 10 out of 15 correct (>= 10 or >= 66%)
   const passed = score >= 10 || (total < 15 && score / total >= 0.66);
 
-  // Record quiz attempt
+  // Record quiz attempt via Prisma (reliable DB connection)
   try {
-    await supabase.from("quiz_attempts").insert({
-      user_id: user.id,
-      skill_id: skillId,
-      score: score,
-      total_questions: total,
-      passed: passed,
-      answers_json: answers,
+    await prisma.quizAttempt.create({
+      data: {
+        userId: user.id,
+        skillId: skillId,
+        score: score,
+        passed: passed,
+        answersJson: answers,
+      },
     });
   } catch (e) {
-    // Ignore logging error
+    console.error("Quiz attempt record error:", e);
   }
 
   if (passed) {
     try {
-      await supabase.from("skill_completions").upsert({
-        user_id: user.id,
-        skill_id: skillId,
-        quiz_passed: true,
-        completed_at: new Date().toISOString(),
-      }, { onConflict: "user_id,skill_id" });
+      await prisma.skillCompletion.upsert({
+        where: {
+          userId_skillId: {
+            userId: user.id,
+            skillId: skillId,
+          },
+        },
+        update: {
+          quizPassed: true,
+          completedAt: new Date(),
+        },
+        create: {
+          userId: user.id,
+          skillId: skillId,
+          quizPassed: true,
+          completedAt: new Date(),
+        },
+      });
     } catch (e) {
-      // Ignore logging error
+      console.error("Skill completion record error:", e);
     }
   }
 
@@ -140,18 +154,26 @@ export async function submitQuiz(data: {
  * Mark step complete (helper)
  */
 export async function markStepComplete(stepId: string) {
-  const user = await requireAuth();
-  const supabase = await createServerSupabaseClient();
-
-  const { error } = await supabase.from("learner_progress").upsert({
-    user_id: user.id,
-    step_id: stepId,
-  }, { onConflict: "user_id,step_id" });
-
-  if (error) {
-    console.error("markStepComplete error:", error.message);
-    return { error: error.message };
+  try {
+    const user = await requireAuth();
+    await prisma.learnerProgress.upsert({
+      where: {
+        userId_stepId: {
+          userId: user.id,
+          stepId: stepId,
+        },
+      },
+      update: {
+        completedAt: new Date(),
+      },
+      create: {
+        userId: user.id,
+        stepId: stepId,
+      },
+    });
+    return { success: true };
+  } catch (error: any) {
+    console.error("markStepComplete error:", error?.message || error);
+    return { error: error?.message || "Failed to mark step complete" };
   }
-
-  return { success: true };
 }
