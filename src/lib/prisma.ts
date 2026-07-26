@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 /**
  * Prisma client singleton.
  *
- * In development, Next.js hot-reloads modules frequently which would create
+ * In development, Next.js hot-reloads tracks frequently which would create
  * a new PrismaClient on every reload, exhausting the connection pool.
  * This pattern caches the client on `globalThis` to prevent that.
  *

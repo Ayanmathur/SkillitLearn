@@ -5,10 +5,10 @@ import { updateModule, createStep, updateStep, deleteStep } from "../../actions/
 import { SortableList } from "@/components/admin/sortable-list";
 import { MarkdownEditor } from "@/components/admin/markdown-editor";
 
-interface Module { id: string; title: string; skillId: string }
+interface Track { id: string; title: string; skillId: string }
 interface Step { id: string; title: string; content: string }
 
-export function ModuleDetailClient({ module: mod, steps }: { module: Module; steps: Step[] }) {
+export function ModuleDetailClient({ track: mod, steps }: { track: Track; steps: Step[] }) {
   const [editingStep, setEditingStep] = useState<Step | null>(null);
   const [showStepForm, setShowStepForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,9 +67,9 @@ export function ModuleDetailClient({ module: mod, steps }: { module: Module; ste
 
   return (
     <div className="space-y-8">
-      {/* Edit Module */}
+      {/* Edit Track */}
       <div className="card">
-        <h2 className="text-lg font-bold text-text-primary mb-4">Edit Module</h2>
+        <h2 className="text-lg font-bold text-text-primary mb-4">Edit Track</h2>
         {error && <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg px-3 py-2 mb-4">{error}</div>}
         {saveMsg && <div className="text-sm text-green-600 bg-green-50 dark:bg-[#1a1a2e] dark:bg-green-900/20 rounded-lg px-3 py-2 mb-4">{saveMsg}</div>}
         <form onSubmit={handleUpdateModule} className="flex gap-3">

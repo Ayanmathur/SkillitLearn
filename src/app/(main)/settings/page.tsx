@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { SettingsForm } from "./settings-form";
 
 export const metadata = {
-  title: "Account Settings — SkillItLearn",
+  title: "Account Settings - SkillItLearn",
 };
 
 export default async function SettingsPage() {

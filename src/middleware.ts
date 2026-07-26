@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // ONLY run middleware on protected routes — public pages skip entirely
+    // ONLY run middleware on protected routes - public pages skip entirely
     "/admin/:path*",
     "/instructor/:path*",
   ],

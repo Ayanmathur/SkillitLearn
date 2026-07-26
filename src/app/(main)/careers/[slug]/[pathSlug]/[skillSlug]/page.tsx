@@ -97,7 +97,7 @@ export default async function SkillBookletPage({ params }: Props) {
 
           <div className="flex flex-wrap gap-3 text-xs mb-5">
             <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
-              📖 {skill.modules.length} module{skill.modules.length !== 1 ? "s" : ""}
+              📖 {skill.modules.length} track{skill.modules.length !== 1 ? "s" : ""}
             </span>
             <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
               📄 {totalSteps} step{totalSteps !== 1 ? "s" : ""}

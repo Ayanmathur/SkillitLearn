@@ -17,7 +17,7 @@ const TESTIMONIALS: Testimonial[] = [
     name: "Avni Singh",
     path: "Data Analytics",
     quote:
-      "The certificate verification feature is awesome. Employers verified my credentials instantly, and the structured module breakdown made learning easy.",
+      "The certificate verification feature is awesome. Employers verified my credentials instantly, and the structured track breakdown made learning easy.",
     image: "/avni_singh_1783716127584.png",
   },
   {
@@ -85,7 +85,7 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-lg md:text-xl text-text-secondary dark:text-white/80 mb-8 leading-relaxed max-w-2xl">
-              Explore 50+ structured career paths with step-by-step booklets, hands-on module steps,
+              Explore 50+ structured career paths with step-by-step booklets, hands-on track steps,
               competency quizzes, and verifiable industry certificates.
             </p>
 
@@ -161,7 +161,7 @@ export default async function HomePage() {
               <p className="text-text-secondary text-lg leading-relaxed mb-4">
                 SkillItLearn organizes professional knowledge into clear career
                 paths. Each path breaks down into skills, and each skill is taught
-                through structured modules with step-by-step booklets - no
+                through structured tracks with step-by-step booklets - no
                 guesswork, no jumping around.
               </p>
               <p className="text-text-secondary text-lg leading-relaxed mb-6">

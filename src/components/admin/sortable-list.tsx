@@ -28,7 +28,7 @@ interface SortableItem {
 
 interface Props {
   items: SortableItem[];
-  table: "paths" | "skills" | "modules" | "steps" | "quizQuestions";
+  table: "paths" | "skills" | "tracks" | "steps" | "quizQuestions";
   onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
   editHref?: (id: string) => string;

@@ -39,7 +39,7 @@ export default async function AdminModulePage({ params }: Props) {
       </header>
       <div className="container-page py-8">
         <ModuleDetailClient
-          module={{ id: mod.id, title: mod.title, skillId: mod.skill.id }}
+          track={{ id: mod.id, title: mod.title, skillId: mod.skill.id }}
           steps={mod.steps.map((s) => ({ id: s.id, title: s.title, content: s.content }))}
         />
       </div>

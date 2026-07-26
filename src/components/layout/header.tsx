@@ -11,7 +11,7 @@ const NAV_LINKS = [
 ];
 
 /**
- * Site header — renders instantly with no server-side auth check.
+ * Site header - renders instantly with no server-side auth check.
  */
 export function Header() {
   return (
@@ -39,7 +39,7 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Right side — client-side auth (no server round-trip) */}
+        {/* Right side - client-side auth (no server round-trip) */}
         <div className="hidden md:flex items-center gap-3">
           <ClientAuthWidget />
         </div>

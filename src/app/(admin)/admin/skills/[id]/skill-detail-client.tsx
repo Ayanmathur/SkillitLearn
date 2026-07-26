@@ -7,11 +7,11 @@ import { createQuestion, updateQuestion, deleteQuestion } from "../../actions/qu
 import { SortableList } from "@/components/admin/sortable-list";
 
 interface Skill { id: string; name: string; slug: string; description: string; estimatedHours: number; pathId: string }
-interface Module { id: string; title: string; stepCount: number }
+interface Track { id: string; title: string; stepCount: number }
 interface Choice { id: string; text: string }
 interface Question { id: string; questionText: string; choicesJson: Choice[]; correctChoiceId: string; explanation: string }
 
-export function SkillDetailClient({ skill, modules, questions }: { skill: Skill; modules: Module[]; questions: Question[] }) {
+export function SkillDetailClient({ skill, tracks, questions }: { skill: Skill; tracks: Track[]; questions: Question[] }) {
   const [showModForm, setShowModForm] = useState(false);
   const [showQForm, setShowQForm] = useState(false);
   const [editingQ, setEditingQ] = useState<Question | null>(null);
@@ -37,7 +37,7 @@ export function SkillDetailClient({ skill, modules, questions }: { skill: Skill;
   }
 
   async function handleDeleteModule(id: string) {
-    if (!confirm("Delete this module?")) return;
+    if (!confirm("Delete this track?")) return;
     const r = await deleteModule(id);
     if (r?.error) alert(r.error); else window.location.reload();
   }
@@ -60,19 +60,19 @@ export function SkillDetailClient({ skill, modules, questions }: { skill: Skill;
         </form>
       </div>
 
-      {/* Modules */}
+      {/* Tracks */}
       <div className="card">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-text-primary">Modules ({modules.length})</h2>
-          <button onClick={() => setShowModForm(!showModForm)} className="text-xs px-4 py-1.5 rounded-full bg-accent/10 text-accent font-semibold hover:bg-accent/20 transition-colors">{showModForm ? "Cancel" : "+ New Module"}</button>
+          <h2 className="text-lg font-bold text-text-primary">Tracks ({tracks.length})</h2>
+          <button onClick={() => setShowModForm(!showModForm)} className="text-xs px-4 py-1.5 rounded-full bg-accent/10 text-accent font-semibold hover:bg-accent/20 transition-colors">{showModForm ? "Cancel" : "+ New Track"}</button>
         </div>
         {showModForm && (
           <form onSubmit={handleCreateModule} className="flex gap-3 mb-4">
-            <input name="title" placeholder="Module title" required className="flex-1 rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" />
+            <input name="title" placeholder="Track title" required className="flex-1 rounded-xl px-3 py-2 text-sm bg-surface border border-[var(--border-color)] text-text-primary focus:ring-2 focus:ring-accent/50 focus:outline-none" />
             <button type="submit" disabled={loading} className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-5 py-2 text-sm transition-all disabled:opacity-50">Create</button>
           </form>
         )}
-        <SortableList table="modules" items={modules.map((m) => ({ id: m.id, label: m.title, sublabel: `${m.stepCount} steps` }))} editHref={(id) => `/admin/modules/${id}`} onDelete={handleDeleteModule} />
+        <SortableList table="tracks" items={tracks.map((m) => ({ id: m.id, label: m.title, sublabel: `${m.stepCount} steps` }))} editHref={(id) => `/admin/tracks/${id}`} onDelete={handleDeleteModule} />
       </div>
 
       {/* Quiz Questions */}

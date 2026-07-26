@@ -72,7 +72,7 @@ export function PathDetailClient({ path, skills }: { path: Path; skills: Skill[]
             <button type="submit" disabled={loading} className="bg-accent hover:bg-accent-hover text-white font-semibold rounded-full px-5 py-2 text-sm transition-all disabled:opacity-50">Create</button>
           </form>
         )}
-        <SortableList table="skills" items={skills.map((s) => ({ id: s.id, label: s.name, sublabel: `${s.moduleCount} modules · ~${s.estimatedHours}h` }))} editHref={(id) => `/admin/skills/${id}`} onDelete={handleDeleteSkill} />
+        <SortableList table="skills" items={skills.map((s) => ({ id: s.id, label: s.name, sublabel: `${s.moduleCount} tracks · ~${s.estimatedHours}h` }))} editHref={(id) => `/admin/skills/${id}`} onDelete={handleDeleteSkill} />
       </div>
     </div>
   );

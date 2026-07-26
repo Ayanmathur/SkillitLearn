@@ -65,8 +65,8 @@ export default async function AboutPage() {
               },
               {
                 step: "2",
-                title: "Learn Through Structured Modules",
-                desc: "Each skill is taught through step-by-step booklets organized into modules. Content covers theory, practice exercises, tools, common mistakes, and self-assessment.",
+                title: "Learn Through Structured Tracks",
+                desc: "Each skill is taught through step-by-step booklets organized into tracks. Content covers theory, practice exercises, tools, common mistakes, and self-assessment.",
                 icon: "📖",
               },
               {

@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 /**
- * GET /api/me — returns the current user's profile (name + role).
+ * GET /api/me - returns the current user's profile (name + role).
  * Used by the client-side auth widget in the header.
  * Lightweight: only fetches 2 fields from the DB.
  */

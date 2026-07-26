@@ -2,8 +2,6 @@ import { createClient } from "@supabase/supabase-js";
 
 /**
  * High-Performance Data Access Layer (DAL) for Public Content.
- * Uses lightweight Supabase PostgREST client to completely bypass
- * Prisma serverless cold starts (~15MB binary overhead).
  */
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -392,4 +390,3 @@ export async function getQuizForSkill(skillSlug: string) {
     })),
   };
 }
-

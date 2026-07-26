@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const metadata: Metadata = {
-  title: "Quiz — SkillItLearn",
+  title: "Quiz - SkillItLearn",
 };
 
 export default async function QuizPage({ params }: Props) {
@@ -50,7 +50,7 @@ export default async function QuizPage({ params }: Props) {
           </nav>
 
           <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
-            {skillName} — Quiz Evaluation
+            {skillName} - Quiz Evaluation
           </h1>
           <p className="text-sm text-text-secondary">
             15 Randomized Questions (5 Easy, 5 Moderate, 5 Difficult). Answer 10 out of 15 correctly (66%) to pass and unlock your certificate.

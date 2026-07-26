@@ -15,7 +15,7 @@ import { prisma } from "@/lib/prisma";
  *
  * IMPORTANT: Uses the request/response cookie pattern (not the shared
  * `createServerSupabaseClient` helper) because Route Handlers need to
- * write Set-Cookie headers on the *response* object — the `cookies()`
+ * write Set-Cookie headers on the *response* object - the `cookies()`
  * API from next/headers can silently fail to persist cookies in this context.
  */
 export async function GET(request: Request) {

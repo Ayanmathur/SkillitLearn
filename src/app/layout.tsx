@@ -22,11 +22,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "SkillItLearn — Career Paths, Skills & Verifiable Certificates",
+    default: "SkillItLearn - Career Paths, Skills & Verifiable Certificates",
     template: "%s | SkillItLearn",
   },
   description:
-    "Discover structured career paths, master in-demand skills through guided modules, prove your expertise with quizzes, and earn verifiable certificates.",
+    "Discover structured career paths, master in-demand skills through guided tracks, prove your expertise with quizzes, and earn verifiable certificates.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "SkillItLearn",
-    title: "SkillItLearn — Career Paths, Skills & Verifiable Certificates",
+    title: "SkillItLearn - Career Paths, Skills & Verifiable Certificates",
     description:
       "Discover structured career paths, master in-demand skills, and earn verifiable certificates.",
   },

@@ -16,7 +16,7 @@ export async function createModule(formData: FormData) {
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const maxOrder = await prisma.module.aggregate({ where: { skillId: parsed.data.skillId }, _max: { orderIndex: true } });
   const mod = await prisma.module.create({ data: { ...parsed.data, orderIndex: (maxOrder._max.orderIndex ?? -1) + 1 } });
-  await prisma.auditLog.create({ data: { actorUserId: user.id, action: "create", targetTable: "modules", targetId: mod.id } });
+  await prisma.auditLog.create({ data: { actorUserId: user.id, action: "create", targetTable: "tracks", targetId: mod.id } });
   revalidatePath(`/admin/skills/${parsed.data.skillId}`);
   return { success: true, id: mod.id };
 }
@@ -27,7 +27,7 @@ export async function updateModule(formData: FormData) {
   if (!parsed.success) return { error: parsed.error.issues[0].message };
   const { id, ...data } = parsed.data;
   await prisma.module.update({ where: { id }, data });
-  await prisma.auditLog.create({ data: { actorUserId: user.id, action: "update", targetTable: "modules", targetId: id } });
+  await prisma.auditLog.create({ data: { actorUserId: user.id, action: "update", targetTable: "tracks", targetId: id } });
   revalidatePath(`/admin/skills/${data.skillId}`);
   return { success: true };
 }
@@ -38,7 +38,7 @@ export async function deleteModule(id: string) {
   const stepCount = await prisma.step.count({ where: { moduleId: id } });
   if (stepCount > 0) return { error: `Cannot delete - ${stepCount} steps exist. Delete them first.` };
   const mod = await prisma.module.delete({ where: { id } });
-  await prisma.auditLog.create({ data: { actorUserId: user.id, action: "delete", targetTable: "modules", targetId: id } });
+  await prisma.auditLog.create({ data: { actorUserId: user.id, action: "delete", targetTable: "tracks", targetId: id } });
   revalidatePath(`/admin/skills/${mod.skillId}`);
   return { success: true };
 }
@@ -50,7 +50,7 @@ export async function createStep(formData: FormData) {
   const maxOrder = await prisma.step.aggregate({ where: { moduleId: parsed.data.moduleId }, _max: { orderIndex: true } });
   const step = await prisma.step.create({ data: { ...parsed.data, orderIndex: (maxOrder._max.orderIndex ?? -1) + 1 } });
   await prisma.auditLog.create({ data: { actorUserId: user.id, action: "create", targetTable: "steps", targetId: step.id } });
-  revalidatePath(`/admin/modules/${parsed.data.moduleId}`);
+  revalidatePath(`/admin/tracks/${parsed.data.moduleId}`);
   return { success: true, id: step.id };
 }
 
@@ -61,7 +61,7 @@ export async function updateStep(formData: FormData) {
   const { id, ...data } = parsed.data;
   await prisma.step.update({ where: { id }, data });
   await prisma.auditLog.create({ data: { actorUserId: user.id, action: "update", targetTable: "steps", targetId: id } });
-  revalidatePath(`/admin/modules/${data.moduleId}`);
+  revalidatePath(`/admin/tracks/${data.moduleId}`);
   return { success: true };
 }
 

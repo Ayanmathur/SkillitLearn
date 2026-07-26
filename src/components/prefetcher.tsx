@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 /**
- * Progressive Prefetcher — silently loads pages in the background.
+ * Progressive Prefetcher - silently loads pages in the background.
  *
  * When a career is chosen, this prefetches the ENTIRE tree
  * (paths + skills + quizzes) so every click within that career

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
 const reorderSchema = z.object({
-  table: z.enum(["paths", "skills", "modules", "steps", "quizQuestions"]),
+  table: z.enum(["paths", "skills", "tracks", "steps", "quizQuestions"]),
   items: z.array(z.object({ id: z.string().uuid(), orderIndex: z.number().int().min(0) })),
 });
 
@@ -25,7 +25,7 @@ export async function reorderItems(data: { table: string; items: Array<{ id: str
   const modelMap: Record<string, any> = {
     paths: prisma.path,
     skills: prisma.skill,
-    modules: prisma.module,
+    tracks: prisma.module,
     steps: prisma.step,
     quizQuestions: prisma.quizQuestion,
   };

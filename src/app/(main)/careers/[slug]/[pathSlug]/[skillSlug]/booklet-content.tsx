@@ -11,7 +11,7 @@ interface Step {
   orderIndex: number;
 }
 
-interface Module {
+interface Track {
   id: string;
   title: string;
   orderIndex: number;
@@ -19,18 +19,18 @@ interface Module {
 }
 
 interface Props {
-  modules: Module[];
+  modules: Track[];
   completedStepIds: string[];
   isLoggedIn: boolean;
   skillId: string;
 }
 
 /**
- * Skill booklet content - renders modules and steps.
+ * Skill booklet content - renders tracks and steps.
  *
- * Module 1 is always unlocked (free preview).
- * Modules 2+ are VISIBLE but NOT expandable without sign-in.
- * Locked modules show a themed green lock icon that redirects to login.
+ * Track 1 is always unlocked (free preview).
+ * Tracks 2+ are VISIBLE but NOT expandable without sign-in.
+ * Locked tracks show a themed green lock icon that redirects to login.
  */
 export function SkillBookletContent({
   modules,
@@ -39,7 +39,7 @@ export function SkillBookletContent({
   skillId,
 }: Props) {
   const router = useRouter();
-  // Sort modules by orderIndex to guarantee correct ordering
+  // Sort tracks by orderIndex to guarantee correct ordering
   const sortedModules = [...modules].sort((a, b) => a.orderIndex - b.orderIndex);
 
   const [expandedModules, setExpandedModules] = useState<Set<string>>(
@@ -76,7 +76,7 @@ export function SkillBookletContent({
 
   let globalStepIndex = 0;
 
-  function moduleProgress(mod: Module) {
+  function moduleProgress(mod: Track) {
     const completed = mod.steps.filter((s) => completedIds.has(s.id)).length;
     return { completed, total: mod.steps.length };
   }
@@ -88,7 +88,7 @@ export function SkillBookletContent({
         const { completed, total } = moduleProgress(mod);
         const moduleDone = completed === total && total > 0;
 
-        // Module 1 (index 0) is always unlocked. Modules 2+ require sign-in.
+        // Track 1 (index 0) is always unlocked. Tracks 2+ require sign-in.
         const isLocked = mi > 0 && !isLoggedIn;
 
         return (
@@ -100,7 +100,7 @@ export function SkillBookletContent({
                 : "border-[var(--border-color)] bg-surface-raised"
             }`}
           >
-            {/* Module header */}
+            {/* Track header */}
             <button
               onClick={() => {
                 if (isLocked) {
@@ -112,7 +112,7 @@ export function SkillBookletContent({
               className="w-full flex items-center gap-4 p-5 md:p-6 text-left
                          hover:bg-accent/5 transition-colors cursor-pointer"
             >
-              {/* Module number */}
+              {/* Track number */}
               <div
                 className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                   moduleDone

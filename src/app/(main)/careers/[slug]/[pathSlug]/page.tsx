@@ -56,7 +56,7 @@ export default async function PathDetailPage({ params }: Props) {
   if (user) {
     // Batch queries for all skills
     const allStepIds = path.skills.flatMap((sk: any) =>
-      sk.modules.flatMap((m: any) => m.steps.map((s: any) => s.id))
+      (sk.modules || []).flatMap((m: any) => (m.steps || []).map((s: any) => s.id))
     );
 
     const [completedSteps, completions, existingCert, template] = await Promise.all([
@@ -89,7 +89,7 @@ export default async function PathDetailPage({ params }: Props) {
     hasTemplate = !!template;
 
     for (const skill of path.skills) {
-      const stepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
+      const stepIds = (skill.modules || []).flatMap((m: any) => (m.steps || []).map((s: any) => s.id));
       const doneCount = stepIds.filter((id: any) => completedStepSet.has(id)).length;
       const totalSteps = stepIds.length;
       const comp = completionMap.get(skill.id);
