@@ -11,7 +11,7 @@ export default async function AdminModulePage({ params }: Props) {
   if (!user) redirect("/login");
   const { id } = await params;
 
-  const mod = await prisma.module.findUnique({
+  const mod = await prisma.track.findUnique({
     where: { id },
     include: {
       skill: {

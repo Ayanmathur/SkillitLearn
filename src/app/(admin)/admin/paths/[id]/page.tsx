@@ -17,7 +17,7 @@ export default async function AdminPathPage({ params }: Props) {
       career: { select: { id: true, name: true } },
       skills: {
         orderBy: { orderIndex: "asc" },
-        include: { modules: { select: { id: true } } },
+        include: { tracks: { select: { id: true } } },
       },
     },
   });
@@ -46,7 +46,7 @@ export default async function AdminPathPage({ params }: Props) {
           path={{ id: path.id, name: path.name, slug: path.slug, description: path.description, careerId: path.career.id }}
           skills={path.skills.map((s) => ({
             id: s.id, name: s.name, slug: s.slug, description: s.description,
-            estimatedHours: s.estimatedHours, moduleCount: s.modules.length,
+            estimatedHours: s.estimatedHours, moduleCount: s.tracks.length,
           }))}
         />
       </div>

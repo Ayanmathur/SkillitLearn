@@ -53,7 +53,7 @@ export async function updateSkill(formData: FormData) {
 export async function deleteSkill(id: string) {
   const user = await requireRole(["admin", "super_admin"]);
   z.string().uuid().parse(id);
-  const modCount = await prisma.module.count({ where: { skillId: id } });
+  const modCount = await prisma.track.count({ where: { skillId: id } });
   if (modCount > 0) return { error: `Cannot delete - ${modCount} tracks exist. Delete them first.` };
   const skill = await prisma.skill.delete({ where: { id } });
   await prisma.auditLog.create({ data: { actorUserId: user.id, action: "delete", targetTable: "skills", targetId: id } });

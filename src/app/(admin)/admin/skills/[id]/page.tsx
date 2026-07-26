@@ -15,7 +15,7 @@ export default async function AdminSkillPage({ params }: Props) {
     where: { id },
     include: {
       path: { include: { career: { select: { id: true, name: true } } } },
-      modules: {
+      tracks: {
         orderBy: { orderIndex: "asc" },
         include: { steps: { select: { id: true } } },
       },
@@ -46,7 +46,7 @@ export default async function AdminSkillPage({ params }: Props) {
       <div className="container-page py-8">
         <SkillDetailClient
           skill={{ id: skill.id, name: skill.name, slug: skill.slug, description: skill.description, estimatedHours: skill.estimatedHours, pathId: skill.path.id }}
-          tracks={skill.modules.map((m) => ({ id: m.id, title: m.title, stepCount: m.steps.length }))}
+          tracks={skill.tracks.map((m) => ({ id: m.id, title: m.title, stepCount: m.steps.length }))}
           questions={skill.quizQuestions.map((q) => ({
             id: q.id, questionText: q.questionText,
             choicesJson: q.choicesJson as Array<{id: string; text: string}>,

@@ -244,6 +244,7 @@ export async function getPathBySlug(pathSlug: string) {
         estimatedHours: 0,
         orderIndex: s.order_index ?? 0,
         modules: s.modules || [],
+        tracks: s.modules || [],
       })),
   };
 }
@@ -294,6 +295,23 @@ export async function getSkillBySlug(skillSlug: string) {
   const pathObj = Array.isArray(data.career_paths) ? data.career_paths[0] : data.career_paths;
   const careerObj = pathObj?.careers ? (Array.isArray(pathObj.careers) ? pathObj.careers[0] : pathObj.careers) : null;
 
+  const tracksList = (data.modules || [])
+    .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
+    .map((m: any) => ({
+      id: m.id,
+      title: m.title,
+      orderIndex: m.order_index ?? 0,
+      steps: (m.steps || [])
+        .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
+        .map((s: any) => ({
+          id: s.id,
+          title: s.title,
+          content: s.content,
+          mediaUrls: s.media_urls || [],
+          orderIndex: s.order_index ?? 0,
+        })),
+    }));
+
   return {
     id: data.id,
     name: data.name,
@@ -310,22 +328,8 @@ export async function getSkillBySlug(skillSlug: string) {
           career: careerObj ? { id: careerObj.id, name: careerObj.name, slug: careerObj.slug } : null,
         }
       : null,
-    modules: (data.modules || [])
-      .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-      .map((m: any) => ({
-        id: m.id,
-        title: m.title,
-        orderIndex: m.order_index ?? 0,
-        steps: (m.steps || [])
-          .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-          .map((s: any) => ({
-            id: s.id,
-            title: s.title,
-            content: s.content,
-            mediaUrls: s.media_urls || [],
-            orderIndex: s.order_index ?? 0,
-          })),
-      })),
+    modules: tracksList,
+    tracks: tracksList,
     quizQuestions: [],
   };
 }
