@@ -53,10 +53,18 @@ export function SkillBookletContent({
   }
 
   function handleMarkComplete(stepId: string) {
+    // 0ms Optimistic Instant Update
+    setCompletedIds((prev) => new Set([...Array.from(prev), stepId]));
+
     startTransition(async () => {
       const result = await markStepComplete(stepId);
-      if (result.success) {
-        setCompletedIds((prev) => new Set([...Array.from(prev), stepId]));
+      if (!result.success) {
+        // Revert on error
+        setCompletedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(stepId);
+          return next;
+        });
       }
     });
   }

@@ -219,6 +219,7 @@ export function CareerExplorer({ careers }: Props) {
           <Link
             key={career.id}
             href={`/careers/${career.slug}`}
+            prefetch={true}
             className="group relative bg-surface rounded-2xl overflow-hidden
                        border border-[var(--border-color)]
                        shadow-sm hover:shadow-card
