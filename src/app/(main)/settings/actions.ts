@@ -60,6 +60,15 @@ export async function deleteAccount() {
     console.error("Error deleting DB user record:", err);
   }
 
+  // Delete from Supabase Auth admin schema
+  try {
+    const { createServiceRoleClient } = await import("@/lib/supabase/server");
+    const adminSupabase = createServiceRoleClient();
+    await adminSupabase.auth.admin.deleteUser(user.id);
+  } catch (authErr) {
+    console.error("Error deleting Auth user record:", authErr);
+  }
+
   // Sign out user session
   await supabase.auth.signOut();
   return { success: true };

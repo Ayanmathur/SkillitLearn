@@ -199,8 +199,8 @@ export async function checkPathCompletion(pathId: string) {
 
 /**
  * Issue a certificate with full PDF + QR code generation.
- * Only issues if ALL skills in the path have quizPassed = true
- * AND the path has a complete certificate template.
+ * Uses default template fallback if custom admin template does not exist yet.
+ * Uses inline PDF storage fallback if Supabase storage upload fails.
  */
 export async function issueCertificate(pathId: string) {
   const user = await requireAuth();
@@ -223,11 +223,13 @@ export async function issueCertificate(pathId: string) {
 
   if (!path) return { error: "Path not found" };
 
-  // Check template exists with required fields
+  // Use template if configured, otherwise use default SkillItLearn signatory fallback
   const tmpl = path.certificateTemplate;
-  if (!tmpl || !tmpl.signatoryName || !tmpl.signatoryTitle) {
-    return { error: "Certificate template is not configured for this path. Contact admin." };
-  }
+  const signatoryName = tmpl?.signatoryName || "Ayan Mathur";
+  const signatoryTitle = tmpl?.signatoryTitle || "Founder & Director, SkillItLearn";
+  const certTitle = tmpl?.templateLayoutJson
+    ? ((tmpl.templateLayoutJson as Record<string, string>).certificateTitle || `Certificate of Completion`)
+    : `Certificate of Completion`;
 
   const completions = await prisma.skillCompletion.count({
     where: {
@@ -259,14 +261,9 @@ export async function issueCertificate(pathId: string) {
   const verifyUrl = `${SITE_URL}/verify/${certId}`;
   const qrBuffer = await generateQRCodeBuffer(verifyUrl);
 
-  // 6. Fetch template assets
-  const logoBuffer = tmpl.logoUrl ? await fetchImageBuffer(tmpl.logoUrl) : undefined;
-  const signatureBuffer = tmpl.signatureUrl ? await fetchImageBuffer(tmpl.signatureUrl) : undefined;
-
-  // Certificate title from template
-  const certTitle = tmpl.templateLayoutJson
-    ? ((tmpl.templateLayoutJson as Record<string, string>).certificateTitle || `Certificate of Completion`)
-    : `Certificate of Completion`;
+  // 6. Fetch template assets if available
+  const logoBuffer = tmpl?.logoUrl ? await fetchImageBuffer(tmpl.logoUrl) : undefined;
+  const signatureBuffer = tmpl?.signatureUrl ? await fetchImageBuffer(tmpl.signatureUrl) : undefined;
 
   // 7. Generate PDF
   const pdfBuffer = await generateCertificatePDF({
@@ -275,42 +272,38 @@ export async function issueCertificate(pathId: string) {
     pathName: path.name,
     careerName: path.career.name,
     certificateTitle: certTitle,
-    signatoryName: tmpl.signatoryName,
-    signatoryTitle: tmpl.signatoryTitle,
+    signatoryName,
+    signatoryTitle,
     issueDate: new Date(),
     qrBuffer,
     logoBuffer,
     signatureBuffer,
   });
 
-  // 8. Upload to Supabase Storage (private bucket)
-  const supabase = createServiceRoleClient();
-  const pdfPath = `certificates/${certId}.pdf`;
-  const qrPath = `certificates/${certId}-qr.png`;
+  // 8. Upload to Supabase Storage (private bucket) with fallback
+  let pdfUrl = `certificates/${certId}.pdf`;
+  const qrUrl = `certificates/${certId}-qr.png`;
 
-  const [pdfUpload, qrUpload] = await Promise.all([
-    supabase.storage.from("content-assets").upload(pdfPath, pdfBuffer, {
-      contentType: "application/pdf",
-      upsert: false,
-    }),
-    supabase.storage.from("content-assets").upload(qrPath, qrBuffer, {
-      contentType: "image/png",
-      upsert: false,
-    }),
-  ]);
+  try {
+    const supabase = createServiceRoleClient();
+    const [pdfUpload] = await Promise.all([
+      supabase.storage.from("content-assets").upload(pdfUrl, pdfBuffer, {
+        contentType: "application/pdf",
+        upsert: true,
+      }),
+      supabase.storage.from("content-assets").upload(qrUrl, qrBuffer, {
+        contentType: "image/png",
+        upsert: true,
+      }).catch(() => null),
+    ]);
 
-  if (pdfUpload.error) {
-    console.error("PDF upload failed:", pdfUpload.error);
-    return { error: "Failed to store certificate PDF." };
+    if (pdfUpload?.error) {
+      pdfUrl = "inline";
+    }
+  } catch (storageErr) {
+    console.warn("Storage upload warning (using dynamic PDF fallback):", storageErr);
+    pdfUrl = "inline";
   }
-  if (qrUpload.error) {
-    console.error("QR upload failed:", qrUpload.error);
-    // Non-critical - continue
-  }
-
-  // Get URLs (private - will use signed URLs for access)
-  const pdfUrl = pdfPath;
-  const qrUrl = qrPath;
 
   // 9. Insert certificate row
   const cert = await prisma.certificate.create({
@@ -325,20 +318,24 @@ export async function issueCertificate(pathId: string) {
   });
 
   // 10. Audit log
-  await prisma.auditLog.create({
-    data: {
-      actorUserId: user.id,
-      action: "certificate_issued",
-      targetTable: "certificates",
-      targetId: cert.id,
-      metadataJson: {
-        certId,
-        pathName: path.name,
-        userName: user.fullName,
-        verifyUrl,
+  try {
+    await prisma.auditLog.create({
+      data: {
+        actorUserId: user.id,
+        action: "certificate_issued",
+        targetTable: "certificates",
+        targetId: cert.id,
+        metadataJson: {
+          certId,
+          pathName: path.name,
+          userName: user.fullName,
+          verifyUrl,
+        },
       },
-    },
-  });
+    });
+  } catch {
+    // Non-critical
+  }
 
   return {
     certificate: { id: cert.uniqueCertificateId, issuedAt: cert.issuedAt },
@@ -347,31 +344,75 @@ export async function issueCertificate(pathId: string) {
 
 /**
  * Get a signed download URL for a certificate PDF.
- * URLs expire after 5 minutes - never permanently public.
+ * If storage is unavailable or pdfUrl is "inline", dynamically generates
+ * a data URL PDF stream so download NEVER fails.
  */
 export async function getCertificateDownloadUrl(certId: string) {
   const user = await requireAuth();
 
   const cert = await prisma.certificate.findUnique({
     where: { uniqueCertificateId: certId },
-    select: { userId: true, pdfUrl: true, revoked: true },
+    include: {
+      path: {
+        select: {
+          id: true,
+          name: true,
+          career: { select: { name: true } },
+          certificateTemplate: true,
+        },
+      },
+    },
   });
 
   if (!cert) return { error: "Certificate not found." };
   if (cert.revoked) return { error: "This certificate has been revoked." };
   if (cert.userId !== user.id) return { error: "You do not own this certificate." };
-  if (!cert.pdfUrl) return { error: "Certificate PDF not available." };
 
-  const supabase = createServiceRoleClient();
-  const { data, error } = await supabase.storage
-    .from("content-assets")
-    .createSignedUrl(cert.pdfUrl, 300); // 5 minutes
+  // Try storage signed URL first
+  if (cert.pdfUrl && cert.pdfUrl !== "inline") {
+    try {
+      const supabase = createServiceRoleClient();
+      const { data, error } = await supabase.storage
+        .from("content-assets")
+        .createSignedUrl(cert.pdfUrl, 300);
 
-  if (error || !data?.signedUrl) {
-    return { error: "Failed to generate download link." };
+      if (!error && data?.signedUrl) {
+        return { url: data.signedUrl };
+      }
+    } catch {
+      // Fallback to dynamic PDF generation below
+    }
   }
 
-  return { url: data.signedUrl };
+  // Failsafe Fallback: Generate PDF on-the-fly and return Base64 Data URL
+  try {
+    const verifyUrl = `${SITE_URL}/verify/${cert.uniqueCertificateId}`;
+    const qrBuffer = await generateQRCodeBuffer(verifyUrl);
+    const tmpl = cert.path.certificateTemplate;
+    const signatoryName = tmpl?.signatoryName || "Ayan Mathur";
+    const signatoryTitle = tmpl?.signatoryTitle || "Founder & Director, SkillItLearn";
+    const certTitle = tmpl?.templateLayoutJson
+      ? ((tmpl.templateLayoutJson as Record<string, string>).certificateTitle || `Certificate of Completion`)
+      : `Certificate of Completion`;
+
+    const pdfBuffer = await generateCertificatePDF({
+      certId: cert.uniqueCertificateId,
+      learnerName: user.fullName || user.email,
+      pathName: cert.path.name,
+      careerName: cert.path.career.name,
+      certificateTitle: certTitle,
+      signatoryName,
+      signatoryTitle,
+      issueDate: cert.issuedAt,
+      qrBuffer,
+    });
+
+    const dataUrl = `data:application/pdf;base64,${pdfBuffer.toString("base64")}`;
+    return { url: dataUrl };
+  } catch (err: any) {
+    console.error("Dynamic PDF fallback error:", err);
+    return { error: "Failed to generate certificate PDF." };
+  }
 }
 
 /**
