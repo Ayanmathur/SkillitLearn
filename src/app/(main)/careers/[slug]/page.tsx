@@ -65,8 +65,8 @@ export default async function CareerDetailPage({ params }: Props) {
             <div className="bg-white/80 dark:bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 text-sm text-gray-800 dark:text-white/90 font-medium">
               ⏱️{" "}
               {career.paths.reduce(
-                (s, p) =>
-                  s + p.skills.reduce((ss, sk) => ss + sk.estimated_hours, 0),
+                (s: number, p: any) =>
+                  s + p.skills.reduce((ss: number, sk: any) => ss + sk.estimatedHours, 0),
                 0
               )}{" "}
               hours total
@@ -85,7 +85,7 @@ export default async function CareerDetailPage({ params }: Props) {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {career.paths.map((path, i) => {
               const totalHours = path.skills.reduce(
-                (s, sk) => s + sk.estimated_hours,
+                (s: number, sk: any) => s + sk.estimatedHours,
                 0
               );
               return (

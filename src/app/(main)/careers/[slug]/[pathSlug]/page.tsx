@@ -12,6 +12,8 @@ interface Props {
   params: Promise<{ slug: string; pathSlug: string }>;
 }
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { pathSlug } = await params;
   const path = await getPathBySlug(pathSlug);
@@ -30,7 +32,7 @@ export default async function PathDetailPage({ params }: Props) {
   if (!path) notFound();
 
   const user = await getCurrentUser();
-  const totalHours = path.skills.reduce((s, sk) => s + sk.estimated_hours, 0);
+  const totalHours = path.skills.reduce((s, sk) => s + sk.estimatedHours, 0);
   const totalSkills = path.skills.length;
 
   // ── Progress tracking ──────────────────────────────────
@@ -53,8 +55,8 @@ export default async function PathDetailPage({ params }: Props) {
 
   if (user) {
     // Batch queries for all skills
-    const allStepIds = path.skills.flatMap((sk) =>
-      sk.modules.flatMap((m) => m.steps.map((s) => s.id))
+    const allStepIds = path.skills.flatMap((sk: any) =>
+      sk.modules.flatMap((m: any) => m.steps.map((s: any) => s.id))
     );
 
     const [completedSteps, completions, existingCert, template] = await Promise.all([
@@ -87,8 +89,8 @@ export default async function PathDetailPage({ params }: Props) {
     hasTemplate = !!template;
 
     for (const skill of path.skills) {
-      const stepIds = skill.modules.flatMap((m) => m.steps.map((s) => s.id));
-      const doneCount = stepIds.filter((id) => completedStepSet.has(id)).length;
+      const stepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
+      const doneCount = stepIds.filter((id: any) => completedStepSet.has(id)).length;
       const totalSteps = stepIds.length;
       const comp = completionMap.get(skill.id);
       const quizPassed = comp?.quizPassed || false;
@@ -135,7 +137,7 @@ export default async function PathDetailPage({ params }: Props) {
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
-              {(path.careers as any)?.name}
+              {path.career?.name}
             </Link>
             <span>/</span>
             <span className="text-gray-700 dark:text-white/80">{path.name}</span>
@@ -207,7 +209,7 @@ export default async function PathDetailPage({ params }: Props) {
                                    : "bg-surface border-2 border-[var(--border-color)] text-text-muted"
                                }`}
                   >
-                    {status === "complete" ? "✓" : skill.order_index + 1}
+                    {status === "complete" ? "✓" : skill.orderIndex + 1}
                     {/* Tooltip */}
                     <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100
                                      text-[10px] bg-gray-900 dark:bg-[#1a1a2e] text-white rounded px-2 py-1 whitespace-nowrap pointer-events-none
@@ -326,7 +328,7 @@ export default async function PathDetailPage({ params }: Props) {
 
                   {/* Hours */}
                   <div className="hidden sm:flex flex-shrink-0 items-center gap-1 text-sm text-text-muted">
-                    <span>~{skill.estimated_hours}h</span>
+                    <span>~{skill.estimatedHours}h</span>
                   </div>
 
                   {/* Arrow / Resume */}

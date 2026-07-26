@@ -12,6 +12,8 @@ interface Props {
   params: Promise<{ slug: string; pathSlug: string; skillSlug: string }>;
 }
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { skillSlug } = await params;
   const skill = await getSkillBySlug(skillSlug);
@@ -30,7 +32,7 @@ export default async function SkillBookletPage({ params }: Props) {
   if (!skill) notFound();
 
   const user = await getCurrentUser();
-  const allStepIds = skill.modules.flatMap((m) => m.steps.map((s) => s.id));
+  const allStepIds = skill.modules.flatMap((m: any) => m.steps.map((s: any) => s.id));
   const totalSteps = allStepIds.length;
 
   // Fetch user's progress for this skill
@@ -76,11 +78,11 @@ export default async function SkillBookletPage({ params }: Props) {
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
-              {(skill.paths as any)?.careers?.name}
+              {skill.path?.career?.name}
             </Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}/${pathSlug}`} className="hover:text-accent transition-colors">
-              {(skill.paths as any)?.name}
+              {skill.path?.name}
             </Link>
             <span>/</span>
             <span className="text-gray-700 dark:text-white/80">{skill.name}</span>
@@ -101,7 +103,7 @@ export default async function SkillBookletPage({ params }: Props) {
               📄 {totalSteps} step{totalSteps !== 1 ? "s" : ""}
             </span>
             <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
-              ⏱️ ~{skill.estimated_hours}h
+              ⏱️ ~{skill.estimatedHours}h
             </span>
             {skillComplete && (
               <span className="bg-accent/20 rounded-full px-4 py-1.5 text-accent font-medium">
