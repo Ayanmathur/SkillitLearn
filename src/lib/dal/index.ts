@@ -5,6 +5,12 @@ import { createClient } from "@supabase/supabase-js";
  * Uses lightweight Supabase PostgREST client to completely bypass
  * Prisma serverless cold starts (~15MB binary overhead).
  */
+
+/** Display mask: replaces 'Module' with 'Track' in titles for UI consistency. */
+function maskTitle(title: string): string {
+  return title.replace(/\bModules\b/gi, "Tracks").replace(/\bModule\b/gi, "Track");
+}
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -324,13 +330,13 @@ export async function getSkillBySlug(skillSlug: string) {
       .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
       .map((m: any) => ({
         id: m.id,
-        title: m.title,
+        title: maskTitle(m.title || ""),
         orderIndex: m.order_index ?? 0,
         steps: (m.steps || [])
           .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
           .map((s: any) => ({
             id: s.id,
-            title: s.title,
+            title: maskTitle(s.title || ""),
             content: s.content,
             mediaUrls: s.media_urls || [],
             orderIndex: s.order_index ?? 0,
