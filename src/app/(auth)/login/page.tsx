@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { signIn, signInWithGoogle } from "@/app/auth/actions";
+import { signIn } from "@/app/auth/actions";
+import { createBrowserClient } from "@supabase/ssr";
 import Link from "next/link";
 import { PwaInstallBanner } from "@/components/pwa-install-banner";
 
@@ -26,9 +27,23 @@ export default function LoginPage() {
   async function handleGoogleSignIn() {
     setLoading(true);
     setError(null);
-    const result = await signInWithGoogle();
-    if (result?.error) {
-      setError(result.error);
+    try {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to initialize Google Sign In");
       setLoading(false);
     }
   }
