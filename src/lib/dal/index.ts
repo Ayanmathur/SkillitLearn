@@ -11,6 +11,7 @@ const supabase = createClient(
 );
 
 // ── Types ───────────────────────────────────────────────────
+
 export interface SkillSummary {
   id: string;
   name: string;
@@ -96,7 +97,7 @@ export async function getAllCareers(): Promise<CareerSummary[]> {
             name: s.name,
             slug: s.slug,
             description: s.description,
-            estimatedHours: s.estimated_hours ?? 0,
+            estimatedHours: 0,
             orderIndex: s.order_index ?? 0,
           })),
       })),
@@ -107,7 +108,7 @@ export async function getStats() {
   try {
     const [careers, paths, skills, certs] = await Promise.all([
       supabase.from("careers").select("id", { count: "exact", head: true }),
-      supabase.from("paths").select("id", { count: "exact", head: true }),
+      supabase.from("career_paths").select("id", { count: "exact", head: true }),
       supabase.from("skills").select("id", { count: "exact", head: true }),
       supabase.from("certificates").select("id", { count: "exact", head: true }),
     ]);
@@ -134,8 +135,8 @@ export async function getCareerBySlug(slug: string) {
       name,
       slug,
       description,
-      icon_url,
-      paths (
+      icon,
+      career_paths (
         id,
         name,
         slug,
@@ -146,7 +147,6 @@ export async function getCareerBySlug(slug: string) {
           name,
           slug,
           description,
-          estimated_hours,
           order_index
         )
       )
@@ -154,15 +154,18 @@ export async function getCareerBySlug(slug: string) {
     .eq("slug", slug)
     .single();
 
-  if (error || !data) return null;
+  if (error || !data) {
+    if (error) console.error("DAL getCareerBySlug Error:", error);
+    return null;
+  }
 
   return {
     id: data.id,
     name: data.name,
     slug: data.slug,
     description: data.description,
-    iconUrl: data.icon_url,
-    paths: (data.paths || [])
+    iconUrl: data.icon,
+    paths: (data.career_paths || [])
       .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
       .map((p: any) => ({
         id: p.id,
@@ -177,7 +180,7 @@ export async function getCareerBySlug(slug: string) {
             name: s.name,
             slug: s.slug,
             description: s.description,
-            estimatedHours: s.estimated_hours ?? 0,
+            estimatedHours: 0,
             orderIndex: s.order_index ?? 0,
           })),
       })),
@@ -188,7 +191,7 @@ export async function getCareerBySlug(slug: string) {
 
 export async function getPathBySlug(pathSlug: string) {
   const { data, error } = await supabase
-    .from("paths")
+    .from("career_paths")
     .select(`
       id,
       name,
@@ -206,7 +209,6 @@ export async function getPathBySlug(pathSlug: string) {
         name,
         slug,
         description,
-        estimated_hours,
         order_index,
         modules (
           id,
@@ -219,7 +221,10 @@ export async function getPathBySlug(pathSlug: string) {
     .eq("slug", pathSlug)
     .single();
 
-  if (error || !data) return null;
+  if (error || !data) {
+    if (error) console.error("DAL getPathBySlug Error:", error);
+    return null;
+  }
 
   const careerObj = Array.isArray(data.careers) ? data.careers[0] : data.careers;
 
@@ -238,7 +243,7 @@ export async function getPathBySlug(pathSlug: string) {
         name: s.name,
         slug: s.slug,
         description: s.description,
-        estimatedHours: s.estimated_hours ?? 0,
+        estimatedHours: 0,
         orderIndex: s.order_index ?? 0,
         modules: s.modules || [],
       })),
@@ -255,10 +260,9 @@ export async function getSkillBySlug(skillSlug: string) {
       name,
       slug,
       description,
-      estimated_hours,
       order_index,
       path_id,
-      paths (
+      career_paths (
         id,
         name,
         slug,
@@ -292,9 +296,12 @@ export async function getSkillBySlug(skillSlug: string) {
     .eq("slug", skillSlug)
     .single();
 
-  if (error || !data) return null;
+  if (error || !data) {
+    if (error) console.error("DAL getSkillBySlug Error:", error);
+    return null;
+  }
 
-  const pathObj = Array.isArray(data.paths) ? data.paths[0] : data.paths;
+  const pathObj = Array.isArray(data.career_paths) ? data.career_paths[0] : data.career_paths;
   const careerObj = pathObj?.careers ? (Array.isArray(pathObj.careers) ? pathObj.careers[0] : pathObj.careers) : null;
 
   return {
@@ -302,7 +309,7 @@ export async function getSkillBySlug(skillSlug: string) {
     name: data.name,
     slug: data.slug,
     description: data.description,
-    estimatedHours: data.estimated_hours ?? 0,
+    estimatedHours: 0,
     orderIndex: data.order_index ?? 0,
     pathId: data.path_id,
     path: pathObj
