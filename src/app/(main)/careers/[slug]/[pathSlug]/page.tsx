@@ -365,7 +365,7 @@ export default async function PathDetailPage({ params }: Props) {
                 hasCertificate ? (
                   <Link
                     href={`/certificates/${certId}`}
-                    className="inline-flex items-center gap-2 bg-green-50 dark:bg-[#1a1a2e]0 hover:bg-green-600 text-white
+                    className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white
                                font-semibold rounded-full px-8 py-3.5
                                transition-all duration-300 hover:shadow-lg hover:shadow-green-500/30"
                   >

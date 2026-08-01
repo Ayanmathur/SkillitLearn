@@ -144,17 +144,22 @@ export async function signIn(formData: FormData) {
     console.error("Failed to upsert user record:", dbError);
   }
 
-  // Check if this is the admin user
-  const dbUser = await prisma.user.findUnique({
-    where: { id: data.user.id },
-    select: { role: true },
-  });
+  // Check if this is the admin user (safe DB query)
+  let isAdmin = false;
+  try {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: data.user.id },
+      select: { role: true },
+    });
+    if (dbUser?.role === "admin" || dbUser?.role === "super_admin") {
+      isAdmin = true;
+    }
+  } catch {
+    // Ignore DB error, default to learner redirect
+  }
 
   // Redirect based on role
-  if (
-    dbUser?.role === "admin" ||
-    dbUser?.role === "super_admin"
-  ) {
+  if (isAdmin) {
     redirect("/admin");
   }
 
