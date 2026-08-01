@@ -88,7 +88,7 @@ export default async function CertificateViewPage({ params }: Props) {
           <div className="rounded-2xl border border-[var(--border-color)] shadow-card overflow-hidden mb-8">
             {/* Preview banner */}
             <div className="bg-gradient-to-r from-accent/10 to-green-100 dark:from-accent/5 dark:to-green-900/10 p-8 text-center border-b border-[var(--border-color)]">
-              <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-[#1a1a2e]0/10 text-green-600 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-accent/10 text-green-600 dark:text-accent text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="m9 11 3 3L22 4" />
                 </svg>

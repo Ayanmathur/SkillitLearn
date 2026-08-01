@@ -18,8 +18,16 @@ export function CertificateDownload({ certId }: Props) {
       if ("error" in result && result.error) {
         setError(result.error);
       } else if (result.url) {
-        // Open signed URL in new tab - triggers download
-        window.open(result.url, "_blank");
+        if (result.url.startsWith("data:")) {
+          const a = document.createElement("a");
+          a.href = result.url;
+          a.download = `certificate-${certId}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } else {
+          window.open(result.url, "_blank");
+        }
       }
     });
   }

@@ -26,7 +26,7 @@ export default async function VerifyCertificatePage({ params }: Props) {
       {/* Header band */}
       <section className="bg-green-50 dark:bg-[#1a1a2e] py-10 md:py-14">
         <div className="container-page text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">
             Certificate Verification
           </h1>
           <p className="text-gray-500 dark:text-white/60 text-sm">

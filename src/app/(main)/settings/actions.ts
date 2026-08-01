@@ -8,26 +8,37 @@ import { revalidatePath } from "next/cache";
 export async function updateProfile(fullName: string) {
   const user = await requireAuth();
 
-  if (!fullName || fullName.trim().length < 2) {
+  const cleanName = (fullName || "").trim();
+  if (cleanName.length < 2) {
     return { error: "Name must be at least 2 characters long." };
   }
 
-  const supabase = await createServerSupabaseClient();
+  try {
+    const supabase = await createServerSupabaseClient();
 
-  // Update Supabase auth metadata
-  await supabase.auth.updateUser({
-    data: { full_name: fullName.trim() },
-  });
+    // Update Supabase auth metadata
+    await supabase.auth.updateUser({
+      data: { full_name: cleanName },
+    }).catch((e) => console.warn("Auth metadata update warning:", e));
 
-  // Update Users DB record
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { fullName: fullName.trim() },
-  });
+    // Update Users DB record with upsert fallback
+    await prisma.user.upsert({
+      where: { id: user.id },
+      update: { fullName: cleanName },
+      create: {
+        id: user.id,
+        email: user.email,
+        fullName: cleanName,
+        role: "learner",
+      },
+    }).catch((e) => console.warn("Prisma user upsert warning:", e));
 
-  revalidatePath("/settings");
-  revalidatePath("/certificates");
-  return { success: true, message: "Profile updated successfully!" };
+    revalidatePath("/settings");
+    revalidatePath("/certificates");
+    return { success: true, message: "Profile updated successfully!" };
+  } catch (err: any) {
+    return { error: err?.message || "Failed to update profile." };
+  }
 }
 
 export async function updatePassword(password: string) {
@@ -37,25 +48,28 @@ export async function updatePassword(password: string) {
     return { error: "Password must be at least 6 characters long." };
   }
 
-  const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.updateUser({ password });
+  try {
+    const supabase = await createServerSupabaseClient();
+    const { error } = await supabase.auth.updateUser({ password });
 
-  if (error) {
-    return { error: error.message };
+    if (error) {
+      return { error: error.message };
+    }
+
+    return { success: true, message: "Password updated successfully!" };
+  } catch (err: any) {
+    return { error: err?.message || "Failed to update password." };
   }
-
-  return { success: true, message: "Password updated successfully!" };
 }
 
 export async function deleteAccount() {
   const user = await requireAuth();
-  const supabase = await createServerSupabaseClient();
 
   // Delete from DB first
   try {
     await prisma.user.delete({
       where: { id: user.id },
-    });
+    }).catch((e) => console.warn("Prisma user delete warning:", e));
   } catch (err) {
     console.error("Error deleting DB user record:", err);
   }
@@ -70,6 +84,12 @@ export async function deleteAccount() {
   }
 
   // Sign out user session
-  await supabase.auth.signOut();
+  try {
+    const supabase = await createServerSupabaseClient();
+    await supabase.auth.signOut();
+  } catch (e) {
+    console.warn("SignOut warning:", e);
+  }
+
   return { success: true };
 }

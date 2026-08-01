@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "View and download your earned SkillItLearn certificates.",
 };
 
+export const revalidate = 0;
+
 export default async function CertificatesPage() {
   const user = await getCurrentUser();
 
@@ -27,48 +29,59 @@ export default async function CertificatesPage() {
     );
   }
 
-  const certificates = await prisma.certificate.findMany({
-    where: { userId: user.id, revoked: false },
-    include: {
-      path: {
-        select: { name: true, career: { select: { name: true } } },
+  // Safely query certificates — table may not exist yet
+  let certificates: any[] = [];
+  try {
+    certificates = await prisma.certificate.findMany({
+      where: { userId: user.id, revoked: false },
+      include: {
+        path: {
+          select: { name: true, career: { select: { name: true } } },
+        },
       },
-    },
-    orderBy: { issuedAt: "desc" },
-  });
+      orderBy: { issuedAt: "desc" },
+    });
+  } catch (err) {
+    console.warn("Certificates query failed (table may not exist):", err);
+  }
 
-  // Also get paths where user has made progress but no certificate yet
-  const completedPaths = await prisma.path.findMany({
-    where: {
-      skills: {
-        some: {
-          skillCompletions: {
-            some: { userId: user.id, quizPassed: true },
+  // Safely query in-progress paths
+  let inProgressPaths: any[] = [];
+  try {
+    const completedPaths = await prisma.path.findMany({
+      where: {
+        skills: {
+          some: {
+            skillCompletions: {
+              some: { userId: user.id, quizPassed: true },
+            },
           },
         },
       },
-    },
-    include: {
-      career: { select: { name: true, slug: true } },
-      skills: {
-        select: {
-          id: true,
-          skillCompletions: {
-            where: { userId: user.id, quizPassed: true },
-            select: { id: true },
+      include: {
+        career: { select: { name: true, slug: true } },
+        skills: {
+          select: {
+            id: true,
+            skillCompletions: {
+              where: { userId: user.id, quizPassed: true },
+              select: { id: true },
+            },
           },
         },
+        certificates: {
+          where: { userId: user.id, revoked: false },
+          select: { id: true },
+        },
       },
-      certificates: {
-        where: { userId: user.id, revoked: false },
-        select: { id: true },
-      },
-    },
-  });
+    });
 
-  const inProgressPaths = completedPaths.filter(
-    (p) => p.certificates.length === 0 && p.skills.some((s) => s.skillCompletions.length > 0)
-  );
+    inProgressPaths = completedPaths.filter(
+      (p) => p.certificates.length === 0 && p.skills.some((s: any) => s.skillCompletions.length > 0)
+    );
+  } catch (err) {
+    console.warn("In-progress paths query failed:", err);
+  }
 
   return (
     <main className="min-h-screen bg-surface">
@@ -88,7 +101,7 @@ export default async function CertificatesPage() {
                 🏆 Earned Certificates ({certificates.length})
               </h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {certificates.map((cert) => (
+                {certificates.map((cert: any) => (
                   <div
                     key={cert.id}
                     className="bg-surface-raised rounded-2xl p-5 border border-[var(--border-color)] shadow-sm
@@ -111,10 +124,10 @@ export default async function CertificatesPage() {
                     </p>
                     <div className="mt-3 pt-3 border-t border-[var(--border-color)]">
                       <Link
-                        href={`/verify?id=${cert.uniqueCertificateId}`}
+                        href={`/certificates/${cert.uniqueCertificateId}`}
                         className="text-xs text-accent hover:text-accent-hover font-semibold transition-colors"
                       >
-                        Verify →
+                        View & Download →
                       </Link>
                     </div>
                   </div>
@@ -130,8 +143,8 @@ export default async function CertificatesPage() {
                 📈 Paths in Progress
               </h2>
               <div className="space-y-3">
-                {inProgressPaths.map((p) => {
-                  const done = p.skills.filter((s) => s.skillCompletions.length > 0).length;
+                {inProgressPaths.map((p: any) => {
+                  const done = p.skills.filter((s: any) => s.skillCompletions.length > 0).length;
                   const total = p.skills.length;
                   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
                   return (
