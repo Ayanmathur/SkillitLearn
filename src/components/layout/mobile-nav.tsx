@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createBrowserClient } from "@supabase/ssr";
 import { signOut } from "@/app/auth/actions";
+import { ThemeToggle } from "../theme-toggle";
 
 const NAV_LINKS = [
   { href: "/#careers", label: "Careers" },
@@ -63,6 +64,10 @@ export function MobileNav() {
                 {link.label}
               </Link>
             ))}
+            <div className="flex items-center justify-between px-4 py-2 my-1 rounded-xl text-gray-700 dark:text-white/80 font-medium text-sm">
+              <span>Theme</span>
+              <ThemeToggle className="p-2 rounded-full bg-white/40 dark:bg-white/10 text-gray-700 dark:text-white transition-colors" />
+            </div>
             <div className="border-t border-gray-200 dark:border-white/10 mt-2 pt-3">
               {user ? (
                 <>

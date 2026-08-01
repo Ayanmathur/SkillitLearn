@@ -64,7 +64,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
           <PwaRegister />
           {children}
         </ThemeProvider>

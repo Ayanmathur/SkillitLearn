@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ClientAuthWidget } from "./client-auth-widget";
 import { MobileNav } from "./mobile-nav";
 import { MobileHeaderControls } from "./mobile-header-controls";
+import { ThemeToggle } from "../theme-toggle";
 
 const NAV_LINKS = [
   { href: "/#careers", label: "Careers" },
@@ -44,8 +45,11 @@ export function Header() {
           <ClientAuthWidget />
         </div>
 
-        {/* Mobile hamburger */}
-        <MobileNav />
+        {/* Right side - mobile controls + hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <MobileNav />
+        </div>
       </div>
     </header>
   );
