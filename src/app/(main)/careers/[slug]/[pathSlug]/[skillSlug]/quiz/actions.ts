@@ -71,13 +71,38 @@ export async function submitQuiz(data: {
   }
 
   // Fetch true correct answers from DB
-  const { data: questions, error: qErr } = await supabase
-    .from("quiz_questions")
-    .select("id, question_text, options, correct_option_index, explanation, difficulty")
-    .in("id", questionIds)
-    .eq("skill_id", skillId);
+  let questions: any[] | null = null;
+  try {
+    const res = await supabase
+      .from("quiz_questions")
+      .select("id, question_text, choices_json, options, correct_choice_id, correct_option_index, explanation, difficulty")
+      .in("id", questionIds)
+      .eq("skill_id", skillId);
+    questions = res.data;
+  } catch {
+    // Fallback to Prisma below
+  }
 
-  if (qErr || !questions) {
+  // Fallback to Prisma ORM if PostgREST query returned empty or failed
+  if (!questions || questions.length === 0) {
+    try {
+      const dbQuestions = await prisma.quizQuestion.findMany({
+        where: { id: { in: questionIds }, skillId },
+      });
+      questions = dbQuestions.map((q) => ({
+        id: q.id,
+        question_text: q.questionText,
+        options: (q.choicesJson as any) || [],
+        correct_option_index: Number(q.correctChoiceId) || 0,
+        explanation: q.explanation,
+        difficulty: "moderate",
+      }));
+    } catch (dbErr) {
+      console.error("Prisma quiz questions error:", dbErr);
+    }
+  }
+
+  if (!questions || questions.length === 0) {
     return { error: "Failed to grade quiz submission." };
   }
 
@@ -86,21 +111,23 @@ export async function submitQuiz(data: {
 
   const results = questions.map((q: any) => {
     const userChoiceIdx = answers[q.id];
-    const isCorrect = userChoiceIdx === q.correct_option_index;
+    const correctIdx = q.correct_option_index ?? Number(q.correct_choice_id) ?? 0;
+    const isCorrect = userChoiceIdx === correctIdx;
     if (isCorrect) score++;
 
+    const opts = q.options || q.choices_json || [];
     return {
       questionId: q.id,
-      questionText: q.question_text,
-      choices: (q.options || []).map((optText: string, idx: number) => ({
+      questionText: q.question_text || q.questionText || "Question",
+      choices: opts.map((optText: string, idx: number) => ({
         id: String(idx),
-        text: optText,
+        text: typeof optText === "string" ? optText : (optText as any)?.text || String(optText),
       })),
       userAnswer: String(userChoiceIdx),
-      correctAnswer: String(q.correct_option_index),
+      correctAnswer: String(correctIdx),
       isCorrect,
-      explanation: q.explanation,
-      difficulty: q.difficulty,
+      explanation: q.explanation || "",
+      difficulty: q.difficulty || "moderate",
     };
   });
 
@@ -133,12 +160,14 @@ export async function submitQuiz(data: {
         },
         update: {
           quizPassed: true,
+          stepsCompleted: true,
           completedAt: new Date(),
         },
         create: {
           userId: user.id,
           skillId: skillId,
           quizPassed: true,
+          stepsCompleted: true,
           completedAt: new Date(),
         },
       });

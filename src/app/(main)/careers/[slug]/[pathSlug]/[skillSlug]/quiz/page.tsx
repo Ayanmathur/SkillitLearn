@@ -20,8 +20,11 @@ export default async function QuizPage({ params }: Props) {
     redirect(`/login?redirect=/careers/${slug}/${pathSlug}/${skillSlug}/quiz`);
   }
 
-  // Format readable skill name from slug
-  const skillName = skillSlug
+  const { getSkillBySlug } = await import("@/lib/data");
+  const skill = await getSkillBySlug(skillSlug).catch(() => null);
+
+  // Format readable skill name from skill object or fallback to slug
+  const skillName = skill?.name || skillSlug
     .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");

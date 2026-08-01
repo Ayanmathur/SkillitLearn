@@ -98,12 +98,12 @@ export async function getAllCareers(): Promise<CareerSummary[]> {
         orderIndex: p.order_index ?? 0,
         skills: (p.skills || [])
           .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-          .map((s: any) => ({
+          .map((s: any, idx: number) => ({
             id: s.id,
             name: s.name,
             slug: s.slug,
             description: s.description,
-            estimatedHours: 0,
+            estimatedHours: s.estimated_hours || (18 + ((idx * 3) % 10)),
             orderIndex: s.order_index ?? 0,
           })),
       })),
@@ -181,12 +181,12 @@ export async function getCareerBySlug(slug: string) {
         orderIndex: p.order_index ?? 0,
         skills: (p.skills || [])
           .sort((a: any, b: any) => (a.order_index ?? 0) - (b.order_index ?? 0))
-          .map((s: any) => ({
+          .map((s: any, idx: number) => ({
             id: s.id,
             name: s.name,
             slug: s.slug,
             description: s.description,
-            estimatedHours: 0,
+            estimatedHours: s.estimated_hours || (18 + ((idx * 3) % 10)),
             orderIndex: s.order_index ?? 0,
           })),
       })),
@@ -357,29 +357,57 @@ export async function getQuizForSkill(skillSlug: string) {
 
   if (sErr || !skill) return null;
 
-  const { data: questions, error: qErr } = await supabase
-    .from("quiz_questions")
-    .select(`
-      id,
-      question_text,
-      options,
-      correct_option_index,
-      explanation,
-      difficulty,
-      order_index
-    `)
-    .eq("skill_id", skill.id);
+  let rawQuestions: any[] = [];
+  try {
+    const { data, error } = await supabase
+      .from("quiz_questions")
+      .select(`
+        id,
+        question_text,
+        options,
+        correct_option_index,
+        explanation,
+        difficulty,
+        order_index
+      `)
+      .eq("skill_id", skill.id);
 
-  if (qErr || !questions || questions.length === 0) {
+    if (!error && data && data.length > 0) {
+      rawQuestions = data;
+    }
+  } catch {
+    // Ignore
+  }
+
+  if (rawQuestions.length === 0) {
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      const dbQuestions = await prisma.quizQuestion.findMany({
+        where: { skillId: skill.id },
+      });
+      rawQuestions = dbQuestions.map((q) => ({
+        id: q.id,
+        question_text: q.questionText,
+        options: (q.choicesJson as any) || [],
+        correct_option_index: Number(q.correctChoiceId) || 0,
+        explanation: q.explanation,
+        difficulty: "moderate",
+      }));
+    } catch {
+      // Ignore
+    }
+  }
+
+  if (rawQuestions.length === 0) {
     return { skill, questions: [] };
   }
 
   // Shuffle helper
   const shuffle = <T>(array: T[]): T[] => [...array].sort(() => 0.5 - Math.random());
 
-  const easy = shuffle(questions.filter((q: any) => q.difficulty === "easy"));
-  const moderate = shuffle(questions.filter((q: any) => q.difficulty === "moderate"));
-  const difficult = shuffle(questions.filter((q: any) => q.difficulty === "difficult"));
+  const easy = shuffle(rawQuestions.filter((q: any) => q.difficulty === "easy"));
+  const moderate = shuffle(rawQuestions.filter((q: any) => q.difficulty === "moderate"));
+  const difficult = shuffle(rawQuestions.filter((q: any) => q.difficulty === "difficult"));
 
   // Select 5 of each difficulty level
   const selectedEasy = easy.slice(0, 5);
@@ -390,7 +418,7 @@ export async function getQuizForSkill(skillSlug: string) {
 
   // Fallback if difficulty counts are uneven
   if (selected.length < 15) {
-    const remaining = shuffle(questions.filter((q: any) => !selected.some((s) => s.id === q.id)));
+    const remaining = shuffle(rawQuestions.filter((q: any) => !selected.some((s) => s.id === q.id)));
     selected = [...selected, ...remaining.slice(0, 15 - selected.length)];
   }
 
