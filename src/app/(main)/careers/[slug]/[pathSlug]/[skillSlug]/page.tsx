@@ -105,22 +105,22 @@ export default async function SkillBookletPage({ params }: Props) {
             <span className="text-gray-700 dark:text-white/80">{skill.name}</span>
           </nav>
 
-          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+          <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
             {skill.name}
           </h1>
-          <p className="text-sm md:text-base text-gray-600 dark:text-white/60 leading-relaxed mb-4 max-w-2xl">
+          <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-white/60 leading-relaxed mb-4 max-w-2xl">
             {skill.description}
           </p>
 
-          <div className="flex flex-wrap gap-3 text-xs mb-5">
-            <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
+          <div className="flex flex-wrap gap-2 sm:gap-3 text-[11px] sm:text-xs mb-4 sm:mb-5">
+            <span className="bg-white/80 dark:bg-white/10 rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-gray-700 dark:text-white/80 font-medium">
               📖 {modulesList.length} track{modulesList.length !== 1 ? "s" : ""}
             </span>
-            <span className="bg-white/80 dark:bg-white/10 rounded-full px-4 py-1.5 text-gray-700 dark:text-white/80 font-medium">
+            <span className="bg-white/80 dark:bg-white/10 rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-gray-700 dark:text-white/80 font-medium">
               📄 {totalSteps} step{totalSteps !== 1 ? "s" : ""}
             </span>
             {skillComplete && (
-              <span className="bg-accent/20 rounded-full px-4 py-1.5 text-accent font-medium">
+              <span className="bg-accent/20 rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-accent font-medium">
                 ✅ Complete
               </span>
             )}

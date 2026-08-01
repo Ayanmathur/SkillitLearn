@@ -119,12 +119,12 @@ export function SkillBookletContent({
                   toggleTrack(mod.id);
                 }
               }}
-              className="w-full flex items-center gap-4 p-5 md:p-6 text-left
+              className="w-full flex items-center gap-3 md:gap-4 p-3.5 sm:p-5 md:p-6 text-left
                          hover:bg-accent/5 transition-colors cursor-pointer"
             >
               {/* Track number */}
               <div
-                className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
+                className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold ${
                   moduleDone
                     ? "bg-green-500 dark:bg-green-600 text-white"
                     : "bg-gray-800 dark:bg-gray-700 text-white"
@@ -134,7 +134,7 @@ export function SkillBookletContent({
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-text-primary text-base md:text-lg">
+                <h3 className="font-bold text-text-primary text-sm sm:text-base md:text-lg leading-snug">
                   {mod.title}
                 </h3>
                 <div className="flex items-center gap-2 mt-0.5">

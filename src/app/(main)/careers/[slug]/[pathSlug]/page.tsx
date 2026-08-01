@@ -148,33 +148,33 @@ export default async function PathDetailPage({ params }: Props) {
       <section className="bg-green-50 dark:bg-[#1a1a2e] py-12 md:py-20">
         <div className="container-page">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-white/60 mb-6 flex-wrap">
+          <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-white/60 mb-4 sm:mb-6 flex-wrap">
             <Link href="/" className="hover:text-accent transition-colors">Home</Link>
             <span>/</span>
             <Link href={`/careers/${careerSlug}`} className="hover:text-accent transition-colors">
               {path.career?.name}
             </Link>
             <span>/</span>
-            <span className="text-gray-700 dark:text-white/80">{path.name}</span>
+            <span className="text-gray-700 dark:text-white/80 line-clamp-1">{path.name}</span>
           </nav>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             {path.name}
           </h1>
-          <p className="text-lg text-gray-600 dark:text-white/75 max-w-2xl leading-relaxed mb-6">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-white/75 max-w-2xl leading-relaxed mb-5 sm:mb-6">
             {path.description}
           </p>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-4 mb-8">
-            <div className="bg-white/80 dark:bg-white/10 rounded-full px-5 py-2 text-sm text-gray-800 dark:text-white/90 font-medium">
+          <div className="flex flex-wrap gap-2.5 sm:gap-4 mb-6 sm:mb-8">
+            <div className="bg-white/80 dark:bg-white/10 rounded-full px-3.5 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm text-gray-800 dark:text-white/90 font-medium">
               ⚡ {totalSkills} Skills
             </div>
-            <div className="bg-white/80 dark:bg-white/10 rounded-full px-5 py-2 text-sm text-gray-800 dark:text-white/90 font-medium">
+            <div className="bg-white/80 dark:bg-white/10 rounded-full px-3.5 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm text-gray-800 dark:text-white/90 font-medium">
               ⏱️ ~{totalHours} hours
             </div>
             {user && (
-              <div className="bg-accent/20 rounded-full px-5 py-2 text-sm text-accent font-medium">
+              <div className="bg-accent/20 rounded-full px-3.5 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm text-accent font-medium">
                 ✅ {completedSkills}/{totalSkills} completed
               </div>
             )}
