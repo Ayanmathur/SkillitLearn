@@ -233,7 +233,7 @@
 |---|---|---|---|
 | 80 | [x] **Google Analytics & Tag Manager** (Completed) | [/careers/digital-marketing/marketing-analytics/google-analytics-and-tag-manager](/careers/digital-marketing/marketing-analytics/google-analytics-and-tag-manager) | Tracking setup, events, and funnels. |
 | 81 | [x] **Marketing Reporting & Dashboards** (Completed) | [/careers/digital-marketing/marketing-analytics/marketing-reporting-and-dashboards](/careers/digital-marketing/marketing-analytics/marketing-reporting-and-dashboards) | Turning campaign data into stakeholder-ready reports. |
-| 82 | **Email Marketing** | [/careers/digital-marketing/marketing-analytics/email-marketing](/careers/digital-marketing/marketing-analytics/email-marketing) | List building, automation, and email campaign performance. |
+| 82 | [x] **Email Marketing** (Completed) | [/careers/digital-marketing/marketing-analytics/email-marketing](/careers/digital-marketing/marketing-analytics/email-marketing) | List building, automation, and email campaign performance. |
 | 83 | **Competitor & Market Research** | [/careers/digital-marketing/marketing-analytics/competitor-and-market-research](/careers/digital-marketing/marketing-analytics/competitor-and-market-research) | Benchmarking against competitors using ad libraries and SEO tools. |
 
 ---
