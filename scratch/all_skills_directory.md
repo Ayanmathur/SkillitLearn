@@ -175,7 +175,7 @@
 | 56 | [x] **Supervised & Unsupervised Learning** (Completed) | [/careers/data-science-ai/machine-learning-engineering/supervised-and-unsupervised-learning](/careers/data-science-ai/machine-learning-engineering/supervised-and-unsupervised-learning) | Classification, regression, clustering with scikit-learn. |
 | 57 | [x] **Deep Learning Fundamentals** (Completed) | [/careers/data-science-ai/machine-learning-engineering/deep-learning-fundamentals](/careers/data-science-ai/machine-learning-engineering/deep-learning-fundamentals) | Neural networks, backpropagation, PyTorch/TensorFlow basics. |
 | 58 | [x] **Model Evaluation & Tuning** (Completed) | [/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning](/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning) | Cross-validation, metrics, hyperparameter search. |
-| 59 | **ML Deployment** | [/careers/data-science-ai/machine-learning-engineering/ml-deployment](/careers/data-science-ai/machine-learning-engineering/ml-deployment) | Serving models via APIs and monitoring in production. |
+| 59 | [x] **ML Deployment** (Completed) | [/careers/data-science-ai/machine-learning-engineering/ml-deployment](/careers/data-science-ai/machine-learning-engineering/ml-deployment) | Serving models via APIs and monitoring in production. |
 
 ### Path 3: Data Engineering
 **Slug**: `data-engineering`
