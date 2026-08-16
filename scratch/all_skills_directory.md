@@ -147,7 +147,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 48 | **Linux for Security** | [/careers/cybersecurity/ethical-hacking-pentesting/linux-for-security](/careers/cybersecurity/ethical-hacking-pentesting/linux-for-security) | Command line fluency for security tooling. |
+| 48 | [x] **Linux for Security** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/linux-for-security](/careers/cybersecurity/ethical-hacking-pentesting/linux-for-security) | Command line fluency for security tooling. |
 | 49 | **Web Application Security** | [/careers/cybersecurity/ethical-hacking-pentesting/web-application-security](/careers/cybersecurity/ethical-hacking-pentesting/web-application-security) | OWASP Top 10 and common web vulnerabilities. |
 | 50 | **Network Penetration Testing** | [/careers/cybersecurity/ethical-hacking-pentesting/network-penetration-testing](/careers/cybersecurity/ethical-hacking-pentesting/network-penetration-testing) | Scanning, enumeration, and exploitation basics. |
 | 51 | **Vulnerability Assessment Tools** | [/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools](/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools) | Using scanners and interpreting results. |
