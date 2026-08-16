@@ -221,7 +221,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 75 | [x] **Content Writing** (Completed) | [/careers/digital-marketing/content-and-brand/content-writing](/careers/digital-marketing/content-and-brand/content-writing) | Blog posts, web copy, and long-form content that reads well and ranks. |
-| 76 | **Script Writing & Storytelling** | [/careers/digital-marketing/content-and-brand/script-writing-and-storytelling](/careers/digital-marketing/content-and-brand/script-writing-and-storytelling) | Structuring narratives for video, reels, and ads. |
+| 76 | [x] **Script Writing & Storytelling** (Completed) | [/careers/digital-marketing/content-and-brand/script-writing-and-storytelling](/careers/digital-marketing/content-and-brand/script-writing-and-storytelling) | Structuring narratives for video, reels, and ads. |
 | 77 | **SEO Fundamentals** | [/careers/digital-marketing/content-and-brand/seo-fundamentals](/careers/digital-marketing/content-and-brand/seo-fundamentals) | Keyword research, on-page SEO, and content structure for search. |
 | 78 | **Social Media Strategy** | [/careers/digital-marketing/content-and-brand/social-media-strategy](/careers/digital-marketing/content-and-brand/social-media-strategy) | Platform-specific content planning and calendars. |
 | 79 | **Brand Voice & Positioning** | [/careers/digital-marketing/content-and-brand/brand-voice-and-positioning](/careers/digital-marketing/content-and-brand/brand-voice-and-positioning) | Defining and maintaining a consistent brand identity in content. |
