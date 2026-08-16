@@ -110,7 +110,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 34 | **Knife Skills** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/knife-skills](/careers/culinary-arts-hospitality/professional-cooking-foundations/knife-skills) | Precise, efficient, and safe cutting techniques. |
+| 34 | [x] **Knife Skills** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/knife-skills](/careers/culinary-arts-hospitality/professional-cooking-foundations/knife-skills) | Precise, efficient, and safe cutting techniques. |
 | 35 | **Plating & Presentation** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/plating-and-presentation](/careers/culinary-arts-hospitality/professional-cooking-foundations/plating-and-presentation) | Making food look as good as it tastes. |
 | 36 | **Cooking Techniques** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques](/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques) | Sauteing, braising, roasting, and other core methods. |
 | 37 | **Menu & Recipe Costing** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/menu-and-recipe-costing](/careers/culinary-arts-hospitality/professional-cooking-foundations/menu-and-recipe-costing) | Pricing dishes profitably. |
