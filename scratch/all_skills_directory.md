@@ -406,7 +406,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 136 | [x] **Design Principles** (Completed) | [/careers/graphic-design-visual-media/graphic-design-foundations/design-principles](/careers/graphic-design-visual-media/graphic-design-foundations/design-principles) | Balance, contrast, hierarchy, and composition. |
-| 137 | **Typography** | [/careers/graphic-design-visual-media/graphic-design-foundations/typography](/careers/graphic-design-visual-media/graphic-design-foundations/typography) | Choosing and pairing type for impact and readability. |
+| 137 | [x] **Typography** (Completed) | [/careers/graphic-design-visual-media/graphic-design-foundations/typography](/careers/graphic-design-visual-media/graphic-design-foundations/typography) | Choosing and pairing type for impact and readability. |
 | 138 | **Adobe Illustrator & Photoshop** | [/careers/graphic-design-visual-media/graphic-design-foundations/adobe-illustrator-and-photoshop](/careers/graphic-design-visual-media/graphic-design-foundations/adobe-illustrator-and-photoshop) | Vector and raster design tools in practice. |
 | 139 | **Branding & Logo Design** | [/careers/graphic-design-visual-media/graphic-design-foundations/branding-and-logo-design](/careers/graphic-design-visual-media/graphic-design-foundations/branding-and-logo-design) | Designing cohesive visual identities. |
 
