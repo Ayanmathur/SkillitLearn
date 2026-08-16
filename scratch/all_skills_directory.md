@@ -423,7 +423,7 @@
 | 140 | [x] **Medical Billing & Coding Basics** (Completed) | [/careers/healthcare-support/medical-administration/medical-billing-and-coding-basics](/careers/healthcare-support/medical-administration/medical-billing-and-coding-basics) | Understanding claims, codes, and insurance basics. |
 | 141 | [x] **Medical Terminology** (Completed) | [/careers/healthcare-support/medical-administration/medical-terminology](/careers/healthcare-support/medical-administration/medical-terminology) | Common clinical vocabulary and abbreviations. |
 | 142 | [x] **Patient Communication** (Completed) | [/careers/healthcare-support/medical-administration/patient-communication](/careers/healthcare-support/medical-administration/patient-communication) | Professional, empathetic front-desk interactions. |
-| 143 | **Health Records Management** | [/careers/healthcare-support/medical-administration/health-records-management](/careers/healthcare-support/medical-administration/health-records-management) | Handling patient records accurately and confidentially. |
+| 143 | [x] **Health Records Management** (Completed) | [/careers/healthcare-support/medical-administration/health-records-management](/careers/healthcare-support/medical-administration/health-records-management) | Handling patient records accurately and confidentially. |
 
 ### Path 2: Patient Care Fundamentals
 **Slug**: `patient-care-fundamentals`
