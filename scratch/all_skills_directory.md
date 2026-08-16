@@ -163,7 +163,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 53 | **SQL & Relational Databases** | [/careers/data-science-ai/data-analyst/sql-relational-databases](/careers/data-science-ai/data-analyst/sql-relational-databases) | Query databases using SELECT, JOIN, GROUP BY, and aggregations. |
+| 53 | [x] **SQL & Relational Databases** (Completed) | [/careers/data-science-ai/data-analyst/sql-relational-databases](/careers/data-science-ai/data-analyst/sql-relational-databases) | Query databases using SELECT, JOIN, GROUP BY, and aggregations. |
 
 ### Path 2: Machine Learning Engineering
 **Slug**: `machine-learning-engineering`
