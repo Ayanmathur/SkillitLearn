@@ -408,7 +408,7 @@
 | 136 | [x] **Design Principles** (Completed) | [/careers/graphic-design-visual-media/graphic-design-foundations/design-principles](/careers/graphic-design-visual-media/graphic-design-foundations/design-principles) | Balance, contrast, hierarchy, and composition. |
 | 137 | [x] **Typography** (Completed) | [/careers/graphic-design-visual-media/graphic-design-foundations/typography](/careers/graphic-design-visual-media/graphic-design-foundations/typography) | Choosing and pairing type for impact and readability. |
 | 138 | [x] **Adobe Illustrator & Photoshop** (Completed) | [/careers/graphic-design-visual-media/graphic-design-foundations/adobe-illustrator-and-photoshop](/careers/graphic-design-visual-media/graphic-design-foundations/adobe-illustrator-and-photoshop) | Vector and raster design tools in practice. |
-| 139 | **Branding & Logo Design** | [/careers/graphic-design-visual-media/graphic-design-foundations/branding-and-logo-design](/careers/graphic-design-visual-media/graphic-design-foundations/branding-and-logo-design) | Designing cohesive visual identities. |
+| 139 | [x] **Branding & Logo Design** (Completed) | [/careers/graphic-design-visual-media/graphic-design-foundations/branding-and-logo-design](/careers/graphic-design-visual-media/graphic-design-foundations/branding-and-logo-design) | Designing cohesive visual identities. |
 
 ---
 
