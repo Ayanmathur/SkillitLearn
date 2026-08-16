@@ -186,7 +186,7 @@
 | 61 | [x] **ETL/ELT Pipelines** (Completed) | [/careers/data-science-ai/data-engineering/etl-and-elt-pipelines](/careers/data-science-ai/data-engineering/etl-and-elt-pipelines) | Extracting, transforming, and loading data reliably. |
 | 62 | [x] **Python for Data Engineering** (Completed) | [/careers/data-science-ai/data-engineering/python-for-data-engineering](/careers/data-science-ai/data-engineering/python-for-data-engineering) | Scripting pipelines and working with APIs/files. |
 | 63 | [x] **Big Data Tools** (Completed) | [/careers/data-science-ai/data-engineering/big-data-tools](/careers/data-science-ai/data-engineering/big-data-tools) | Spark and distributed processing basics. |
-| 64 | **Data Pipeline Orchestration** | [/careers/data-science-ai/data-engineering/data-pipeline-orchestration](/careers/data-science-ai/data-engineering/data-pipeline-orchestration) | Scheduling and monitoring with Airflow. |
+| 64 | [x] **Data Pipeline Orchestration** (Completed) | [/careers/data-science-ai/data-engineering/data-pipeline-orchestration](/careers/data-science-ai/data-engineering/data-pipeline-orchestration) | Scheduling and monitoring with Airflow. |
 
 ### Path 4: Data Analytics
 **Slug**: `data-analytics`
