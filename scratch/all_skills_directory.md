@@ -171,7 +171,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 54 | [x] **Python Programming** (Completed) | [/careers/data-science-ai/machine-learning-engineering/python-programming](/careers/data-science-ai/machine-learning-engineering/python-programming) | Core language skills for data and ML work. |
-| 55 | **Linear Algebra & Calculus for ML** | [/careers/data-science-ai/machine-learning-engineering/linear-algebra-and-calculus-for-ml](/careers/data-science-ai/machine-learning-engineering/linear-algebra-and-calculus-for-ml) | Mathematical foundations behind ML algorithms. |
+| 55 | [x] **Linear Algebra & Calculus for ML** (Completed) | [/careers/data-science-ai/machine-learning-engineering/linear-algebra-and-calculus-for-ml](/careers/data-science-ai/machine-learning-engineering/linear-algebra-and-calculus-for-ml) | Mathematical foundations behind ML algorithms. |
 | 56 | **Supervised & Unsupervised Learning** | [/careers/data-science-ai/machine-learning-engineering/supervised-and-unsupervised-learning](/careers/data-science-ai/machine-learning-engineering/supervised-and-unsupervised-learning) | Classification, regression, clustering with scikit-learn. |
 | 57 | **Deep Learning Fundamentals** | [/careers/data-science-ai/machine-learning-engineering/deep-learning-fundamentals](/careers/data-science-ai/machine-learning-engineering/deep-learning-fundamentals) | Neural networks, backpropagation, PyTorch/TensorFlow basics. |
 | 58 | **Model Evaluation & Tuning** | [/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning](/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning) | Cross-validation, metrics, hyperparameter search. |
