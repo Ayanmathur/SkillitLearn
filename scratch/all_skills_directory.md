@@ -287,7 +287,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 97 | **Sustainability Fundamentals** | [/careers/environmental-sustainability/sustainability-management/sustainability-fundamentals](/careers/environmental-sustainability/sustainability-management/sustainability-fundamentals) | Core concepts in environmental and corporate sustainability. |
+| 97 | [x] **Sustainability Fundamentals** (Completed) | [/careers/environmental-sustainability/sustainability-management/sustainability-fundamentals](/careers/environmental-sustainability/sustainability-management/sustainability-fundamentals) | Core concepts in environmental and corporate sustainability. |
 | 98 | **Carbon Footprint Measurement** | [/careers/environmental-sustainability/sustainability-management/carbon-footprint-measurement](/careers/environmental-sustainability/sustainability-management/carbon-footprint-measurement) | Quantifying an organization's emissions. |
 | 99 | **ESG Reporting Basics** | [/careers/environmental-sustainability/sustainability-management/esg-reporting-basics](/careers/environmental-sustainability/sustainability-management/esg-reporting-basics) | Environmental, social, and governance reporting standards. |
 | 100 | **Sustainable Operations Strategy** | [/careers/environmental-sustainability/sustainability-management/sustainable-operations-strategy](/careers/environmental-sustainability/sustainability-management/sustainable-operations-strategy) | Reducing waste and resource use in operations. |
