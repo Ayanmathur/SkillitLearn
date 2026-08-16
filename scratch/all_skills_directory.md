@@ -485,7 +485,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 160 | **Space Planning** | [/careers/interior-design/interior-design-foundations/space-planning](/careers/interior-design/interior-design-foundations/space-planning) | Arranging layouts for function and flow. |
+| 160 | [x] **Space Planning** (Completed) | [/careers/interior-design/interior-design-foundations/space-planning](/careers/interior-design/interior-design-foundations/space-planning) | Arranging layouts for function and flow. |
 | 161 | **Color & Material Selection** | [/careers/interior-design/interior-design-foundations/color-and-material-selection](/careers/interior-design/interior-design-foundations/color-and-material-selection) | Choosing finishes that suit a space's purpose and mood. |
 | 162 | **Interior Design Software** | [/careers/interior-design/interior-design-foundations/interior-design-software](/careers/interior-design/interior-design-foundations/interior-design-software) | Producing floor plans and renders digitally. |
 | 163 | **Furniture & Fixtures Sourcing** | [/careers/interior-design/interior-design-foundations/furniture-and-fixtures-sourcing](/careers/interior-design/interior-design-foundations/furniture-and-fixtures-sourcing) | Selecting and specifying furnishings within budget. |
