@@ -331,7 +331,7 @@
 | 110 | [x] **Budgeting & Forecasting** (Completed) | [/careers/finance-accounting/financial-analysis/budgeting-and-forecasting](/careers/finance-accounting/financial-analysis/budgeting-and-forecasting) | Planning and tracking against financial targets. |
 | 111 | [x] **Financial Modeling** (Completed) | [/careers/finance-accounting/financial-analysis/financial-modeling](/careers/finance-accounting/financial-analysis/financial-modeling) | Building spreadsheet models for forecasting. |
 | 112 | [x] **Financial Ratio Analysis** (Completed) | [/careers/finance-accounting/financial-analysis/financial-ratio-analysis](/careers/finance-accounting/financial-analysis/financial-ratio-analysis) | Interpreting liquidity, profitability, and leverage ratios. |
-| 113 | **Valuation Basics** | [/careers/finance-accounting/financial-analysis/valuation-basics](/careers/finance-accounting/financial-analysis/valuation-basics) | Estimating the worth of a company or asset. |
+| 113 | [x] **Valuation Basics** (Completed) | [/careers/finance-accounting/financial-analysis/valuation-basics](/careers/finance-accounting/financial-analysis/valuation-basics) | Estimating the worth of a company or asset. |
 
 ---
 
