@@ -455,10 +455,10 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 152 | **Compensation & Benefits Basics** | [/careers/human-resources/people-operations/compensation-and-benefits-basics](/careers/human-resources/people-operations/compensation-and-benefits-basics) | Structuring pay and benefits fairly. |
-| 153 | **HR Policies & Compliance** | [/careers/human-resources/people-operations/hr-policies-and-compliance](/careers/human-resources/people-operations/hr-policies-and-compliance) | Employment law basics and policy design. |
-| 154 | **Employee Engagement** | [/careers/human-resources/people-operations/employee-engagement](/careers/human-resources/people-operations/employee-engagement) | Measuring and improving workplace satisfaction. |
-| 155 | **Performance Management** | [/careers/human-resources/people-operations/performance-management](/careers/human-resources/people-operations/performance-management) | Running reviews and feedback cycles. |
+| 152 | [x] **Compensation & Benefits Basics** (Completed) | [/careers/human-resources/people-operations/compensation-and-benefits-basics](/careers/human-resources/people-operations/compensation-and-benefits-basics) | Structuring pay and benefits fairly. |
+| 153 | [x] **HR Policies & Compliance** (Completed) | [/careers/human-resources/people-operations/hr-policies-and-compliance](/careers/human-resources/people-operations/hr-policies-and-compliance) | Employment law basics and policy design. |
+| 154 | [x] **Employee Engagement** (Completed) | [/careers/human-resources/people-operations/employee-engagement](/careers/human-resources/people-operations/employee-engagement) | Measuring and improving workplace satisfaction. |
+| 155 | [x] **Performance Management** (Completed) | [/careers/human-resources/people-operations/performance-management](/careers/human-resources/people-operations/performance-management) | Running reviews and feedback cycles. |
 
 ---
 
