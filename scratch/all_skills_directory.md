@@ -150,7 +150,7 @@
 | 48 | [x] **Linux for Security** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/linux-for-security](/careers/cybersecurity/ethical-hacking-pentesting/linux-for-security) | Command line fluency for security tooling. |
 | 49 | [x] **Web Application Security** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/web-application-security](/careers/cybersecurity/ethical-hacking-pentesting/web-application-security) | OWASP Top 10 and common web vulnerabilities. |
 | 50 | [x] **Network Penetration Testing** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/network-penetration-testing](/careers/cybersecurity/ethical-hacking-pentesting/network-penetration-testing) | Scanning, enumeration, and exploitation basics. |
-| 51 | **Vulnerability Assessment Tools** | [/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools](/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools) | Using scanners and interpreting results. |
+| 51 | [x] **Vulnerability Assessment Tools** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools](/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools) | Using scanners and interpreting results. |
 | 52 | **Reporting & Responsible Disclosure** | [/careers/cybersecurity/ethical-hacking-pentesting/reporting-and-responsible-disclosure](/careers/cybersecurity/ethical-hacking-pentesting/reporting-and-responsible-disclosure) | Communicating findings clearly and ethically. |
 
 ---
