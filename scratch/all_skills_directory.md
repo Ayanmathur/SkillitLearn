@@ -213,7 +213,7 @@
 | 71 | [x] **Ad Budgeting & Bidding Strategy** (Completed) | [/careers/digital-marketing/performance-marketing/ad-budgeting-and-bidding-strategy](/careers/digital-marketing/performance-marketing/ad-budgeting-and-bidding-strategy) | Allocating spend and choosing bid strategies for ROI. |
 | 72 | [x] **Landing Page Optimization** (Completed) | [/careers/digital-marketing/performance-marketing/landing-page-optimization](/careers/digital-marketing/performance-marketing/landing-page-optimization) | Designing pages that convert paid traffic. |
 | 73 | [x] **A/B Testing for Ads** (Completed) | [/careers/digital-marketing/performance-marketing/a-and-b-testing-for-ads](/careers/digital-marketing/performance-marketing/a-and-b-testing-for-ads) | Structuring experiments and reading results correctly. |
-| 74 | **Meta Ads Management** | [/careers/digital-marketing/performance-marketing/meta-ads-management](/careers/digital-marketing/performance-marketing/meta-ads-management) | Campaign structure, targeting, and optimization on Facebook & Instagram. |
+| 74 | [x] **Meta Ads Management** (Completed) | [/careers/digital-marketing/performance-marketing/meta-ads-management](/careers/digital-marketing/performance-marketing/meta-ads-management) | Campaign structure, targeting, and optimization on Facebook & Instagram. |
 
 ### Path 2: Content & Brand
 **Slug**: `content-and-brand`
