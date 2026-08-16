@@ -448,7 +448,7 @@
 | 148 | [x] **Employer Branding** (Completed) | [/careers/human-resources/talent-acquisition/employer-branding](/careers/human-resources/talent-acquisition/employer-branding) | Positioning a company as a place people want to work. |
 | 149 | [x] **Sourcing & Recruiting** (Completed) | [/careers/human-resources/talent-acquisition/sourcing-and-recruiting](/careers/human-resources/talent-acquisition/sourcing-and-recruiting) | Finding candidates across channels. |
 | 150 | [x] **Interviewing Techniques** (Completed) | [/careers/human-resources/talent-acquisition/interviewing-techniques](/careers/human-resources/talent-acquisition/interviewing-techniques) | Structured interviews that reduce bias. |
-| 151 | **Offer Negotiation & Onboarding** | [/careers/human-resources/talent-acquisition/offer-negotiation-and-onboarding](/careers/human-resources/talent-acquisition/offer-negotiation-and-onboarding) | Closing candidates and setting them up to succeed. |
+| 151 | [x] **Offer Negotiation & Onboarding** (Completed) | [/careers/human-resources/talent-acquisition/offer-negotiation-and-onboarding](/careers/human-resources/talent-acquisition/offer-negotiation-and-onboarding) | Closing candidates and setting them up to succeed. |
 
 ### Path 2: People Operations
 **Slug**: `people-operations`
