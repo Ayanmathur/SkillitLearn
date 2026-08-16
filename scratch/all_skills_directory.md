@@ -114,7 +114,7 @@
 | 35 | [x] **Plating & Presentation** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/plating-and-presentation](/careers/culinary-arts-hospitality/professional-cooking-foundations/plating-and-presentation) | Making food look as good as it tastes. |
 | 36 | [x] **Cooking Techniques** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques](/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques) | Sauteing, braising, roasting, and other core methods. |
 | 37 | [x] **Menu & Recipe Costing** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/menu-and-recipe-costing](/careers/culinary-arts-hospitality/professional-cooking-foundations/menu-and-recipe-costing) | Pricing dishes profitably. |
-| 38 | **Kitchen Safety & Sanitation** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/kitchen-safety-and-sanitation](/careers/culinary-arts-hospitality/professional-cooking-foundations/kitchen-safety-and-sanitation) | Food safety standards and safe kitchen practices. |
+| 38 | [x] **Kitchen Safety & Sanitation** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/kitchen-safety-and-sanitation](/careers/culinary-arts-hospitality/professional-cooking-foundations/kitchen-safety-and-sanitation) | Food safety standards and safe kitchen practices. |
 
 ### Path 2: Hospitality & Guest Service
 **Slug**: `hospitality-guest-service`
