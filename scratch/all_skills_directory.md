@@ -182,7 +182,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 60 | **SQL & Data Warehousing** | [/careers/data-science-ai/data-engineering/sql-and-data-warehousing](/careers/data-science-ai/data-engineering/sql-and-data-warehousing) | Star schemas, warehouses, and query optimization. |
+| 60 | [x] **SQL & Data Warehousing** (Completed) | [/careers/data-science-ai/data-engineering/sql-and-data-warehousing](/careers/data-science-ai/data-engineering/sql-and-data-warehousing) | Star schemas, warehouses, and query optimization. |
 | 61 | **ETL/ELT Pipelines** | [/careers/data-science-ai/data-engineering/etl-and-elt-pipelines](/careers/data-science-ai/data-engineering/etl-and-elt-pipelines) | Extracting, transforming, and loading data reliably. |
 | 62 | **Python for Data Engineering** | [/careers/data-science-ai/data-engineering/python-for-data-engineering](/careers/data-science-ai/data-engineering/python-for-data-engineering) | Scripting pipelines and working with APIs/files. |
 | 63 | **Big Data Tools** | [/careers/data-science-ai/data-engineering/big-data-tools](/careers/data-science-ai/data-engineering/big-data-tools) | Spark and distributed processing basics. |
