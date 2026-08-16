@@ -273,7 +273,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 93 | [x] **Operations Management** (Completed) | [/careers/entrepreneurship-small-business/growing-operating-a-business/operations-management](/careers/entrepreneurship-small-business/growing-operating-a-business/operations-management) | Running day-to-day business processes efficiently. |
-| 94 | **Hiring Your First Team** | [/careers/entrepreneurship-small-business/growing-operating-a-business/hiring-your-first-team](/careers/entrepreneurship-small-business/growing-operating-a-business/hiring-your-first-team) | Bringing on early employees or contractors. |
+| 94 | [x] **Hiring Your First Team** (Completed) | [/careers/entrepreneurship-small-business/growing-operating-a-business/hiring-your-first-team](/careers/entrepreneurship-small-business/growing-operating-a-business/hiring-your-first-team) | Bringing on early employees or contractors. |
 | 95 | **Customer Retention Strategy** | [/careers/entrepreneurship-small-business/growing-operating-a-business/customer-retention-strategy](/careers/entrepreneurship-small-business/growing-operating-a-business/customer-retention-strategy) | Keeping customers coming back. |
 | 96 | **Basic Fundraising Concepts** | [/careers/entrepreneurship-small-business/growing-operating-a-business/basic-fundraising-concepts](/careers/entrepreneurship-small-business/growing-operating-a-business/basic-fundraising-concepts) | Understanding equity, loans, and investor expectations. |
 
