@@ -318,7 +318,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 105 | [x] **Accounts Payable & Receivable** (Completed) | [/careers/finance-accounting/accounting-foundations/accounts-payable-and-receivable](/careers/finance-accounting/accounting-foundations/accounts-payable-and-receivable) | Managing invoices, payments, and collections. |
-| 106 | **Bookkeeping Basics** | [/careers/finance-accounting/accounting-foundations/bookkeeping-basics](/careers/finance-accounting/accounting-foundations/bookkeeping-basics) | Recording transactions and maintaining ledgers. |
+| 106 | [x] **Bookkeeping Basics** (Completed) | [/careers/finance-accounting/accounting-foundations/bookkeeping-basics](/careers/finance-accounting/accounting-foundations/bookkeeping-basics) | Recording transactions and maintaining ledgers. |
 | 107 | **Payroll Fundamentals** | [/careers/finance-accounting/accounting-foundations/payroll-fundamentals](/careers/finance-accounting/accounting-foundations/payroll-fundamentals) | Processing payroll and understanding deductions. |
 | 108 | **Accounting Software** | [/careers/finance-accounting/accounting-foundations/accounting-software](/careers/finance-accounting/accounting-foundations/accounting-software) | Working in tools like QuickBooks or Xero. |
 | 109 | **Financial Statements** | [/careers/finance-accounting/accounting-foundations/financial-statements](/careers/finance-accounting/accounting-foundations/financial-statements) | Reading and preparing income statements and balance sheets. |
