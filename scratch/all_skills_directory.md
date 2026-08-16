@@ -261,7 +261,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 88 | **Idea Validation** | [/careers/entrepreneurship-small-business/starting-a-business/idea-validation](/careers/entrepreneurship-small-business/starting-a-business/idea-validation) | Testing demand before building. |
+| 88 | [x] **Idea Validation** (Completed) | [/careers/entrepreneurship-small-business/starting-a-business/idea-validation](/careers/entrepreneurship-small-business/starting-a-business/idea-validation) | Testing demand before building. |
 | 89 | **Business Model Design** | [/careers/entrepreneurship-small-business/starting-a-business/business-model-design](/careers/entrepreneurship-small-business/starting-a-business/business-model-design) | Mapping how the business creates and captures value. |
 | 90 | **Basic Business Finance** | [/careers/entrepreneurship-small-business/starting-a-business/basic-business-finance](/careers/entrepreneurship-small-business/starting-a-business/basic-business-finance) | Pricing, margins, and cash flow for founders. |
 | 91 | **Legal & Registration Basics** | [/careers/entrepreneurship-small-business/starting-a-business/legal-and-registration-basics](/careers/entrepreneurship-small-business/starting-a-business/legal-and-registration-basics) | Choosing a structure and meeting basic legal requirements. |
