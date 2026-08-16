@@ -328,7 +328,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 110 | **Budgeting & Forecasting** | [/careers/finance-accounting/financial-analysis/budgeting-and-forecasting](/careers/finance-accounting/financial-analysis/budgeting-and-forecasting) | Planning and tracking against financial targets. |
+| 110 | [x] **Budgeting & Forecasting** (Completed) | [/careers/finance-accounting/financial-analysis/budgeting-and-forecasting](/careers/finance-accounting/financial-analysis/budgeting-and-forecasting) | Planning and tracking against financial targets. |
 | 111 | **Financial Modeling** | [/careers/finance-accounting/financial-analysis/financial-modeling](/careers/finance-accounting/financial-analysis/financial-modeling) | Building spreadsheet models for forecasting. |
 | 112 | **Financial Ratio Analysis** | [/careers/finance-accounting/financial-analysis/financial-ratio-analysis](/careers/finance-accounting/financial-analysis/financial-ratio-analysis) | Interpreting liquidity, profitability, and leverage ratios. |
 | 113 | **Valuation Basics** | [/careers/finance-accounting/financial-analysis/valuation-basics](/careers/finance-accounting/financial-analysis/valuation-basics) | Estimating the worth of a company or asset. |
