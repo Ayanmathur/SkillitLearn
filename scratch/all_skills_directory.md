@@ -140,7 +140,7 @@
 | 44 | [x] **SIEM & Log Analysis** (Completed) | [/careers/cybersecurity/security-analyst/siem-and-log-analysis](/careers/cybersecurity/security-analyst/siem-and-log-analysis) | Detecting anomalies using security monitoring tools. |
 | 45 | [x] **Incident Response** (Completed) | [/careers/cybersecurity/security-analyst/incident-response](/careers/cybersecurity/security-analyst/incident-response) | Containing, investigating, and recovering from incidents. |
 | 46 | [x] **Security Compliance Basics** (Completed) | [/careers/cybersecurity/security-analyst/security-compliance-basics](/careers/cybersecurity/security-analyst/security-compliance-basics) | Frameworks like ISO 27001, SOC 2, and audit readiness. |
-| 47 | **Networking Fundamentals** | [/careers/cybersecurity/security-analyst/networking-fundamentals](/careers/cybersecurity/security-analyst/networking-fundamentals) | TCP/IP, DNS, firewalls, and network topology. |
+| 47 | [x] **Networking Fundamentals** (Completed) | [/careers/cybersecurity/security-analyst/networking-fundamentals](/careers/cybersecurity/security-analyst/networking-fundamentals) | TCP/IP, DNS, firewalls, and network topology. |
 
 ### Path 2: Ethical Hacking & Pentesting
 **Slug**: `ethical-hacking-pentesting`
