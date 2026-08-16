@@ -151,7 +151,7 @@
 | 49 | [x] **Web Application Security** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/web-application-security](/careers/cybersecurity/ethical-hacking-pentesting/web-application-security) | OWASP Top 10 and common web vulnerabilities. |
 | 50 | [x] **Network Penetration Testing** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/network-penetration-testing](/careers/cybersecurity/ethical-hacking-pentesting/network-penetration-testing) | Scanning, enumeration, and exploitation basics. |
 | 51 | [x] **Vulnerability Assessment Tools** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools](/careers/cybersecurity/ethical-hacking-pentesting/vulnerability-assessment-tools) | Using scanners and interpreting results. |
-| 52 | **Reporting & Responsible Disclosure** | [/careers/cybersecurity/ethical-hacking-pentesting/reporting-and-responsible-disclosure](/careers/cybersecurity/ethical-hacking-pentesting/reporting-and-responsible-disclosure) | Communicating findings clearly and ethically. |
+| 52 | [x] **Reporting & Responsible Disclosure** (Completed) | [/careers/cybersecurity/ethical-hacking-pentesting/reporting-and-responsible-disclosure](/careers/cybersecurity/ethical-hacking-pentesting/reporting-and-responsible-disclosure) | Communicating findings clearly and ethically. |
 
 ---
 
