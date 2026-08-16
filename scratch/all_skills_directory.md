@@ -305,7 +305,7 @@
 | 101 | [x] **Fashion Sketching & Illustration** (Completed) | [/careers/fashion-apparel/fashion-design-foundations/fashion-sketching-and-illustration](/careers/fashion-apparel/fashion-design-foundations/fashion-sketching-and-illustration) | Communicating design ideas visually. |
 | 102 | [x] **Textiles & Fabric Knowledge** (Completed) | [/careers/fashion-apparel/fashion-design-foundations/textiles-and-fabric-knowledge](/careers/fashion-apparel/fashion-design-foundations/textiles-and-fabric-knowledge) | Understanding fabric properties and uses. |
 | 103 | [x] **Pattern Making Basics** (Completed) | [/careers/fashion-apparel/fashion-design-foundations/pattern-making-basics](/careers/fashion-apparel/fashion-design-foundations/pattern-making-basics) | Turning designs into wearable patterns. |
-| 104 | **Garment Construction** | [/careers/fashion-apparel/fashion-design-foundations/garment-construction](/careers/fashion-apparel/fashion-design-foundations/garment-construction) | Sewing and assembling garments from patterns. |
+| 104 | [x] **Garment Construction** (Completed) | [/careers/fashion-apparel/fashion-design-foundations/garment-construction](/careers/fashion-apparel/fashion-design-foundations/garment-construction) | Sewing and assembling garments from patterns. |
 
 ---
 
