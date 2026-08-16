@@ -94,7 +94,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 29 | **Systems & Networking** | [/careers/cloud-devops-infrastructure/site-reliability-engineering/systems-and-networking](/careers/cloud-devops-infrastructure/site-reliability-engineering/systems-and-networking) | Deeper OS and network internals for reliability work. |
+| 29 | [x] **Systems & Networking** (Completed) | [/careers/cloud-devops-infrastructure/site-reliability-engineering/systems-and-networking](/careers/cloud-devops-infrastructure/site-reliability-engineering/systems-and-networking) | Deeper OS and network internals for reliability work. |
 | 30 | **Automation & Scripting** | [/careers/cloud-devops-infrastructure/site-reliability-engineering/automation-and-scripting](/careers/cloud-devops-infrastructure/site-reliability-engineering/automation-and-scripting) | Reducing toil through automation. |
 | 31 | **Observability** | [/careers/cloud-devops-infrastructure/site-reliability-engineering/observability](/careers/cloud-devops-infrastructure/site-reliability-engineering/observability) | Metrics, logs, and traces for understanding system health. |
 | 32 | **Capacity Planning** | [/careers/cloud-devops-infrastructure/site-reliability-engineering/capacity-planning](/careers/cloud-devops-infrastructure/site-reliability-engineering/capacity-planning) | Forecasting load and planning infrastructure ahead of demand. |
