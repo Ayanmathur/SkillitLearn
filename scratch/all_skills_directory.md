@@ -395,7 +395,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 132 | **Video Editing Fundamentals** | [/careers/graphic-design-visual-media/video-editing-motion-graphics/video-editing-fundamentals](/careers/graphic-design-visual-media/video-editing-motion-graphics/video-editing-fundamentals) | Cutting, pacing, and structuring footage. |
+| 132 | [x] **Video Editing Fundamentals** (Completed) | [/careers/graphic-design-visual-media/video-editing-motion-graphics/video-editing-fundamentals](/careers/graphic-design-visual-media/video-editing-motion-graphics/video-editing-fundamentals) | Cutting, pacing, and structuring footage. |
 | 133 | **Adobe Premiere Pro** | [/careers/graphic-design-visual-media/video-editing-motion-graphics/adobe-premiere-pro](/careers/graphic-design-visual-media/video-editing-motion-graphics/adobe-premiere-pro) | Professional non-linear video editing. |
 | 134 | **Motion Graphics with After Effects** | [/careers/graphic-design-visual-media/video-editing-motion-graphics/motion-graphics-with-after-effects](/careers/graphic-design-visual-media/video-editing-motion-graphics/motion-graphics-with-after-effects) | Animated titles, transitions, and visual effects. |
 | 135 | **Color Grading & Audio Basics** | [/careers/graphic-design-visual-media/video-editing-motion-graphics/color-grading-and-audio-basics](/careers/graphic-design-visual-media/video-editing-motion-graphics/color-grading-and-audio-basics) | Polishing the look and sound of a final cut. |
