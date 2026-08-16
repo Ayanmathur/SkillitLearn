@@ -265,7 +265,7 @@
 | 89 | [x] **Business Model Design** (Completed) | [/careers/entrepreneurship-small-business/starting-a-business/business-model-design](/careers/entrepreneurship-small-business/starting-a-business/business-model-design) | Mapping how the business creates and captures value. |
 | 90 | [x] **Basic Business Finance** (Completed) | [/careers/entrepreneurship-small-business/starting-a-business/basic-business-finance](/careers/entrepreneurship-small-business/starting-a-business/basic-business-finance) | Pricing, margins, and cash flow for founders. |
 | 91 | [x] **Legal & Registration Basics** (Completed) | [/careers/entrepreneurship-small-business/starting-a-business/legal-and-registration-basics](/careers/entrepreneurship-small-business/starting-a-business/legal-and-registration-basics) | Choosing a structure and meeting basic legal requirements. |
-| 92 | **Launch Planning** | [/careers/entrepreneurship-small-business/starting-a-business/launch-planning](/careers/entrepreneurship-small-business/starting-a-business/launch-planning) | Getting the first customers and iterating fast. |
+| 92 | [x] **Launch Planning** (Completed) | [/careers/entrepreneurship-small-business/starting-a-business/launch-planning](/careers/entrepreneurship-small-business/starting-a-business/launch-planning) | Getting the first customers and iterating fast. |
 
 ### Path 2: Growing & Operating a Business
 **Slug**: `growing-operating-a-business`
