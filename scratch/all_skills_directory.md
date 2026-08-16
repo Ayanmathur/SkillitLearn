@@ -381,7 +381,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 128 | [x] **2D Game Art Fundamentals** (Completed) | [/careers/game-development/game-art-animation/2d-game-art-fundamentals](/careers/game-development/game-art-animation/2d-game-art-fundamentals) | Sprites, tiles, and stylized 2D visuals. |
-| 129 | **3D Modeling for Games** | [/careers/game-development/game-art-animation/3d-modeling-for-games](/careers/game-development/game-art-animation/3d-modeling-for-games) | Building game-ready 3D assets. |
+| 129 | [x] **3D Modeling for Games** (Completed) | [/careers/game-development/game-art-animation/3d-modeling-for-games](/careers/game-development/game-art-animation/3d-modeling-for-games) | Building game-ready 3D assets. |
 | 130 | **Texturing & Materials** | [/careers/game-development/game-art-animation/texturing-and-materials](/careers/game-development/game-art-animation/texturing-and-materials) | Making 3D models look realistic or stylized. |
 | 131 | **Character & Environment Animation** | [/careers/game-development/game-art-animation/character-and-environment-animation](/careers/game-development/game-art-animation/character-and-environment-animation) | Bringing characters and worlds to life in motion. |
 
