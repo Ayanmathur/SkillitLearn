@@ -369,7 +369,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 123 | **Programming Fundamentals for Games** | [/careers/game-development/game-programming/programming-fundamentals-for-games](/careers/game-development/game-programming/programming-fundamentals-for-games) | Core coding concepts applied to game logic. |
+| 123 | [x] **Programming Fundamentals for Games** (Completed) | [/careers/game-development/game-programming/programming-fundamentals-for-games](/careers/game-development/game-programming/programming-fundamentals-for-games) | Core coding concepts applied to game logic. |
 | 124 | **Game Engine Basics (Unity/Unreal)** | [/careers/game-development/game-programming/game-engine-basics-unity-and-unreal](/careers/game-development/game-programming/game-engine-basics-unity-and-unreal) | Building playable scenes in a modern game engine. |
 | 125 | **Physics & Collision Systems** | [/careers/game-development/game-programming/physics-and-collision-systems](/careers/game-development/game-programming/physics-and-collision-systems) | Implementing realistic or stylized game physics. |
 | 126 | **Game Performance Optimization** | [/careers/game-development/game-programming/game-performance-optimization](/careers/game-development/game-programming/game-performance-optimization) | Keeping games running smoothly across devices. |
