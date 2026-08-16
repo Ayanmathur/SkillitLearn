@@ -249,7 +249,7 @@
 | 84 | [x] **Online Store Setup** (Completed) | [/careers/e-commerce-management/e-commerce-operations/online-store-setup](/careers/e-commerce-management/e-commerce-operations/online-store-setup) | Configuring a storefront on platforms like Shopify. |
 | 85 | [x] **Product Listings & Merchandising** (Completed) | [/careers/e-commerce-management/e-commerce-operations/product-listings-and-merchandising](/careers/e-commerce-management/e-commerce-operations/product-listings-and-merchandising) | Presenting products in ways that drive purchases. |
 | 86 | [x] **E-commerce Payments & Logistics** (Completed) | [/careers/e-commerce-management/e-commerce-operations/e-commerce-payments-and-logistics](/careers/e-commerce-management/e-commerce-operations/e-commerce-payments-and-logistics) | Handling checkout, shipping, and fulfillment smoothly. |
-| 87 | **Conversion Rate Optimization** | [/careers/e-commerce-management/e-commerce-operations/conversion-rate-optimization](/careers/e-commerce-management/e-commerce-operations/conversion-rate-optimization) | Turning more visitors into paying customers. |
+| 87 | [x] **Conversion Rate Optimization** (Completed) | [/careers/e-commerce-management/e-commerce-operations/conversion-rate-optimization](/careers/e-commerce-management/e-commerce-operations/conversion-rate-optimization) | Turning more visitors into paying customers. |
 
 ---
 
