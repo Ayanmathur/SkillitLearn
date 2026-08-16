@@ -68,7 +68,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 19 | [x] **Airport Ground Operations** (Completed) | [/careers/aviation/aviation-ground-operations/airport-ground-operations](/careers/aviation/aviation-ground-operations/airport-ground-operations) | Ramp, baggage, and turnaround processes. |
-| 20 | **Aviation Regulations Basics** | [/careers/aviation/aviation-ground-operations/aviation-regulations-basics](/careers/aviation/aviation-ground-operations/aviation-regulations-basics) | Understanding key regulatory requirements. |
+| 20 | [x] **Aviation Regulations Basics** (Completed) | [/careers/aviation/aviation-ground-operations/aviation-regulations-basics](/careers/aviation/aviation-ground-operations/aviation-regulations-basics) | Understanding key regulatory requirements. |
 | 21 | **Aviation Safety Fundamentals** | [/careers/aviation/aviation-ground-operations/aviation-safety-fundamentals](/careers/aviation/aviation-ground-operations/aviation-safety-fundamentals) | Core safety standards in aviation environments. |
 | 22 | **Flight Scheduling & Coordination** | [/careers/aviation/aviation-ground-operations/flight-scheduling-and-coordination](/careers/aviation/aviation-ground-operations/flight-scheduling-and-coordination) | Coordinating schedules across ground and flight crews. |
 
