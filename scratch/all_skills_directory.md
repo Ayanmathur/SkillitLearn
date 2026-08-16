@@ -174,7 +174,7 @@
 | 55 | [x] **Linear Algebra & Calculus for ML** (Completed) | [/careers/data-science-ai/machine-learning-engineering/linear-algebra-and-calculus-for-ml](/careers/data-science-ai/machine-learning-engineering/linear-algebra-and-calculus-for-ml) | Mathematical foundations behind ML algorithms. |
 | 56 | [x] **Supervised & Unsupervised Learning** (Completed) | [/careers/data-science-ai/machine-learning-engineering/supervised-and-unsupervised-learning](/careers/data-science-ai/machine-learning-engineering/supervised-and-unsupervised-learning) | Classification, regression, clustering with scikit-learn. |
 | 57 | [x] **Deep Learning Fundamentals** (Completed) | [/careers/data-science-ai/machine-learning-engineering/deep-learning-fundamentals](/careers/data-science-ai/machine-learning-engineering/deep-learning-fundamentals) | Neural networks, backpropagation, PyTorch/TensorFlow basics. |
-| 58 | **Model Evaluation & Tuning** | [/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning](/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning) | Cross-validation, metrics, hyperparameter search. |
+| 58 | [x] **Model Evaluation & Tuning** (Completed) | [/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning](/careers/data-science-ai/machine-learning-engineering/model-evaluation-and-tuning) | Cross-validation, metrics, hyperparameter search. |
 | 59 | **ML Deployment** | [/careers/data-science-ai/machine-learning-engineering/ml-deployment](/careers/data-science-ai/machine-learning-engineering/ml-deployment) | Serving models via APIs and monitoring in production. |
 
 ### Path 3: Data Engineering
