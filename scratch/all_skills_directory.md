@@ -98,7 +98,7 @@
 | 30 | [x] **Automation & Scripting** (Completed) | [/careers/cloud-devops-infrastructure/site-reliability-engineering/automation-and-scripting](/careers/cloud-devops-infrastructure/site-reliability-engineering/automation-and-scripting) | Reducing toil through automation. |
 | 31 | [x] **Observability** (Completed) | [/careers/cloud-devops-infrastructure/site-reliability-engineering/observability](/careers/cloud-devops-infrastructure/site-reliability-engineering/observability) | Metrics, logs, and traces for understanding system health. |
 | 32 | [x] **Capacity Planning** (Completed) | [/careers/cloud-devops-infrastructure/site-reliability-engineering/capacity-planning](/careers/cloud-devops-infrastructure/site-reliability-engineering/capacity-planning) | Forecasting load and planning infrastructure ahead of demand. |
-| 33 | **Incident Management** | [/careers/cloud-devops-infrastructure/site-reliability-engineering/incident-management](/careers/cloud-devops-infrastructure/site-reliability-engineering/incident-management) | On-call practices, postmortems, and blameless review. |
+| 33 | [x] **Incident Management** (Completed) | [/careers/cloud-devops-infrastructure/site-reliability-engineering/incident-management](/careers/cloud-devops-infrastructure/site-reliability-engineering/incident-management) | On-call practices, postmortems, and blameless review. |
 
 ---
 
