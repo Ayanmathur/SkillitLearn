@@ -51,7 +51,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 14 | **Engine Systems Fundamentals** | [/careers/automotive-technology/automotive-repair-foundations/engine-systems-fundamentals](/careers/automotive-technology/automotive-repair-foundations/engine-systems-fundamentals) | How combustion engines work and fail. |
+| 14 | [x] **Engine Systems Fundamentals** (Completed) | [/careers/automotive-technology/automotive-repair-foundations/engine-systems-fundamentals](/careers/automotive-technology/automotive-repair-foundations/engine-systems-fundamentals) | How combustion engines work and fail. |
 | 15 | **Electrical Systems Diagnostics** | [/careers/automotive-technology/automotive-repair-foundations/electrical-systems-diagnostics](/careers/automotive-technology/automotive-repair-foundations/electrical-systems-diagnostics) | Diagnosing vehicle electrical and sensor issues. |
 | 16 | **Brakes & Suspension Repair** | [/careers/automotive-technology/automotive-repair-foundations/brakes-and-suspension-repair](/careers/automotive-technology/automotive-repair-foundations/brakes-and-suspension-repair) | Common repair procedures for brakes and suspension. |
 | 17 | **Automotive Safety & Tools** | [/careers/automotive-technology/automotive-repair-foundations/automotive-safety-and-tools](/careers/automotive-technology/automotive-repair-foundations/automotive-safety-and-tools) | Safe use of tools and shop equipment. |
