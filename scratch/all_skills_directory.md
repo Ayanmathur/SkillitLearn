@@ -197,7 +197,7 @@
 | 66 | [x] **Statistics Fundamentals** (Completed) | [/careers/data-science-ai/data-analytics/statistics-fundamentals](/careers/data-science-ai/data-analytics/statistics-fundamentals) | Descriptive stats, distributions, hypothesis testing. |
 | 67 | [x] **Data Visualization** (Completed) | [/careers/data-science-ai/data-analytics/data-visualization](/careers/data-science-ai/data-analytics/data-visualization) | Building dashboards with Tableau or Power BI. |
 | 68 | [x] **Python for Data Analysis** (Completed) | [/careers/data-science-ai/data-analytics/python-for-data-analysis](/careers/data-science-ai/data-analytics/python-for-data-analysis) | Pandas, NumPy, and exploratory data analysis. |
-| 69 | **Excel for Analysis** | [/careers/data-science-ai/data-analytics/excel-for-analysis](/careers/data-science-ai/data-analytics/excel-for-analysis) | Pivot tables, formulas, and data cleaning in spreadsheets. |
+| 69 | [x] **Excel for Analysis** (Completed) | [/careers/data-science-ai/data-analytics/excel-for-analysis](/careers/data-science-ai/data-analytics/excel-for-analysis) | Pivot tables, formulas, and data cleaning in spreadsheets. |
 
 ---
 
