@@ -362,7 +362,7 @@
 | 119 | [x] **Level Design** (Completed) | [/careers/game-development/game-design-foundations/level-design](/careers/game-development/game-design-foundations/level-design) | Crafting spaces and challenges that guide players. |
 | 120 | [x] **Game Balancing** (Completed) | [/careers/game-development/game-design-foundations/game-balancing](/careers/game-development/game-design-foundations/game-balancing) | Tuning difficulty, economy, and progression. |
 | 121 | [x] **Prototyping Game Ideas** (Completed) | [/careers/game-development/game-design-foundations/prototyping-game-ideas](/careers/game-development/game-design-foundations/prototyping-game-ideas) | Quickly testing mechanics before full production. |
-| 122 | **Narrative Design Basics** | [/careers/game-development/game-design-foundations/narrative-design-basics](/careers/game-development/game-design-foundations/narrative-design-basics) | Weaving story into interactive systems. |
+| 122 | [x] **Narrative Design Basics** (Completed) | [/careers/game-development/game-design-foundations/narrative-design-basics](/careers/game-development/game-design-foundations/narrative-design-basics) | Weaving story into interactive systems. |
 
 ### Path 2: Game Programming
 **Slug**: `game-programming`
