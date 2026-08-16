@@ -346,7 +346,7 @@
 | 114 | [x] **Program Design** (Completed) | [/careers/fitness-personal-training/personal-training-foundations/program-design](/careers/fitness-personal-training/personal-training-foundations/program-design) | Building safe, effective workout programs. |
 | 115 | [x] **Client Assessment & Goal Setting** (Completed) | [/careers/fitness-personal-training/personal-training-foundations/client-assessment-and-goal-setting](/careers/fitness-personal-training/personal-training-foundations/client-assessment-and-goal-setting) | Evaluating fitness levels and setting realistic goals. |
 | 116 | [x] **Exercise Science Basics** (Completed) | [/careers/fitness-personal-training/personal-training-foundations/exercise-science-basics](/careers/fitness-personal-training/personal-training-foundations/exercise-science-basics) | Anatomy and physiology relevant to training. |
-| 117 | **Coaching & Motivation Techniques** | [/careers/fitness-personal-training/personal-training-foundations/coaching-and-motivation-techniques](/careers/fitness-personal-training/personal-training-foundations/coaching-and-motivation-techniques) | Keeping clients engaged and progressing safely. |
+| 117 | [x] **Coaching & Motivation Techniques** (Completed) | [/careers/fitness-personal-training/personal-training-foundations/coaching-and-motivation-techniques](/careers/fitness-personal-training/personal-training-foundations/coaching-and-motivation-techniques) | Keeping clients engaged and progressing safely. |
 
 ---
 
