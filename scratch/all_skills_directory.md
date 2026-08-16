@@ -83,7 +83,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 23 | [x] **Cloud Computing Fundamentals** (Completed) | [/careers/cloud-devops-infrastructure/cloud-architecture/cloud-computing-fundamentals](/careers/cloud-devops-infrastructure/cloud-architecture/cloud-computing-fundamentals) | Compute, storage, networking across AWS/Azure/GCP. |
-| 24 | **Infrastructure as Code** | [/careers/cloud-devops-infrastructure/cloud-architecture/infrastructure-as-code](/careers/cloud-devops-infrastructure/cloud-architecture/infrastructure-as-code) | Terraform for repeatable infrastructure provisioning. |
+| 24 | [x] **Infrastructure as Code** (Completed) | [/careers/cloud-devops-infrastructure/cloud-architecture/infrastructure-as-code](/careers/cloud-devops-infrastructure/cloud-architecture/infrastructure-as-code) | Terraform for repeatable infrastructure provisioning. |
 | 25 | **Cloud Security** | [/careers/cloud-devops-infrastructure/cloud-architecture/cloud-security](/careers/cloud-devops-infrastructure/cloud-architecture/cloud-security) | IAM, network security groups, and encryption in the cloud. |
 | 26 | **Cloud Certification Prep** | [/careers/cloud-devops-infrastructure/cloud-architecture/cloud-certification-prep](/careers/cloud-devops-infrastructure/cloud-architecture/cloud-certification-prep) | Structured review for a major cloud certification exam. |
 | 27 | **Scalability & High Availability** | [/careers/cloud-devops-infrastructure/cloud-architecture/scalability-and-high-availability](/careers/cloud-devops-infrastructure/cloud-architecture/scalability-and-high-availability) | Load balancing, auto-scaling, and failover design. |
