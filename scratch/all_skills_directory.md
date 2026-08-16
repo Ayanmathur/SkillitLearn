@@ -54,7 +54,7 @@
 | 14 | [x] **Engine Systems Fundamentals** (Completed) | [/careers/automotive-technology/automotive-repair-foundations/engine-systems-fundamentals](/careers/automotive-technology/automotive-repair-foundations/engine-systems-fundamentals) | How combustion engines work and fail. |
 | 15 | [x] **Electrical Systems Diagnostics** (Completed) | [/careers/automotive-technology/automotive-repair-foundations/electrical-systems-diagnostics](/careers/automotive-technology/automotive-repair-foundations/electrical-systems-diagnostics) | Diagnosing vehicle electrical and sensor issues. |
 | 16 | [x] **Brakes & Suspension Repair** (Completed) | [/careers/automotive-technology/automotive-repair-foundations/brakes-and-suspension-repair](/careers/automotive-technology/automotive-repair-foundations/brakes-and-suspension-repair) | Common repair procedures for brakes and suspension. |
-| 17 | **Automotive Safety & Tools** | [/careers/automotive-technology/automotive-repair-foundations/automotive-safety-and-tools](/careers/automotive-technology/automotive-repair-foundations/automotive-safety-and-tools) | Safe use of tools and shop equipment. |
+| 17 | [x] **Automotive Safety & Tools** (Completed) | [/careers/automotive-technology/automotive-repair-foundations/automotive-safety-and-tools](/careers/automotive-technology/automotive-repair-foundations/automotive-safety-and-tools) | Safe use of tools and shop equipment. |
 | 18 | **Diagnostic Scan Tools** | [/careers/automotive-technology/automotive-repair-foundations/diagnostic-scan-tools](/careers/automotive-technology/automotive-repair-foundations/diagnostic-scan-tools) | Using OBD scanners to identify faults. |
 
 ---
