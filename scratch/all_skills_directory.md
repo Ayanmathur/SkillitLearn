@@ -343,7 +343,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 114 | **Program Design** | [/careers/fitness-personal-training/personal-training-foundations/program-design](/careers/fitness-personal-training/personal-training-foundations/program-design) | Building safe, effective workout programs. |
+| 114 | [x] **Program Design** (Completed) | [/careers/fitness-personal-training/personal-training-foundations/program-design](/careers/fitness-personal-training/personal-training-foundations/program-design) | Building safe, effective workout programs. |
 | 115 | **Client Assessment & Goal Setting** | [/careers/fitness-personal-training/personal-training-foundations/client-assessment-and-goal-setting](/careers/fitness-personal-training/personal-training-foundations/client-assessment-and-goal-setting) | Evaluating fitness levels and setting realistic goals. |
 | 116 | **Exercise Science Basics** | [/careers/fitness-personal-training/personal-training-foundations/exercise-science-basics](/careers/fitness-personal-training/personal-training-foundations/exercise-science-basics) | Anatomy and physiology relevant to training. |
 | 117 | **Coaching & Motivation Techniques** | [/careers/fitness-personal-training/personal-training-foundations/coaching-and-motivation-techniques](/careers/fitness-personal-training/personal-training-foundations/coaching-and-motivation-techniques) | Keeping clients engaged and progressing safely. |
