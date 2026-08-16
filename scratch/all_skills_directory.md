@@ -193,7 +193,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 65 | **SQL for Analysts** | [/careers/data-science-ai/data-analytics/sql-for-analysts](/careers/data-science-ai/data-analytics/sql-for-analysts) | Querying, joining, and aggregating relational data. |
+| 65 | [x] **SQL for Analysts** (Completed) | [/careers/data-science-ai/data-analytics/sql-for-analysts](/careers/data-science-ai/data-analytics/sql-for-analysts) | Querying, joining, and aggregating relational data. |
 | 66 | **Statistics Fundamentals** | [/careers/data-science-ai/data-analytics/statistics-fundamentals](/careers/data-science-ai/data-analytics/statistics-fundamentals) | Descriptive stats, distributions, hypothesis testing. |
 | 67 | **Data Visualization** | [/careers/data-science-ai/data-analytics/data-visualization](/careers/data-science-ai/data-analytics/data-visualization) | Building dashboards with Tableau or Power BI. |
 | 68 | **Python for Data Analysis** | [/careers/data-science-ai/data-analytics/python-for-data-analysis](/careers/data-science-ai/data-analytics/python-for-data-analysis) | Pandas, NumPy, and exploratory data analysis. |
