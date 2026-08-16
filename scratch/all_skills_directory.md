@@ -473,7 +473,7 @@
 | 156 | [x] **Insurance Fundamentals** (Completed) | [/careers/insurance/insurance-sales-underwriting-basics/insurance-fundamentals](/careers/insurance/insurance-sales-underwriting-basics/insurance-fundamentals) | Core concepts of risk, premiums, and coverage. |
 | 157 | [x] **Policy Types & Underwriting Basics** (Completed) | [/careers/insurance/insurance-sales-underwriting-basics/policy-types-and-underwriting-basics](/careers/insurance/insurance-sales-underwriting-basics/policy-types-and-underwriting-basics) | How policies are evaluated and priced. |
 | 158 | [x] **Claims Process Basics** (Completed) | [/careers/insurance/insurance-sales-underwriting-basics/claims-process-basics](/careers/insurance/insurance-sales-underwriting-basics/claims-process-basics) | How claims are filed, reviewed, and settled. |
-| 159 | **Client Needs Assessment & Sales** | [/careers/insurance/insurance-sales-underwriting-basics/client-needs-assessment-and-sales](/careers/insurance/insurance-sales-underwriting-basics/client-needs-assessment-and-sales) | Matching clients to appropriate coverage. |
+| 159 | [x] **Client Needs Assessment & Sales** (Completed) | [/careers/insurance/insurance-sales-underwriting-basics/client-needs-assessment-and-sales](/careers/insurance/insurance-sales-underwriting-basics/client-needs-assessment-and-sales) | Matching clients to appropriate coverage. |
 
 ---
 
