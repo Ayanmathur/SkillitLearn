@@ -302,7 +302,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 101 | **Fashion Sketching & Illustration** | [/careers/fashion-apparel/fashion-design-foundations/fashion-sketching-and-illustration](/careers/fashion-apparel/fashion-design-foundations/fashion-sketching-and-illustration) | Communicating design ideas visually. |
+| 101 | [x] **Fashion Sketching & Illustration** (Completed) | [/careers/fashion-apparel/fashion-design-foundations/fashion-sketching-and-illustration](/careers/fashion-apparel/fashion-design-foundations/fashion-sketching-and-illustration) | Communicating design ideas visually. |
 | 102 | **Textiles & Fabric Knowledge** | [/careers/fashion-apparel/fashion-design-foundations/textiles-and-fabric-knowledge](/careers/fashion-apparel/fashion-design-foundations/textiles-and-fabric-knowledge) | Understanding fabric properties and uses. |
 | 103 | **Pattern Making Basics** | [/careers/fashion-apparel/fashion-design-foundations/pattern-making-basics](/careers/fashion-apparel/fashion-design-foundations/pattern-making-basics) | Turning designs into wearable patterns. |
 | 104 | **Garment Construction** | [/careers/fashion-apparel/fashion-design-foundations/garment-construction](/careers/fashion-apparel/fashion-design-foundations/garment-construction) | Sewing and assembling garments from patterns. |
