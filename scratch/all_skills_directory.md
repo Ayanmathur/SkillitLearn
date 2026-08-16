@@ -121,7 +121,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 39 | **Customer Service Excellence** | [/careers/culinary-arts-hospitality/hospitality-guest-service/customer-service-excellence](/careers/culinary-arts-hospitality/hospitality-guest-service/customer-service-excellence) | Creating positive guest experiences consistently. |
+| 39 | [x] **Customer Service Excellence** (Completed) | [/careers/culinary-arts-hospitality/hospitality-guest-service/customer-service-excellence](/careers/culinary-arts-hospitality/hospitality-guest-service/customer-service-excellence) | Creating positive guest experiences consistently. |
 | 40 | **Reservations & Front Desk Operations** | [/careers/culinary-arts-hospitality/hospitality-guest-service/reservations-and-front-desk-operations](/careers/culinary-arts-hospitality/hospitality-guest-service/reservations-and-front-desk-operations) | Managing bookings and guest check-in/out. |
 | 41 | **Event & Service Coordination** | [/careers/culinary-arts-hospitality/hospitality-guest-service/event-and-service-coordination](/careers/culinary-arts-hospitality/hospitality-guest-service/event-and-service-coordination) | Coordinating logistics for guest events. |
 | 42 | **Handling Complaints Gracefully** | [/careers/culinary-arts-hospitality/hospitality-guest-service/handling-complaints-gracefully](/careers/culinary-arts-hospitality/hospitality-guest-service/handling-complaints-gracefully) | Turning service issues into positive outcomes. |
