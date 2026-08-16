@@ -136,7 +136,7 @@
 
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
-| 43 | **Security Fundamentals** | [/careers/cybersecurity/security-analyst/security-fundamentals](/careers/cybersecurity/security-analyst/security-fundamentals) | CIA triad, threat models, common attack types. |
+| 43 | [x] **Security Fundamentals** (Completed) | [/careers/cybersecurity/security-analyst/security-fundamentals](/careers/cybersecurity/security-analyst/security-fundamentals) | CIA triad, threat models, common attack types. |
 | 44 | **SIEM & Log Analysis** | [/careers/cybersecurity/security-analyst/siem-and-log-analysis](/careers/cybersecurity/security-analyst/siem-and-log-analysis) | Detecting anomalies using security monitoring tools. |
 | 45 | **Incident Response** | [/careers/cybersecurity/security-analyst/incident-response](/careers/cybersecurity/security-analyst/incident-response) | Containing, investigating, and recovering from incidents. |
 | 46 | **Security Compliance Basics** | [/careers/cybersecurity/security-analyst/security-compliance-basics](/careers/cybersecurity/security-analyst/security-compliance-basics) | Frameworks like ISO 27001, SOC 2, and audit readiness. |
