@@ -290,7 +290,7 @@
 | 97 | [x] **Sustainability Fundamentals** (Completed) | [/careers/environmental-sustainability/sustainability-management/sustainability-fundamentals](/careers/environmental-sustainability/sustainability-management/sustainability-fundamentals) | Core concepts in environmental and corporate sustainability. |
 | 98 | [x] **Carbon Footprint Measurement** (Completed) | [/careers/environmental-sustainability/sustainability-management/carbon-footprint-measurement](/careers/environmental-sustainability/sustainability-management/carbon-footprint-measurement) | Quantifying an organization's emissions. |
 | 99 | [x] **ESG Reporting Basics** (Completed) | [/careers/environmental-sustainability/sustainability-management/esg-reporting-basics](/careers/environmental-sustainability/sustainability-management/esg-reporting-basics) | Environmental, social, and governance reporting standards. |
-| 100 | **Sustainable Operations Strategy** | [/careers/environmental-sustainability/sustainability-management/sustainable-operations-strategy](/careers/environmental-sustainability/sustainability-management/sustainable-operations-strategy) | Reducing waste and resource use in operations. |
+| 100 | [x] **Sustainable Operations Strategy** (Completed) | [/careers/environmental-sustainability/sustainability-management/sustainable-operations-strategy](/careers/environmental-sustainability/sustainability-management/sustainable-operations-strategy) | Reducing waste and resource use in operations. |
 
 ---
 
