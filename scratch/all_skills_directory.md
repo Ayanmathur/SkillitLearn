@@ -87,7 +87,7 @@
 | 25 | [x] **Cloud Security** (Completed) | [/careers/cloud-devops-infrastructure/cloud-architecture/cloud-security](/careers/cloud-devops-infrastructure/cloud-architecture/cloud-security) | IAM, network security groups, and encryption in the cloud. |
 | 26 | [x] **Cloud Certification Prep** (Completed) | [/careers/cloud-devops-infrastructure/cloud-architecture/cloud-certification-prep](/careers/cloud-devops-infrastructure/cloud-architecture/cloud-certification-prep) | Structured review for a major cloud certification exam. |
 | 27 | [x] **Scalability & High Availability** (Completed) | [/careers/cloud-devops-infrastructure/cloud-architecture/scalability-and-high-availability](/careers/cloud-devops-infrastructure/cloud-architecture/scalability-and-high-availability) | Load balancing, auto-scaling, and failover design. |
-| 28 | **Cost Optimization** | [/careers/cloud-devops-infrastructure/cloud-architecture/cost-optimization](/careers/cloud-devops-infrastructure/cloud-architecture/cost-optimization) | Right-sizing resources and managing cloud spend. |
+| 28 | [x] **Cost Optimization** (Completed) | [/careers/cloud-devops-infrastructure/cloud-architecture/cost-optimization](/careers/cloud-devops-infrastructure/cloud-architecture/cost-optimization) | Right-sizing resources and managing cloud spend. |
 
 ### Path 2: Site Reliability Engineering
 **Slug**: `site-reliability-engineering`
