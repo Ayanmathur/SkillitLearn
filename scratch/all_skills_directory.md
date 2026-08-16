@@ -112,7 +112,7 @@
 |---|---|---|---|
 | 34 | [x] **Knife Skills** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/knife-skills](/careers/culinary-arts-hospitality/professional-cooking-foundations/knife-skills) | Precise, efficient, and safe cutting techniques. |
 | 35 | [x] **Plating & Presentation** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/plating-and-presentation](/careers/culinary-arts-hospitality/professional-cooking-foundations/plating-and-presentation) | Making food look as good as it tastes. |
-| 36 | **Cooking Techniques** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques](/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques) | Sauteing, braising, roasting, and other core methods. |
+| 36 | [x] **Cooking Techniques** (Completed) | [/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques](/careers/culinary-arts-hospitality/professional-cooking-foundations/cooking-techniques) | Sauteing, braising, roasting, and other core methods. |
 | 37 | **Menu & Recipe Costing** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/menu-and-recipe-costing](/careers/culinary-arts-hospitality/professional-cooking-foundations/menu-and-recipe-costing) | Pricing dishes profitably. |
 | 38 | **Kitchen Safety & Sanitation** | [/careers/culinary-arts-hospitality/professional-cooking-foundations/kitchen-safety-and-sanitation](/careers/culinary-arts-hospitality/professional-cooking-foundations/kitchen-safety-and-sanitation) | Food safety standards and safe kitchen practices. |
 
