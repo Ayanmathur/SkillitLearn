@@ -398,7 +398,7 @@
 | 132 | [x] **Video Editing Fundamentals** (Completed) | [/careers/graphic-design-visual-media/video-editing-motion-graphics/video-editing-fundamentals](/careers/graphic-design-visual-media/video-editing-motion-graphics/video-editing-fundamentals) | Cutting, pacing, and structuring footage. |
 | 133 | [x] **Adobe Premiere Pro** (Completed) | [/careers/graphic-design-visual-media/video-editing-motion-graphics/adobe-premiere-pro](/careers/graphic-design-visual-media/video-editing-motion-graphics/adobe-premiere-pro) | Professional non-linear video editing. |
 | 134 | [x] **Motion Graphics with After Effects** (Completed) | [/careers/graphic-design-visual-media/video-editing-motion-graphics/motion-graphics-with-after-effects](/careers/graphic-design-visual-media/video-editing-motion-graphics/motion-graphics-with-after-effects) | Animated titles, transitions, and visual effects. |
-| 135 | **Color Grading & Audio Basics** | [/careers/graphic-design-visual-media/video-editing-motion-graphics/color-grading-and-audio-basics](/careers/graphic-design-visual-media/video-editing-motion-graphics/color-grading-and-audio-basics) | Polishing the look and sound of a final cut. |
+| 135 | [x] **Color Grading & Audio Basics** (Completed) | [/careers/graphic-design-visual-media/video-editing-motion-graphics/color-grading-and-audio-basics](/careers/graphic-design-visual-media/video-editing-motion-graphics/color-grading-and-audio-basics) | Polishing the look and sound of a final cut. |
 
 ### Path 2: Graphic Design Foundations
 **Slug**: `graphic-design-foundations`
