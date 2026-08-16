@@ -210,7 +210,7 @@
 | # | Skill Name | Direct URL Route | Core Learning Focus |
 |---|---|---|---|
 | 70 | [x] **Google Ads Management** (Completed) | [/careers/digital-marketing/performance-marketing/google-ads-management](/careers/digital-marketing/performance-marketing/google-ads-management) | Search, display, and shopping campaigns on Google Ads. |
-| 71 | **Ad Budgeting & Bidding Strategy** | [/careers/digital-marketing/performance-marketing/ad-budgeting-and-bidding-strategy](/careers/digital-marketing/performance-marketing/ad-budgeting-and-bidding-strategy) | Allocating spend and choosing bid strategies for ROI. |
+| 71 | [x] **Ad Budgeting & Bidding Strategy** (Completed) | [/careers/digital-marketing/performance-marketing/ad-budgeting-and-bidding-strategy](/careers/digital-marketing/performance-marketing/ad-budgeting-and-bidding-strategy) | Allocating spend and choosing bid strategies for ROI. |
 | 72 | **Landing Page Optimization** | [/careers/digital-marketing/performance-marketing/landing-page-optimization](/careers/digital-marketing/performance-marketing/landing-page-optimization) | Designing pages that convert paid traffic. |
 | 73 | **A/B Testing for Ads** | [/careers/digital-marketing/performance-marketing/a-and-b-testing-for-ads](/careers/digital-marketing/performance-marketing/a-and-b-testing-for-ads) | Structuring experiments and reading results correctly. |
 | 74 | **Meta Ads Management** | [/careers/digital-marketing/performance-marketing/meta-ads-management](/careers/digital-marketing/performance-marketing/meta-ads-management) | Campaign structure, targeting, and optimization on Facebook & Instagram. |
